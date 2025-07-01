@@ -1,0 +1,20 @@
+https://leetcode.com/problems/find-the-original-typed-string-i/?envType=daily-question&envId=2025-07-01
+
+class Solution {
+    public int possibleStringCount(String str) {
+        int n = str.length();
+
+        int count = 1;
+        int temp = 0;
+        for(int ind=1; ind<n; ind++){
+            if(str.charAt(ind) == str.charAt(ind-1)){
+                temp++;
+            }else{
+                count += temp;
+                temp=0;
+            }
+        }
+        return count+temp;
+        
+    }
+}

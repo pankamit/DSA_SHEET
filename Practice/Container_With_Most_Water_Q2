@@ -1,0 +1,33 @@
+
+
+package com.app.day48;
+
+public class ContainerWithMostWaterQ2 {
+
+    public static void main(String[] args) {
+
+        int[] arr = {1}; //{1,5,4,3};
+        int n = arr.length;
+
+        int l = 0;
+        int r = n-1;
+
+        int max = 0;
+        while(l < r){
+          //  System.out.println("l "+l+" r "+r);
+            int area = 0;
+            if(arr[l] <= arr[r]){
+                area = (r-l)*arr[l];
+                l++;
+            }else{
+                area = (r-l)*arr[r];
+                r--;
+            }
+           // System.out.println("area "+area);
+            max = Math.max(area,max);
+        }
+
+        System.out.println("max "+max);
+
+    }
+}

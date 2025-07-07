@@ -1,0 +1,25 @@
+## https://takeuforward.org/plus/dsa/hashing/faqs/count-subarrays-with-given-xor-k
+
+class Solution {
+    public int subarraysWithXorK(int[] arr, int k) {
+
+      HashMap<Integer,Integer> hm = new HashMap<>();
+      int n = arr.length;
+
+      hm.put(0,1);
+      int xor = 0;
+
+      int count = 0;
+
+      for(int ind=0;ind<n;ind++){
+            xor = xor ^ arr[ind];
+            int diff = k ^ xor;
+            if(hm.containsKey(diff)){
+                count += hm.get(diff);
+            }
+            hm.put(xor,hm.getOrDefault(xor,0)+1);
+      }
+
+      return count;
+    }
+}

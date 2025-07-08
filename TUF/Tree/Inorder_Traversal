@@ -1,0 +1,33 @@
+## https://takeuforward.org/plus/dsa/binary-trees/theory-and-traversals/inorder-traversal
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int data;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int val) { data = val; left = null, right = null }
+ * }
+ **/
+
+class Solution {
+    public List<Integer> inorder(TreeNode root) {
+        //your code goes here
+        List<Integer> lst = new ArrayList<>();
+        
+        traverse(root,lst);
+        return lst;
+        
+    }
+
+    void traverse(TreeNode node,List<Integer> lst){
+      if(node == null){
+        return;
+      }
+
+      traverse(node.left,lst);
+      lst.add(node.data);
+      traverse(node.right,lst);
+
+    }
+}

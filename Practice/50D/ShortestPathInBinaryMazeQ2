@@ -1,0 +1,53 @@
+package com.app.day50;
+
+public class ShortestPathInBinaryMazeQ2 {
+
+    public static void main(String[] args) {
+
+        int[][] mat = {{1,0,1},{1,0,1},{1,0,1}};  //{{1,1,1},{1,0,1},{1,1,1}};  //{{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}};
+        int sr = 0;//0;//0;
+        int sc = 0;//0;//0;
+        int tr = 0;//0;//3;
+        int tc = 2;//2;//3;
+
+        int n = mat.length;
+        int m = mat[0].length;
+
+        boolean[][] visitArr = new boolean[n][m];
+
+        int res = traverse(mat,sr,sc,tr,tc,n,m,visitArr);
+        res = res == Integer.MAX_VALUE ? -1 : res;
+        System.out.println("shortest path "+res);
+    }
+
+    static int traverse(int[][] mat,int sr,int sc,int tr,int tc,int n,int m,boolean[][] visitArr){
+
+        if(sr == tr && sc == tc){
+            return 0;
+        }
+
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+
+        int min = Integer.MAX_VALUE;
+
+        for(int ind=0;ind<dir.length;ind++){
+            int new_r = sr+dir[ind][0];
+            int new_c = sc+dir[ind][1];
+
+            if(new_r >= 0 && new_r < n && new_c >=0 && new_c <  m && mat[new_r][new_c] == 1 && !visitArr[new_r][new_c]) {
+                visitArr[new_r][new_c] = true;
+                int dist = traverse(mat, new_r, new_c, tr, tc, n, m,visitArr);
+                if(dist != Integer.MAX_VALUE){
+                    dist++;
+                }
+                min = Math.min(min,dist);
+                visitArr[new_r][new_c] = false;
+            }
+
+
+        }
+
+        return min;
+
+    }
+}

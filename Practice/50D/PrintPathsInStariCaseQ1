@@ -1,0 +1,42 @@
+package com.app.day50;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PrintPathsInStariCaseQ1 {
+
+    public static void main(String[] args) {
+
+        int A = 3;//2;
+
+        List<List<Integer>> resLst = new ArrayList<>();
+        List<Integer> lst = new ArrayList<>();
+
+        traverse(A,lst,resLst);
+        System.out.println("Paths "+resLst);
+    }
+
+    public static void traverse(int A,List<Integer> lst,List<List<Integer>> resLst){
+
+
+        if(A == 0){
+            resLst.add(new ArrayList<>(lst));
+            return;
+        }
+
+        // take 1 Step
+        if(A-1 >= 0){
+            lst.add(1); // Add
+            traverse(A-1,lst,resLst);
+            lst.remove(lst.size()-1); // Undo
+        }
+
+        // take 2 Steps
+        if(A-2 >= 0) {
+            lst.add(2); // Add
+            traverse(A - 2, lst, resLst);
+            lst.remove(lst.size() - 1); // Undo
+        }
+
+    }
+}

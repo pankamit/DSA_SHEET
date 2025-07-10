@@ -1,0 +1,38 @@
+package com.app.day49;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+public class PermutationQ1 {
+
+    public static void main(String[] args) {
+
+        int[] arr = {1,2,3};
+        int n = arr.length;
+        HashSet<Integer> hs = new HashSet<>();
+        List<String> resLst = new ArrayList<>();
+
+        traverse(arr,n,0,"",resLst,hs);
+        System.out.println("resLst "+resLst);
+
+
+    }
+
+    static void traverse(int[] arr,int n,int pos ,String res,List<String> resLst,HashSet<Integer> hs){
+
+        if(pos == n){
+            resLst.add(res);
+            return;
+        }
+
+        for(int ind=0;ind<n;ind++){
+            if(!hs.contains(arr[ind])){
+                hs.add(arr[ind]);
+                traverse(arr,n,pos+1,res+arr[ind],resLst,hs);
+                hs.remove(arr[ind]);
+            }
+        }
+
+    }
+}

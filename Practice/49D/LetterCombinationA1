@@ -1,0 +1,49 @@
+package com.app.day49;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class LetterCombinationA1 {
+
+    public static void main(String[] args) {
+
+        String A = "012"; //"23";
+
+        Map<String,String> hm = new HashMap<>();
+        hm.put("0","0");
+        hm.put("1","1");
+        hm.put("2","abc");
+        hm.put("3","def");
+        hm.put("4","ghi");
+        hm.put("5","jkl");
+        hm.put("6","mno");
+        hm.put("7","pqrs");
+        hm.put("8","tuv");
+        hm.put("9","wxyz");
+
+
+        List<String> lst = new ArrayList<>();
+
+        traverse(A,hm,0,"",lst);
+
+        System.out.println("res "+lst);
+
+    }
+
+    static void traverse(String A,Map<String,String> hm,int pos,String res,List<String> lst){
+
+        if(pos == A.length()){
+            lst.add(res);
+            return;
+        }
+
+        String str = hm.get(""+A.charAt(pos));
+        for(int ind=0;ind<str.length();ind++) {
+            traverse(A, hm, pos + 1, res + str.charAt(ind), lst);
+        }
+
+
+    }
+}

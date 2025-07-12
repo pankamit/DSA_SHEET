@@ -1,0 +1,81 @@
+package com.app.day51;
+
+public class Add2NumbersLLA2 {
+
+    public static void main(String[] args) {
+
+        /*Node node1 = new Node(2);
+        node1.next = new Node(4);
+        node1.next.next = new Node(3);
+
+        Node node2 = new Node(5);
+        node2.next = new Node(6);
+        node2.next.next = new Node(4);*/
+
+        Node node1 = new Node(9);
+        node1.next = new Node(9);
+
+        Node node2 = new Node(1);
+
+        Node node3 = new Node(-1);
+        int carry = 0;
+
+        Node head = node3;
+
+
+        while(node1 != null && node2 != null){
+            int sum = node1.data+node2.data+carry;
+            int rem = sum%10;
+            carry = sum/10;
+
+            node3.next = new Node(rem);
+            node3 = node3.next;
+
+            node1 = node1.next;
+            node2 = node2.next;
+        }
+
+        if(node1 != null){
+            int sum = node1.data+carry;
+            int rem = sum%10;
+            carry = sum/10;
+
+            node3.next = new Node(rem);
+            node3 = node3.next;
+
+            node1 = node1.next;
+        }
+
+        if(node2 != null){
+            int sum = node2.data+carry;
+            int rem = sum%10;
+            carry = sum/10;
+
+            node3.next = new Node(rem);
+            node3 = node3.next;
+
+            node2 = node2.next;
+        }
+
+        if(carry != 0){
+            node3.next = new Node(carry);
+
+        }
+
+        Node temp = head;
+        head = head.next;
+        temp.next = null;
+
+        traverse(head);
+    }
+
+    public static void traverse(Node node){
+
+        while(node != null){
+            System.out.print(node.data+" ");
+            node = node.next;
+        }
+        System.out.println();
+
+    }
+}

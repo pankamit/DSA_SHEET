@@ -1,0 +1,71 @@
+package com.app.day51;
+
+public class MergeTwoSortedLLQ2 {
+
+    public static void main(String[] args) {
+
+        /*Node node1 = new Node(5);
+        node1.next = new Node(8);
+        node1.next.next = new Node(20);
+
+        Node node2 = new Node(4);
+        node2.next = new Node(11);
+        node2.next.next = new Node(15); */
+
+        Node node1 = new Node(1);
+        node1.next = new Node(2);
+        node1.next.next = new Node(3);
+
+        Node node2 = null;
+
+        Node node = merge(node1,node2);
+
+        traverse(node);
+
+    }
+
+    static Node merge(Node h1,Node h2){
+
+        Node h = new Node(-1);
+        Node curr = h;
+
+        while(h1 != null && h2 != null){
+            if(h1.data <= h2.data){
+                curr.next = h1;
+                h1 = h1.next;
+                curr = curr.next;
+                //  curr.next = null;
+            }else{
+                curr.next = h2;
+                h2 = h2.next;
+                curr = curr.next;
+                // curr.next = null;
+            }
+        }
+
+        if(h1 != null){
+            curr.next = h1;
+        }
+
+        if(h2 != null){
+            curr.next = h2;
+        }
+
+        Node temp = h;
+        h = h.next;
+        temp.next = null;
+
+        return h;
+
+    }
+
+    public static void traverse(Node node){
+
+        while(node != null){
+            System.out.print(node.data+" ");
+            node = node.next;
+        }
+        System.out.println();
+
+    }
+}

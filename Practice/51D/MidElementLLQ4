@@ -1,0 +1,49 @@
+package com.app.day51;
+
+public class MidElementLLQ4 {
+
+    public static void main(String[] args) {
+
+        /*Node node = new Node(1);
+        node.next = new Node(2);
+        node.next.next = new Node(3);
+        node.next.next.next = new Node(4);
+        node.next.next.next.next = new Node(5);*/
+
+        Node node = new Node(1);
+        node.next = new Node(5);
+        node.next.next = new Node(6);
+        node.next.next.next = new Node(2);
+        node.next.next.next.next = new Node(3);
+        node.next.next.next.next.next = new Node(4);
+
+        Node head = node;
+
+        if(node == null){
+            System.out.println("mid element "+null);
+            return;
+        }
+
+        Node mid = findMid(node);
+
+        System.out.println("mid element "+mid.data);
+
+    }
+
+
+
+    static Node findMid(Node node){
+
+        Node slow = node;
+        Node fast = node;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+
+        }
+
+        return slow;
+    }
+
+}

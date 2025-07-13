@@ -1,0 +1,145 @@
+package com.app.day52;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+class DNode{
+    Pair data;
+    DNode next;
+    DNode prev;
+
+    DNode(Pair data){
+        this.data = data;
+    }
+}
+
+class Pair{
+    int key;
+    int val;
+
+    Pair(int key,int val){
+        this.key = key;
+        this.val = val;
+    }
+}
+
+public class LRUCacheQ2 {
+
+    int cap;
+    Map<Integer,DNode> hm;
+    DNode head;
+    DNode tail;
+
+    LRUCacheQ2(int cap){
+        this.cap = cap;
+        hm = new HashMap<>();
+    }
+
+    int get(int key){
+        if(hm.containsKey(key)){
+            DNode node = hm.get(key);
+            int val = node.data.val;
+            pickAndInsertEnd(node);
+
+            return val;
+        }else{
+            return -1;
+        }
+    }
+
+    void set(int key,int val){
+        if(hm.isEmpty()){
+            DNode node = new DNode(new Pair(key,val));
+            hm.put(key,node);
+
+            head = node;
+            tail = node;
+
+            return;
+        }
+
+
+        if(hm.containsKey(key)){
+            DNode node = hm.get(key);
+            node.data.val = val;
+            pickAndInsertEnd(node);
+
+
+        }else{
+            DNode node = new DNode(new Pair(key,val));
+
+            if(hm.size() < cap){
+                hm.put(key, node);
+                tail.next = node;
+                node.prev = tail;
+                tail = node;
+
+            }else {
+                // add new Node to tail
+                hm.put(key,node);
+                tail.next = node;
+                node.prev = tail;
+                tail = node;
+
+                // Remove Head Node
+                DNode temp = head;
+                hm.remove(temp.data.key);
+                head = head.next;
+                temp.next = null;
+
+            }
+        }
+    }
+
+
+    void pickAndInsertEnd(DNode node){
+        // Base Cases
+        if(node == tail){
+            return;
+        }
+
+       // System.out.println("Inside pickAndInsertEnd node data "+node.data);
+        DNode prev = node.prev;
+        DNode next = node.next;
+
+        if(prev != null) {
+            prev.next = next;
+        }
+        next.prev = prev;
+        if(prev == null){
+            head = next;
+        }
+
+        node.next = null;
+        tail.next = node;
+        tail = node;
+
+    }
+
+
+    public static void main(String[] args) {
+
+        LRUCacheQ2 obj1 = new LRUCacheQ2(2);
+        obj1.set(1,10);
+      //  System.out.println("After update 1");
+        obj1.set(5,12);
+       // System.out.println("After update 5");
+        System.out.println(obj1.get(5));
+       // System.out.println("After get 5");
+        System.out.println(obj1.get(1));
+       // System.out.println("After get 5");
+        System.out.println(obj1.get(10));
+       // System.out.println("After get 10");
+        obj1.set(6,14);
+       // System.out.println("After update 6");
+        System.out.println(obj1.get(5));
+       // System.out.println("After get 5");
+
+
+    }
+
+
+
+
+}

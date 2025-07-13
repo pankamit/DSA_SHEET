@@ -1,0 +1,91 @@
+package com.app.day52;
+
+class Node{
+    int data;
+    Node next;
+
+    Node(int data){
+        this.data = data;
+    }
+}
+
+public class IntersactionLLQ1 {
+
+    public static void main(String[] args) {
+
+        /*Node node1 = new Node(1);
+        node1.next = new Node(2);
+        node1.next.next = new Node(3);
+        node1.next.next.next = new Node(4);
+        node1.next.next.next.next = new Node(5);
+
+
+        Node node2 = new Node(6);
+        node2.next = new Node(3);
+        node2.next.next = new Node(4);
+        node2.next.next.next = new Node(5);*/
+
+        Node node1 = new Node(1);
+        node1.next = new Node(2);
+        node1.next.next = new Node(3);
+
+
+        Node node2 = new Node(4);
+        node2.next = new Node(5);
+
+
+        node1 = reverse(node1);
+        node2 = reverse(node2);
+
+        Node head = node1;
+
+        Node prev = null;
+        while(node1 != null && node2 != null){
+
+            if(node1.data != node2.data){
+                break;
+            }
+
+            prev = node1;
+
+            node1 = node1.next;
+            node2 = node2.next;
+        }
+
+        if(prev == null){
+            System.out.println(prev);
+            return;
+        }
+
+        prev.next = null;
+
+        head = reverse(head);
+
+        node1 = head;
+        traverse(node1);
+
+    }
+
+    static void traverse(Node node){
+        while(node != null){
+            System.out.print(node.data+" ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    static Node reverse(Node node){
+
+        Node curr = node;
+        Node prev = null;
+
+        while(curr != null){
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+}

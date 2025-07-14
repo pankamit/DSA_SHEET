@@ -1,0 +1,40 @@
+## https://leetcode.com/problems/process-string-with-special-operations-i/
+
+class Solution {
+    public String processStr(String s) {
+        String res = "";
+        for(int ind=0;ind<s.length();ind++){
+            char ch = s.charAt(ind);
+            if(ch >= 'a' && ch <= 'z'){
+                res += ch;
+            }else if(ch == '*'){
+               res = remove(res);
+            }else if(ch == '#'){
+                res = duplicate(res);
+            }else if(ch == '%'){
+                res = reverse(res);
+            }
+        }
+        return res;
+    }
+
+    String remove(String s){
+        if(s.length() == 0){
+            return s;
+        }
+        return s.substring(0,s.length()-1);
+    }
+
+    String duplicate(String s){
+        return s+s;
+    }
+
+    String reverse(String s){
+        String str = "";
+        for(int ind=s.length()-1;ind>=0;ind--){
+            str += s.charAt(ind);
+        }
+        return str;
+        
+    }
+}

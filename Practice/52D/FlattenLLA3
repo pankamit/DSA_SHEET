@@ -1,0 +1,125 @@
+package com.app.day52;
+
+class FNode{
+    int data;
+    FNode next;
+    FNode down;
+
+    FNode(int data){
+        this.data = data;
+    }
+
+
+}
+
+public class FlattenLLA3 {
+
+    public static void main(String[] args) {
+
+        /*FNode node = new FNode(3);
+        FNode head = node;
+
+        node.down = new FNode(7);
+        node.down.down = new FNode(7);
+        node.down.down.down = new FNode(8);
+
+        node.next = new FNode(4);
+        node = node.next;
+        node.down = new FNode(11);
+
+        node.next = new FNode(20);
+        node = node.next;
+        node.down = new FNode(22);
+
+        node.next = new FNode(20);
+        node = node.next;
+        node.down = new FNode(20);
+        node.down.down = new FNode(28);
+        node.down.down.down = new FNode(39);
+
+        node.next = new FNode(30);
+        node = node.next;
+        node.down = new FNode(31);
+        node.down.down = new FNode(39);*/
+
+
+        FNode node = new FNode(2);
+        FNode head = node;
+
+        node.down = new FNode(7);
+        node.down.down = new FNode(7);
+
+
+      /*  node.next = new FNode(4);
+        node = node.next;
+        node.down = new FNode(11); */
+
+
+        FNode prev = head;
+        node = head.next;
+
+        // Keep all the nodes sorted towards right
+        while(node != null) {
+            FNode next = node.next;
+            prev.next = null;
+            node.next = null;
+            prev = mergeSortedLLDown(prev, node);
+            node = next;
+        }
+
+        // Make it align towards next
+        node = prev;
+        head = node;
+        while(node != null){
+            FNode next = node.down;
+            node.down = null;
+            node.next = next;
+            node = node.next;
+        }
+
+        node = head;
+        traverse(node);
+
+    }
+
+    static void traverse(FNode node){
+        while (node != null){
+            System.out.print(node.data+ " ");
+            node = node.next;
+        }
+    }
+
+    static FNode mergeSortedLLDown(FNode l1, FNode l2){
+        FNode node = new FNode(-1);
+        FNode head = node;
+
+        while(l1 != null && l2 != null){
+            if(l1.data <= l2.data){
+              //  FNode next = l1.down;
+                node.down = l1;
+                node = node.down;
+                l1 = l1.down;
+            }else{
+               // FNode next = l2.down;
+                node.down = l2;
+                node = node.down;
+
+                l2 = l2.down;
+            }
+        }
+
+        if(l1 != null){
+            node.down = l1;
+        }
+
+        if(l2 != null){
+            node.down = l2;
+        }
+
+        FNode temp = head;
+        head = head.down;
+        temp.down = null;
+
+        return head;
+    }
+}

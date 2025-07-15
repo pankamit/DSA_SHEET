@@ -1,0 +1,65 @@
+package com.app.day52;
+
+public class PartitionLLA2 {
+
+    public static void main(String[] args) {
+
+        /*Node node = new Node(1);
+        node.next = new Node(4);
+        node.next.next = new Node(3);
+        node.next.next.next = new Node(2);
+        node.next.next.next.next = new Node(5);
+        node.next.next.next.next.next = new Node(2);*/
+
+        Node node = new Node(1);
+        node.next = new Node(2);
+        node.next.next = new Node(3);
+        node.next.next.next = new Node(1);
+        node.next.next.next.next = new Node(3);
+
+        int B = 2;
+
+        Node part = new Node(-1);
+        part.next = node;
+        Node head = part;
+        Node prev= null;
+        //prev = part;
+        while(node != null){
+          //  System.out.println("node "+node.data+" part "+part.data+" partNext "+part.next);
+            if(node.data < B){
+
+                Node next = node.next;
+                if(prev != null) {
+                    prev.next = next;
+                    node.next = part.next;
+                    part.next = node;
+                }
+                part = part.next;
+                node = next;
+
+            }else{
+                prev = node;
+                node = node.next;
+              //  System.out.println("prev "+prev.data);
+            }
+
+        }
+
+        // Remove very first;
+        Node temp = head;
+        head = head.next;
+        temp.next = null;
+
+        // print the result
+        node = head;
+        traverse(node);
+    }
+
+    static void traverse(Node node){
+        while(node !=null){
+            System.out.print(node.data+" ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+}

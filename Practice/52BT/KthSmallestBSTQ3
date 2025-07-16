@@ -1,0 +1,57 @@
+package com.app.day53BT;
+
+public class KthSmallestBSTQ3 {
+
+    static int count;
+
+    public static void main(String[] args) {
+
+       /* Node node = new Node(2);
+        node.left = new Node(1);
+        node.right = new Node(3);*/
+
+        Node node = new Node(3);
+        node.left = new Node(2);
+        node.left.left = new Node(1);
+
+        int B = 1;//2;
+
+
+
+        int res = traverse(node,B);
+        if(res == -1){
+            System.out.println(B+"th element doesn't exists");
+        }else{
+            System.out.println(B+"th element is "+res);
+        }
+
+
+    }
+
+    static int traverse(Node node,int B){
+
+        if(node == null){
+            return -1;
+        }
+
+        //if(node.left != null) {
+        int res = traverse(node.left, B);
+        if(res != -1){
+            return res;
+        }
+
+        //}
+        count++;
+        if(count == B){
+            return node.data;
+        }
+        //if(node.right != null) {
+        res = traverse(node.right, B);
+        if(res != -1){
+            return res;
+        }
+        //}
+
+        return -1;
+    }
+}

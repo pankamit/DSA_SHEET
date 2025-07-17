@@ -1,0 +1,41 @@
+package com.app.day53BT;
+
+public class LCAinBSTQ4 {
+
+    public static void main(String[] args) {
+
+        Node node = new Node(15);
+        node.left = new Node(12);
+        node.right = new Node(20);
+
+        node.left.left = new Node(10);
+        node.left.right = new Node(14);
+        node.right.left = new Node(16);
+        node.right.right = new Node(27);
+
+        node.left.left.left = new Node(8);
+
+        int B = 12;//16;//8;
+        int C = 8;//27;//20;
+
+        Node head = node;
+
+        Node lca = traverse(node,B,C);
+        System.out.println("LCA for BST : "+lca.data);
+    }
+
+    static Node traverse(Node node,int B,int C){
+        if(node == null){
+            return null;
+        }
+
+        if(B < node.data && C < node.data){
+            return traverse(node.left,B,C);
+
+        }else if(B > node.data && C > node.data){
+            return traverse(node.right,B,C);
+        }else{
+            return node;
+        }
+    }
+}

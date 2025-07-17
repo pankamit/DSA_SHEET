@@ -1,0 +1,82 @@
+package com.app.day53BT;
+
+public class LCABTQ1 {
+
+    public static void main(String[] args) {
+
+        Node node = new Node(1);
+        node.left = new Node(2);
+        node.right = new Node(3);
+
+        node.left.left = new Node(4);
+        node.left.right = new Node(5);
+
+        int B = 4;//2;
+        int C = 3; //3;
+
+
+        Node head = node;
+        node = head;
+        if(!nodeExists(node,B)){
+            System.out.println(B+" is not present");
+            return;
+
+        }
+        node = head;
+        if(!nodeExists(node,C)){
+            System.out.println(C+" is not present");
+            return;
+        }
+
+        //Both nodes are present in BST
+        node = head;
+        Node lca = traverse(node,B,C);
+        if(lca !=  null) {
+            System.out.println(" LCA " + lca.data);
+        }
+
+    }
+
+    static boolean nodeExists(Node node,int key){
+        if(node == null){
+            return false;
+
+        }
+        if(node.data == key){
+            return true;
+        }
+
+        if(nodeExists(node.left,key)){
+            return true;
+        }
+        if(nodeExists(node.right,key)){
+            return true;
+        }
+
+        return false;
+    }
+
+    static Node traverse(Node node,int B,int C){
+
+        if(node == null || node.data == B || node.data == C){
+            return node;
+        }
+
+        Node leftLCA =  traverse(node.left,B,C);
+        Node rightLCA = traverse(node.right,B,C);
+
+        if(leftLCA != null && rightLCA != null){
+            return node;
+        }else if(leftLCA != null){
+            return leftLCA;
+        }else{
+            return rightLCA;
+        }
+
+    }
+
+
+
+
+
+}

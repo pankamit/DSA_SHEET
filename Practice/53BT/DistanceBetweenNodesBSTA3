@@ -1,0 +1,58 @@
+package com.app.day53BT;
+
+public class DistanceBetweenNodesBSTA3 {
+
+    public static void main(String[] args) {
+
+        Node node = new Node(5);
+        node.left = new Node(2);
+        node.right = new Node(8);
+
+        node.left.left = new Node(1);
+        node.left.right = new Node(4);
+        node.right.left = new Node(6);
+        node.right.right = new Node(11);
+
+        int B = 2;//2;
+        int C = 5;//11;
+        Node head = node;
+
+        Node lca = traverse(node,B,C);
+        node = lca;
+        int d1 = findDistance(node,B);
+        node = lca;
+        int d2 = findDistance(node,C);
+
+        System.out.println("distanc between nodes "+(d1+d2));
+    }
+
+    static int findDistance(Node node,int key){
+
+        if(node == null){
+            return 0;
+        }
+
+        if(key == node.data){
+            return 0;
+        }else if(key < node.data){
+            return 1 + findDistance(node.left,key);
+        }else{
+            return 1 + findDistance(node.right,key);
+        }
+    }
+
+    static Node traverse(Node node,int B,int C){
+
+        if(node == null){
+            return node;
+        }
+
+        if(B < node.data && C < node.data){
+            return traverse(node.left,B,C);
+        }else if(B > node.data && C > node.data){
+            return traverse(node.right,B,C);
+        }else{
+            return node;
+        }
+    }
+}

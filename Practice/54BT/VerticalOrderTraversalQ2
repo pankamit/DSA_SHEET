@@ -1,0 +1,95 @@
+package com.app.day54BT;
+
+import java.util.*;
+
+class Node{
+    int data;
+    Node left;
+    Node right;
+    int level;
+
+    Node(int data){
+        this.data  = data;
+    }
+
+}
+
+class Pair{
+    Node node;
+    int level;
+
+    Pair(Node node,int level){
+        this.node = node;
+        this.level = level;
+    }
+}
+
+public class VerticalOrderTraversalQ2 {
+    
+    public static void main(String[] args) {
+
+        /*Node node = new Node(6);
+
+        node.left = new Node(3);
+        node.right = new Node(7);
+
+        node.left.left = new Node(2);
+        node.left.right = new Node(5);
+        node.right.right = new Node(9);*/
+
+
+        Node node = new Node(1);
+
+        node.left = new Node(3);
+        node.right = new Node(7);
+
+        node.left.left = new Node(2);
+        node.right.right = new Node(9);
+        
+        Node head = node;
+
+        Map<Integer, List<Integer>> map = new TreeMap<>();
+        
+        Queue<Pair> qu = new LinkedList<>();
+        qu.add(new Pair(node,0));
+        
+        
+        while(!qu.isEmpty()){
+
+            int len = qu.size();
+            for(int ind=0;ind<len;ind++){
+                Pair pair = qu.remove();
+                Node pNode = pair.node;
+                int pLvl = pair.level;
+
+                if(map.containsKey(pLvl)){
+                    map.get(pLvl).add(pNode.data);
+                }else{
+                    List<Integer> lst = new ArrayList<>();
+                    lst.add(pNode.data);
+                    map.put(pLvl,lst);
+                }
+
+                if(pNode.left != null){
+                    qu.add(new Pair(pNode.left,pLvl-1));
+                }
+
+                if(pNode.right != null){
+                    qu.add(new Pair(pNode.right,pLvl+1));
+                }
+
+            }
+
+        }
+
+        List<List<Integer>> resLst = new ArrayList<>();
+
+        for(Map.Entry<Integer,List<Integer>> entry : map.entrySet()){
+            resLst.add(entry.getValue());
+        }
+
+        System.out.println("vertical lvl traversal "+resLst);
+
+    }
+
+}

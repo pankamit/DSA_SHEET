@@ -1,0 +1,68 @@
+package com.app.day54BT;
+
+public class DiameterQ4M1 {
+
+    public static void main(String[] args) {
+
+        /*Node node = new Node(1);
+
+        node.left = new Node(2);
+        node.right = new Node(3);
+
+        node.left.left = new Node(4);
+        node.left.right = new Node(5);*/
+        Node node = new Node(1);
+
+        node.left = new Node(2);
+        node.right = new Node(3);
+
+        node.left.left = new Node(4);
+        node.left.right = new Node(5);
+        node.right.right = new Node(6);
+
+        Node head = node;
+
+        int res= traverse(node);
+        System.out.println("diameter is "+res);
+
+    }
+
+    static int traverse(Node node){
+
+        if(node == null){
+            return -1;
+        }
+
+        if(node.left == null && node.right == null){
+            return 0;
+        }
+
+        int dl = traverse(node.left);
+        int dr = traverse(node.right);
+
+        int lh = height(node.left);
+        int rh = height(node.right);
+
+        int max = Math.max(dl,dr);
+        max = Math.max(max,lh+rh+2);
+        return max;
+
+
+    }
+
+    static int height(Node node){
+
+        if(node == null){
+            return -1;
+        }
+
+        if(node.left == null && node.right == null){
+            return 0;
+        }
+
+        int lh = height(node.left);
+        int rh = height(node.right);
+
+        return  Math.max(lh,rh)+1;
+    }
+}

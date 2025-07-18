@@ -1,0 +1,93 @@
+package com.app.day54BT;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class NNode{
+    int data;
+    NNode left;
+    NNode right;
+    NNode next;
+
+    NNode(int data){
+        this.data = data;
+    }
+}
+
+public class NextPointerBTQ1 {
+
+    public static void main(String[] args) {
+        
+        NNode node = new NNode(1);
+
+        node.left = new NNode(2);
+        node.right = new NNode(5);
+
+        node.left.left = new NNode(3);
+        node.left.right = new NNode(4);
+        node.right.left = new NNode(6);
+        node.right.right = new NNode(7);
+
+        NNode root = node;
+
+        Queue<NNode> qu = new LinkedList<>();
+        qu.add(node);
+
+        while(!qu.isEmpty()){
+            int len = qu.size();
+            for(int ind=0; ind<len; ind++){
+                NNode ele = qu.remove();
+
+                if(ind < len -1){
+                    ele.next = qu.peek();
+                }
+
+
+                if(ele.left != null){
+                    qu.add(ele.left);
+                }
+
+                if(ele.right != null){
+                    qu.add(ele.right);
+                }
+
+            }
+        }
+
+
+        node = root;
+        qu.add(node);
+
+        while(!qu.isEmpty()){
+            int len = qu.size();
+            for(int ind=0; ind<len; ind++){
+                NNode ele = qu.remove();
+
+                if(ind == 0){
+                    //NNode temp = ele;
+                    print(ele);
+                }
+
+                if(ele.left != null){
+                    qu.add(ele.left);
+                }
+
+                if(ele.right != null){
+                    qu.add(ele.right);
+                }
+
+            }
+        }
+    }
+
+    static void print(NNode node){
+
+        NNode temp = node;
+        while(node != null){
+            System.out.print(" "+node.data);
+            node = node.next;
+        }
+        System.out.println();
+
+    }
+}

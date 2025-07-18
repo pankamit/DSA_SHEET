@@ -1,0 +1,77 @@
+package com.app.day54BT;
+
+import java.util.*;
+
+
+
+
+public class TopViewBTQ3 {
+    
+    public static void main(String[] args) {
+
+       /* Node node = new Node(1);
+
+        node.left = new Node(2);
+        node.right = new Node(3);
+
+        node.left.left = new Node(4);
+        node.left.right = new Node(5);
+        node.right.left = new Node(6);
+        node.right.right = new Node(7);
+
+        node.left.left.left = new Node(8);*/
+
+
+        Node node = new Node(1);
+
+        node.left = new Node(2);
+        node.right = new Node(3);
+
+        node.left.right = new Node(4);
+        node.left.right.right = new Node(5);
+        
+        Node head = node;
+
+        Map<Integer, Integer> map = new TreeMap<>();
+        
+        Queue<Pair> qu = new LinkedList<>();
+        qu.add(new Pair(node,0));
+        
+        
+        while(!qu.isEmpty()){
+
+            int len = qu.size();
+            for(int ind=0;ind<len;ind++){
+                Pair pair = qu.remove();
+                Node pNode = pair.node;
+                int pLvl = pair.level;
+
+
+                if(!map.containsKey(pLvl)){
+                    map.put(pLvl,pNode.data);
+                }
+
+                if(pNode.left != null){
+                    qu.add(new Pair(pNode.left,pLvl-1));
+                }
+
+                if(pNode.right != null){
+                    qu.add(new Pair(pNode.right,pLvl+1));
+                }
+
+            }
+
+        }
+
+        List<Integer> resLst = new ArrayList<>();
+
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+                resLst.add(entry.getValue());
+
+        }
+
+        System.out.println("Top order traversal "+resLst);
+
+    }
+
+}

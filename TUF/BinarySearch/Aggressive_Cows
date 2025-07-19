@@ -1,0 +1,71 @@
+##https://takeuforward.org/plus/dsa/binary-search/faqs/aggressive-cows
+
+class Solution {
+    public int aggressiveCows(int[] arr, int k) {
+        int n = arr.length;
+
+        if(k < 2 || n == 1){
+            return -1;
+        }
+
+        // Need to check distance between consecutive elements
+        Arrays.sort(arr);
+
+        
+
+        int min = 1;
+        int max = arr[n-1];
+   
+        int res = -1;
+
+        //Linear search
+        for(int ind=min;ind<=max;ind++){
+            if(canPossible(arr,k,ind)){
+                res = ind;
+            }else{
+                break;
+            }
+        }
+
+
+    // Binary search
+        int  l = min;
+        int r = max;
+        while(l <= r){
+            int mid = l + (r-l)/2;
+
+            if(!canPossible(arr,k,mid)){
+                r = mid-1;
+            }else{
+                res = mid;
+                l = mid+1;
+            }
+
+        }
+
+        return res;
+
+    }
+
+    boolean canPossible(int[] arr,int k,int x){
+        int count = 1;
+        int last = arr[0];
+        for(int ind=1;ind<arr.length;ind++){
+            int dist = arr[ind]-last;
+            if(dist >= x){
+                count++;
+                if(count == k){
+                    return true;
+                }
+                last = arr[ind];
+            }
+        }
+
+        return false;
+        
+
+        
+
+
+    }
+}

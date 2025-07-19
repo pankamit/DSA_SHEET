@@ -1,0 +1,68 @@
+##https://takeuforward.org/plus/dsa/binary-search/faqs/book-allocation-problem
+
+class Solution {
+    public int findPages(int[] arr, int k) {
+        int n = arr.length;
+
+        if(k > n){
+            return -1;
+        }
+
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
+        for(int ind=0;ind<n;ind++){
+            max = Math.max(max,arr[ind]);
+            sum += arr[ind];
+        }
+
+        int l = max;
+        int r = sum;
+        
+        int res = l;
+        //for(int ind=l ; ind<=r; ind++){
+
+        while(l <= r){
+            int mid = (l+r)/2;
+
+            int stcnt = canPart(arr,k,mid);
+            if(stcnt == k){
+                 r = mid-1;
+                 res = mid;
+            }else if(stcnt > k){
+                l = mid+1;
+            }else{
+                r = mid-1;
+            }
+        }
+        //}
+
+        return res;
+
+    }
+
+    int canPart(int[] arr,int k,int x){
+
+        int sum = 0;
+        int count = 0;
+        for(int ind=0;ind<arr.length;ind++){
+            sum += arr[ind];
+            if(sum <= x){
+                //sum = arr[ind]+sum;
+            }else{
+                count++;
+                sum = arr[ind];
+            }
+        }
+
+        if(sum <= x){
+            count++;
+        }
+        //count++;
+
+        //System.out.println("x "+x+" count "+count);
+        return count;
+
+
+
+    }
+}

@@ -1,0 +1,76 @@
+## https://takeuforward.org/plus/dsa/binary-search/faqs/kth-element-of-2-sorted-arrays
+
+class Solution {
+    public int kthElement(int[] arr1, int[] arr2, int k) {
+      
+      if(arr1.length > arr2.length){
+        int[] temp = arr1;
+        arr1 = arr2;
+        arr2 = temp;
+      }
+
+      int n1 = arr1.length;
+      int n2 = arr2.length;
+
+      //Base Case
+      if(n1+n2 < k){
+        return -1;
+      }
+
+
+    int l = 0;
+    if(k > n2){
+        l = k-n2;
+    }
+
+    int r = n1;
+
+    // find ind1
+
+    while(l <= r){
+    //for(int ind1 = l;ind1<=r;ind1++){
+        int mid = (l+r)/2;
+
+        int ind1 = mid;
+
+        int a1 = Integer.MIN_VALUE;    
+        if(ind1 > 0 && ind1 <= n1){
+            a1 = arr1[ind1 -1];    
+        }
+
+        int b1 = Integer.MAX_VALUE;
+        if(ind1 >=0 && ind1 < n1){
+            b1 = arr1[ind1];
+        }
+
+        // find ind2
+        int ind2 = k-ind1;
+        if(ind2 < 0){
+            ind2 = 0;
+        }
+
+        int a2 = Integer.MIN_VALUE;    
+        if(ind2 > 0 && ind2 <= n2){
+            a2 = arr2[ind2 -1];    
+        }
+
+        int b2 = Integer.MAX_VALUE;
+        if(ind2 >=0 && ind2 < n2){
+            b2 = arr2[ind2];
+        }
+
+        if(a1 <= b2 && a2 <= b1){
+            return Math.max(a1,a2);
+        }else if(a1 > b2){
+            // move left
+            r = mid-1;
+        }else{
+            // move right
+            l = mid+1;
+        }
+
+    }
+    
+    return -1;
+    }
+}

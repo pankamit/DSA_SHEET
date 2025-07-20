@@ -1,0 +1,77 @@
+## https://takeuforward.org/plus/dsa/binary-search/faqs/median-of-2-sorted-arrays
+
+class Solution {
+    public double median(int[] arr1, int[] arr2) {
+     
+     int n1 = arr1.length;
+     int n2 = arr2.length;
+
+     int n = n1+n2;
+     int plen = 0;
+     if(n%2 == 0){
+        plen = n/2;
+     }else{
+        plen = (n+1)/2;
+     }
+        // make arr1 minlen array
+     if(n2 < n1){
+        int[] temp = arr1;
+        arr1 = arr2;
+        arr2 = temp;
+     }
+
+     n1 = arr1.length;
+     n2 = arr2.length;
+
+     int l = 0;
+     int r = n1;
+
+     for(int ind = l ;ind<=r ;ind++){
+        
+        int a1 = Integer.MIN_VALUE;
+        if(ind != 0){
+            a1 = arr1[ind-1];
+        }
+        int b1 = Integer.MAX_VALUE;
+        if(ind < r){
+            b1 = arr1[ind];
+        }
+
+        int ind2 = plen - ind;
+        
+        int a2 = Integer.MIN_VALUE;
+        if(ind2 != 0){
+            a2 = arr2[ind2-1];
+        }
+
+        
+        int b2 = Integer.MAX_VALUE;
+        if(ind2 < n2){
+            b2 = arr2[ind2];
+        }
+        
+
+        //
+        if(a1 <= b2 && a2 <= b1){
+            int lmax =  Math.max(a1,a2);
+            int rmin = Math.min(b1,b2);
+            //System.out.println("lmax "+lmax+" rmin "+rmin+" a1 "+a1+" a2 "+a2+" b1 "+b1+" b2 "+b2);
+            if(n%2 == 0){
+                return ((double)lmax+(double)rmin)/2;
+            }else{
+                return lmax;
+            }
+        }
+
+        
+     }
+
+     return -1;
+
+
+
+
+
+
+    }
+}

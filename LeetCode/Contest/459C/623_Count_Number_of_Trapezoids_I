@@ -1,0 +1,47 @@
+## https://leetcode.com/problems/count-number-of-trapezoids-i/
+
+class Solution {
+    public int countTrapezoids(int[][] mat) {
+
+        HashMap<Integer,Long> hm = new HashMap<>();
+
+        int n = mat.length;
+        // fill map to store same y
+        for(int ind=0;ind<n;ind++){
+           // int x = mat[ind][0];
+            int y = mat[ind][1];
+            hm.put(y,hm.getOrDefault(y,0L)+1);
+        }
+
+        System.out.println("hm "+hm);
+
+        Map<Integer,Long> map = new HashMap<>();
+        int pos=0;
+        long[] pre = new long[(int)hm.size()];
+        for(Map.Entry<Integer,Long> entry : hm.entrySet()){
+
+            long cnt = entry.getValue()-1;
+            long sum1 = cnt*(cnt+1)/2;
+            map.put(pos,sum1);
+            if(pos == 0){
+                pre[pos]= sum1;    
+            }else{
+                pre[pos] = pre[pos-1]+sum1;
+            }
+            pos++;
+        }
+
+        System.out.println("map "+map);
+        System.out.println("pre "+Arrays.toString(pre));
+
+        long res = 0;
+    
+        for(int ind=0; ind<map.size()-1 ; ind++){
+            res += map.get(ind)*(pre[map.size()-1]-pre[ind]);
+            res = res%1000000007;
+        }
+
+        return (int)res;
+        
+    }
+}

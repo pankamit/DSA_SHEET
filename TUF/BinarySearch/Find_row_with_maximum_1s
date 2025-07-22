@@ -1,0 +1,47 @@
+## https://takeuforward.org/plus/dsa/binary-search/2d-arrays/find-row-with-maximum-1's
+
+class Solution {
+    public int rowWithMax1s(int[][] mat) {
+
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int cnt_max = 0;
+        int row = -1;
+        for(int ind=0;ind<n;ind++){
+            int cnt = find1Count(mat[ind]);
+            
+            if(cnt_max < cnt){
+                cnt_max = cnt;
+                row = ind;
+            }
+         //   System.out.println("for ind "+ind+"cnt "+cnt+" row "+row+" cnt_max "+cnt_max);
+        }
+       
+        return row;
+    }
+
+    int find1Count(int[] arr){
+        int n = arr.length;
+        int l = 0;
+        int r = n-1;
+
+        int res = n;
+        while(l <= r){
+            int mid = (l+r)/2;
+
+            if(arr[mid] == 1){
+                // move left
+                res = mid;
+                r = mid-1;
+            }else{
+                // move right
+                l = mid+1;
+            }
+        }
+
+        return n-res;
+
+
+    }
+}

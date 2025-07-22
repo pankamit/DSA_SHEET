@@ -1,0 +1,29 @@
+## https://takeuforward.org/plus/dsa/binary-search/faqs/find-peak-element
+
+class Solution {
+    public int findPeakElement(int[] arr) {
+        int n = arr.length;
+
+        int l = 0;
+        int r = n-1;
+
+        while(l <= r){
+            int mid = (l+r)/2;
+
+            if((mid == 0 || arr[mid] > arr[mid-1]) 
+            && (mid == n-1 || arr[mid] > arr[mid+1])){
+                return mid;
+            }else if(mid == 0 || arr[mid] > arr[mid-1]){
+                // move right
+                l = mid+1;
+            }else{
+                // move left
+                r = mid-1;
+            }
+
+        }
+
+        return -1;
+
+    }
+}

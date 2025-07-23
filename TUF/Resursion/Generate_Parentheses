@@ -1,0 +1,31 @@
+## https://takeuforward.org/plus/dsa/recursion/implementation-problems/generate-parentheses
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        //your code goes here
+
+        List<String> lst = new ArrayList<>();
+        tr(n,0,0,0,"",lst);
+
+        return lst;
+
+    }
+
+    void tr(int n,int pos,int oc,int cc,String str,List<String> lst){
+
+        if(pos == 2*n){
+            lst.add(str);
+
+            return;
+        }
+
+        if(oc < n){
+            tr(n,pos+1,oc+1,cc,str+"(",lst);
+        }
+
+        if(cc < oc){
+            tr(n,pos+1,oc,cc+1,str+")",lst);
+        }
+
+    }
+}

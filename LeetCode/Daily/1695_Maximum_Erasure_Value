@@ -1,0 +1,42 @@
+## https://leetcode.com/problems/maximum-erasure-value/?envType=daily-question&envId=2025-07-22
+
+class Solution {
+    public int maximumUniqueSubarray(int[] arr) {
+        int n = arr.length;
+
+        int l = 0;
+        int r = 1;
+
+        HashMap<Integer,Integer> hm = new HashMap<>();
+
+        int sum = arr[l];
+        int max = sum;
+        hm.put(arr[l],l);
+        
+        //r++;
+        while(r < n){
+            
+            if(hm.containsKey(arr[r])){
+                int pos = hm.get(arr[r]);
+                while(l <= pos){
+                    sum = sum-arr[l];
+                    hm.remove(arr[l]);
+                    l++;
+                }
+            }
+
+                hm.put(arr[r],r);
+                sum += arr[r];
+                max = Math.max(sum,max);
+            /*}else{
+                hm.put(arr[r],r);
+                sum += arr[r];
+                max = Math.max(sum,max);
+            }*/
+            r++;
+        }
+
+        return max;
+        
+    }
+}

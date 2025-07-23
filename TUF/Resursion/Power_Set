@@ -1,0 +1,32 @@
+## https://takeuforward.org/plus/dsa/recursion/implementation-problems/power-set
+
+class Solution {
+    public List<List<Integer>> powerSet(int[] arr) {
+        //your code goes here
+        List<List<Integer>> resLst = new ArrayList<>();
+        int n = arr.length;
+
+        List<Integer> lst = new ArrayList<>();
+
+        tr(arr,n,0,lst,resLst);
+        return resLst;
+    }
+
+    void tr(int[] arr,int n,int pos,List<Integer> lst,List<List<Integer>> resLst){
+
+        if(pos == n){
+            resLst.add(new ArrayList(lst));
+            return;
+        }
+
+        // pick
+        lst.add(arr[pos]);
+        tr(arr,n,pos+1,lst,resLst);
+        lst.remove(lst.size()-1);
+
+        // not pick
+        tr(arr,n,pos+1,lst,resLst);
+
+
+    }
+}

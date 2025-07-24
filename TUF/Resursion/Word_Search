@@ -1,0 +1,54 @@
+## https://takeuforward.org/plus/dsa/recursion/faqs-hard/word-search
+
+class Solution {
+    public boolean exist(char[][] mat, String s) {
+        //your code goes here
+        int n = mat.length;
+        int m = mat[0].length;
+        int len = s.length();
+
+        boolean[][] visitArr = new boolean[n][m];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                visitArr = new boolean[n][m];
+                if(s.charAt(0) == mat[i][j]){
+                    visitArr[i][j]=true;
+                    if(tr(mat,n,m,i,j,s,len,1,visitArr)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
+    }
+
+    boolean tr(char[][] mat,int n,int m,int r,int c,String s,int len,int pos,boolean[][] visitArr){
+
+        if(pos == len){
+            return true;
+        }
+
+        char ch = s.charAt(pos);
+        int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
+
+        for(int ind=0;ind<dir.length;ind++){    
+            int new_r = r+dir[ind][0];
+            int new_c= c+dir[ind][1];
+            if(new_r >=0 && new_r < n && new_c >=0 && new_c < m
+            && mat[new_r][new_c] == ch && !visitArr[new_r][new_c]){
+                visitArr[new_r][new_c] = true;
+                if(tr(mat,n,m,new_r,new_c,s,len,pos+1,visitArr)){
+                    return true;
+                }
+                visitArr[new_r][new_c] = false;
+
+            }
+        }
+
+        return false;
+    
+    
+    }
+}

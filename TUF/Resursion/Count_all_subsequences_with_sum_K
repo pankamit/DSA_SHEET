@@ -1,0 +1,32 @@
+## https://takeuforward.org/plus/dsa/recursion/subsequence-pattern-problems/count-all-subsequences-with-sum-k
+
+class Solution {
+    public int countSubsequenceWithTargetSum(int[] arr, int k) {
+        //your code goes here
+        int n = arr.length;
+        return  tr(arr,n,0,k);
+    }
+
+    int tr(int[] arr,int n,int pos,int k){
+
+        if(k == 0){
+            return 1;
+        }
+
+        if(k < 0){
+            return 0;
+        }
+
+        if(pos == n){
+            return 0;
+        }
+
+        // pick
+        int lc = tr(arr,n,pos+1,k-arr[pos]);
+
+        // not pick
+        int rc = tr(arr,n,pos+1,k);
+
+        return lc+rc;
+    }
+}

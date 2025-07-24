@@ -1,0 +1,26 @@
+## https://takeuforward.org/plus/dsa/recursion/faqs-medium/subsets-i
+
+class Solution {
+    public List<Integer> subsetSums(int[] arr) {
+        //your code goes here
+        int n = arr.length;
+        List<Integer> resLst = new ArrayList<>();
+
+        tr(arr,n,0,0,resLst);
+        return resLst;
+
+    }
+
+    void tr(int[] arr,int n,int pos,int sum,List<Integer> resLst){
+        if(n == pos){
+            resLst.add(sum);
+            return;
+        }
+        
+        // pick
+        tr(arr,n,pos+1,sum+arr[pos],resLst);
+
+        // not pick
+        tr(arr,n,pos+1,sum,resLst);
+    }
+}

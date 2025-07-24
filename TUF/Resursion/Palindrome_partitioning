@@ -1,0 +1,60 @@
+## https://takeuforward.org/plus/dsa/recursion/faqs-hard/palindrome-partitioning
+
+class Solution {
+    public List<List<String>> partition(String s) {
+        //your code goes here
+        int n = s.length();
+        List<List<String>> resLst = new ArrayList<>();
+
+        List<String> lst = new ArrayList<>();
+
+        tr(s,n,0,0,lst,resLst);        
+        return resLst;
+    }
+
+    void tr(String s,int n,int l,int r,List<String> lst,List<List<String>> resLst){
+
+        if(r == n){
+            if(l == r){
+                resLst.add(new ArrayList<>(lst));
+                return;
+                
+            }else{
+
+                return;
+            }
+        }
+
+        String str = s.substring(l,r+1);
+        if(isPall(str)){
+
+            // pick
+            lst.add(str);
+            tr(s,n,r+1,r+1,lst,resLst);
+            lst.remove(lst.size()-1);
+        }
+
+        // not pick
+        tr(s,n,l,r+1,lst,resLst);
+
+
+
+    }
+
+    boolean isPall(String s){
+        int n = s.length();
+
+        int l = 0;
+        int r = n-1;
+
+        while(l<r){
+            if(s.charAt(l) != s.charAt(r)){
+                return false;
+            }
+            l++;
+            r--;
+        }
+
+        return true;
+    }
+}

@@ -1,0 +1,37 @@
+## https://takeuforward.org/plus/dsa/recursion/subsequence-pattern-problems/check-if-there-exists-a-subsequence-with-sum-k
+
+class Solution {
+    public boolean checkSubsequenceSum(int[] arr, int k) {
+         //your code goes here
+        int n = arr.length;
+        return tr(arr,n,0,k);
+
+    }
+
+    boolean tr(int[] arr,int n,int pos,int k){
+
+        if(k == 0){
+            return true;
+        }
+
+        if(k < 0){
+            return false;
+        }
+
+        if(pos == n){
+            return false;
+        }
+
+        // pick
+        if(tr(arr,n,pos+1,k-arr[pos])){
+            return true;
+        }
+
+        // not pick
+        if(tr(arr,n,pos+1,k)){
+            return true;
+        }
+
+        return false;
+    }
+}

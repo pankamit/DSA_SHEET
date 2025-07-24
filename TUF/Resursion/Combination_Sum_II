@@ -1,0 +1,51 @@
+## https://takeuforward.org/plus/dsa/recursion/faqs-medium/combination-sum-ii
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] arr, int tar) {
+        //your code goes here
+        int n = arr.length;
+        List<List<Integer>> resLst = new ArrayList<>();
+        List<Integer> lst = new ArrayList<>();
+                
+
+        Arrays.sort(arr);
+
+        tr(arr,n,0,tar,lst,resLst);
+
+        return resLst;
+    }
+
+    void tr(int[] arr,int n,int pos,int tar,List<Integer> lst,List<List<Integer>> resLst){
+
+        if(tar==0){
+            resLst.add(new ArrayList(lst));
+            return;
+        }
+
+        if(tar < 0){
+            return;
+        }
+
+        if(pos == n){
+            return;
+        }
+
+        // pick
+        lst.add(arr[pos]);
+        tr(arr,n,pos+1,tar-arr[pos],lst,resLst);
+        lst.remove(lst.size()-1);
+
+        // not pick
+
+        // remove all the similar elements in case of not pick
+        int ind=pos+1;
+        for(;ind<n;ind++){
+            if(arr[ind] != arr[pos]){
+                break;
+            }
+        }
+
+        tr(arr,n,ind,tar,lst,resLst);
+
+    }
+}

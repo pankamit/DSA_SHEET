@@ -1,0 +1,44 @@
+## https://takeuforward.org/plus/dsa/recursion/faqs-medium/combination-sum-iii
+
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int tar) {
+        //your code goes here
+        List<List<Integer>> resLst = new ArrayList<>();
+        List<Integer> lst = new ArrayList<>();
+
+
+        tr(k,0,1,tar,lst,resLst);
+        return resLst;
+    }
+
+    void tr(int k,int pos,int ele,int tar,List<Integer> lst,List<List<Integer>> resLst){
+        
+        if(tar<0){
+            return;
+        }
+
+        
+        
+        if(pos == k){
+            if(tar == 0){
+                resLst.add(new ArrayList<>(lst));
+                return;
+            }
+            return;
+        }
+
+        if(ele > 9){
+            return;
+        }
+
+        // pick
+        lst.add(ele);
+        tr(k,pos+1,ele+1,tar-ele,lst,resLst);
+        lst.remove(lst.size()-1);
+
+        // not pick
+        tr(k,pos,ele+1,tar,lst,resLst);
+        
+
+    }
+}

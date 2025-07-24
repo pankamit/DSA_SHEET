@@ -1,0 +1,37 @@
+## https://takeuforward.org/plus/dsa/recursion/hard/letter-combinations-of-a-phone-number
+
+class Solution {
+    public List<String> letterCombinations(String s) {
+        //your code goes here
+        int n = s.length();
+        List<String> lst = new ArrayList<>();
+        Map<Integer,String> map = new HashMap<>();
+        map.put(2,"abc");
+        map.put(3,"def");
+        map.put(4,"ghi");
+        map.put(5,"jkl");
+        map.put(6,"mno");
+        map.put(7,"pqrs");
+        map.put(8,"tuv");
+        map.put(9,"wxyz");
+    
+        tr(s,n,0,map,"",lst);
+        return lst;
+
+    }
+
+    void tr(String s,int n,int pos,Map<Integer,String> map,String str,List<String> lst){
+
+        if(pos == n){
+            lst.add(str);
+            return;
+        }
+
+        int ele = s.charAt(pos)-'0';
+        String val = map.get(ele);
+        for(int ind=0;ind<val.length();ind++){
+            tr(s,n,pos+1,map,str+val.charAt(ind),lst);
+        }
+
+    }
+}

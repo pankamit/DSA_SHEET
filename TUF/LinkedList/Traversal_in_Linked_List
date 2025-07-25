@@ -1,0 +1,41 @@
+## https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/traversal-in-linked-list
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public List<Integer> LLTraversal(ListNode head) {
+
+        List<Integer> lst = new ArrayList<>();
+        ListNode node = head;
+
+        while(node != null){
+            //System.out.print(node.val+" ");
+            lst.add(node.val);
+            node = node.next;
+        }
+        //System.out.println();
+
+        return lst;
+
+    }
+}

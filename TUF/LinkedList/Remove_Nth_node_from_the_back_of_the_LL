@@ -1,0 +1,67 @@
+## https://takeuforward.org/plus/dsa/linked-list/logic-building/remove-nth-node-from-the-back-of-the-ll
+
+
+/*Definition for Singly Linked List
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int k) {
+        ListNode node = head;
+        int cnt = 0;
+
+        while(node != null){
+            cnt++;
+            if(cnt == k){
+                //ListNode node1 = head;
+
+                break;
+            }
+            
+            node = node.next;
+        }
+
+        // if k is greater than len
+        if(node == null){
+            return head;
+        }
+
+        // if k == len
+        if(node.next == null){
+            return head.next;
+        }
+
+        ListNode temp = head;
+        node = node.next;
+
+        while(node.next != null){
+            node = node.next;
+            temp = temp.next;
+
+        }
+
+        temp.next = temp.next.next;
+        return head;
+        
+
+
+    }
+}

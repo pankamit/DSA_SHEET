@@ -1,0 +1,58 @@
+## https://takeuforward.org/plus/dsa/linked-list/logic-building/sort-a-ll-of-0's-1's-and-2's
+
+/* Definition of singly Linked List:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+*/
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        ListNode node = head;
+
+        ListNode head0 = new ListNode(-1);
+        ListNode head1 = new ListNode(-1);
+        ListNode head2 = new ListNode(-1);
+
+        ListNode node0 = head0;
+        ListNode node1 = head1;
+        ListNode node2 = head2;
+
+
+        while(node != null){
+            if(node.val == 0){
+                node0.next = node;
+                node0 = node0.next;
+            }else if(node.val == 1){
+                node1.next = node;
+                node1 = node1.next;
+            }else{
+                node2.next = node;
+                node2 = node2.next;
+            }
+            node = node.next;
+        }
+        node2.next = null;
+
+        
+
+        node1.next = head2.next;
+        node0.next = head1.next;
+        
+        return head0.next;
+            
+
+
+    }
+}

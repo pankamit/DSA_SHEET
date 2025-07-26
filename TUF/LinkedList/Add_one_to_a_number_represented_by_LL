@@ -1,0 +1,74 @@
+##  https://takeuforward.org/plus/dsa/linked-list/faqs--medium/add-one-to-a-number-represented-by-ll
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public ListNode addOne(ListNode head) {
+        ListNode node = head;
+
+        if(node == null){
+            return new ListNode(1);
+        }
+
+        node = reverse(node);
+        head = node;
+        int carry = 1;
+        ListNode prev = null;
+
+        while(node != null){
+            int sum = node.val+carry;
+            int rem = sum%10;
+            int div = sum/10;
+
+            node.val = rem;
+            if(div == 0){
+                break;
+            }
+            carry = div;
+            prev = node;
+            node = node.next;
+        }
+
+        
+        if(node == null && carry > 0){
+            prev.next = new ListNode(carry);
+        }
+
+        return reverse(head);
+
+    }
+
+    ListNode reverse(ListNode curr){
+        ListNode prev = null;
+        
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+}

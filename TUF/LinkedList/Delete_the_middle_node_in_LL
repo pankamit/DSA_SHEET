@@ -1,0 +1,46 @@
+## https://takeuforward.org/plus/dsa/linked-list/faqs--medium/delete-the-middle-node-in-ll
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+
+        ListNode fNode = head;
+        ListNode sNode = head;
+
+        if(fNode == null || fNode.next == null){
+            return null;
+        }
+
+
+
+        while(fNode.next.next != null && fNode.next.next.next != null){
+            fNode = fNode.next.next;
+            sNode = sNode.next;
+        }
+
+        sNode.next = sNode.next.next;
+
+        return head;
+    }
+}

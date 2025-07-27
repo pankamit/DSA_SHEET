@@ -1,0 +1,47 @@
+## https://takeuforward.org/plus/dsa/linked-list/faqs--medium/detect-a-loop-in-ll
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fNode = head;
+        ListNode sNode = head;
+
+        while(fNode != null && fNode.next != null){
+            
+            
+            
+            fNode = fNode.next.next;
+            sNode =sNode.next;
+
+            if(sNode == fNode){
+                return true;
+            }
+
+        }
+
+        return false;
+
+
+    }
+}

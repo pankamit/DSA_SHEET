@@ -1,0 +1,63 @@
+## https://takeuforward.org/plus/dsa/linked-list/faqs--medium/find-the-starting-point-in-ll
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+class Solution {
+    public ListNode findStartingPoint(ListNode head) {
+        ListNode fNode = head;
+        ListNode sNode = head;
+
+        
+
+        ListNode p1 = head;
+        ListNode p2 = null;
+
+        while(fNode != null && fNode.next != null){
+            fNode = fNode.next.next;
+            sNode = sNode.next;
+
+            if(fNode == sNode){
+                p2 = sNode;
+                break;  
+            }
+        }
+
+        if(p2 == null){
+            return null;
+        }
+
+        while(p1 != p2){
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+
+        return p2;
+
+
+
+        
+
+
+
+    }
+}

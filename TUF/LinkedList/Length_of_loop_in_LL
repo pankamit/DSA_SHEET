@@ -1,0 +1,61 @@
+## https://takeuforward.org/plus/dsa/linked-list/faqs--medium/length-of-loop-in-ll
+
+/*Definition of singly linked list:
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+        val = 0;
+        next = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+    }
+
+    ListNode(int data1, ListNode next1) {
+        val = data1;
+        next = next1;
+    }
+}
+ */
+
+ class Solution {
+     public int findLengthOfLoop(ListNode head) {
+        ListNode fNode = head;
+        ListNode sNode = head;
+//
+        if(head == null){
+            return 0;
+        }
+
+        ListNode p2 = null;
+        while(fNode != null && fNode.next != null){
+
+            sNode = sNode.next;
+            fNode = fNode.next.next;
+
+            if(sNode == fNode){
+                p2 = sNode;
+                break;
+            }
+        }
+
+        if(p2 == null){
+            return 0;
+        }
+
+        ListNode p1 = p2;
+        p2 = p2.next;
+        int cnt =1; 
+        while(p2 != p1){
+            cnt++;
+            p2 = p2.next;
+        }
+
+        return cnt;
+
+     }
+ }

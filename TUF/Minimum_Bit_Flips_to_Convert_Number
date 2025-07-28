@@ -1,0 +1,14 @@
+## https://takeuforward.org/plus/dsa/bit-manipulation/problems/minimum-bit-flips-to-convert-number
+
+class Solution {
+    public int minBitsFlip(int a, int b) {
+        //your code goes here
+        int n = a^b;
+        int cnt = 0;
+        while(n != 0){
+            n = n&(n-1);
+            cnt++;
+        }
+        return cnt;
+    }
+}

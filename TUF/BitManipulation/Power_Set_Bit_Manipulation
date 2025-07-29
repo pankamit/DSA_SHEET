@@ -1,0 +1,26 @@
+## https://takeuforward.org/plus/dsa/bit-manipulation/problems/power-set-bit-manipulation
+
+class Solution {
+    public List<List<Integer>> powerSet(int[] arr) {
+        //your code goes here
+        
+        List<List<Integer>> resLst = new ArrayList<>();
+        int n = arr.length;
+
+        int subset = (int)Math.pow(2,n);
+        
+        for(int ind=0;ind<subset;ind++){
+            List<Integer> lst = new ArrayList<>();
+            for(int i=0;i<n;i++){
+                if((ind & (1<<i)) != 0){
+                    lst.add(arr[i]);
+                }
+            }
+            resLst.add(lst);
+        }
+
+        return resLst;
+
+
+    }
+}

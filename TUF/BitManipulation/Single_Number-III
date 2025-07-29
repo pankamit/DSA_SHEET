@@ -1,0 +1,40 @@
+## https://takeuforward.org/plus/dsa/bit-manipulation/problems/single-number---iii
+
+class Solution {    
+    public int[] singleNumber(int[] arr) {        
+        //your code goes here
+        int n = arr.length;
+        int res = 0;
+        for(int ind=0;ind<n;ind++){
+            res = res^arr[ind];
+        }
+
+        int i = 0;
+        for(int ind=0;ind<32;ind++){
+            i = 1<<ind;
+            if((res & (1<<ind)) > 0){
+                //i = ind;
+                break;
+            } 
+        }
+
+        int a = 0;
+        int b = 0;
+
+        for(int ind=0;ind<n;ind++){
+            if((arr[ind]&i) > 0){
+                a = a^arr[ind];
+            }else{
+                b = b^arr[ind];
+            }
+        }
+
+        int[] resArr = new int[2];
+        resArr[0] = Math.min(a,b);
+        resArr[1] = Math.max(a,b);
+
+        return resArr;
+
+
+    }
+}

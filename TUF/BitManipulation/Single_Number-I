@@ -1,0 +1,14 @@
+## https://takeuforward.org/plus/dsa/bit-manipulation/problems/single-number---i
+
+class Solution {
+    public int singleNumber(int[] arr) {
+        //your code goes here
+        int n = arr.length;
+        int res = 0;
+        for(int ind=0;ind<n;ind++){
+            res = res ^ arr[ind];
+        }
+
+        return res;
+    }
+}

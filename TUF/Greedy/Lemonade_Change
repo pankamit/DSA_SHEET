@@ -1,0 +1,40 @@
+## https://takeuforward.org/plus/dsa/greedy-algorithms/easy/lemonade-change
+
+class Solution {
+    public boolean lemonadeChange(int[] arr) {
+        //your code goes here
+        int n = arr.length;
+        int a5 =0;
+        int a10 = 0;
+        int a20 = 0;
+        
+        for(int ind=0;ind<n;ind++){
+            if(arr[ind] == 5){
+                a5++;
+            }else if(arr[ind] == 10){
+                if(a5 == 0){
+                    return false;
+                }
+                a5--;
+                a10++;
+            }else{ // if(arr[ind] == 20){
+                if(a10 > 0 && a5>0){
+                    a10--;
+                    a5--;
+                
+                   // a5 = a5+3;
+                }else if(a5 >= 3){
+                    a5=a5-3;
+
+                   // a10++;
+                   // a5++;
+                }else{
+                    return false;
+                }
+                
+            }
+        }
+
+        return true;
+    }
+}

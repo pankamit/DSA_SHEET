@@ -1,0 +1,61 @@
+## https://takeuforward.org/plus/dsa/greedy-algorithms/scheduling-and-interval-problems/insert-interval
+
+class Solution {
+    public int[][] insertNewInterval(int[][] mat, int[] arr) {
+        //your code goes here
+      int n = mat.length;
+      List<int[]> lst = new ArrayList<>();
+      // find ith from left newStart < end[i]
+      int i = n;
+      for(int ind=0;ind<n;ind++){
+        if(arr[0] <= mat[ind][1]){
+            i = ind;
+            break;
+        }
+      }
+
+      // find jth from right newEnd > start[j]
+      int j = -1;
+      for(int ind=n-1;ind>=0;ind--){
+        if(arr[1] >= mat[ind][0]){
+          j = ind;
+          break;
+        }
+      }
+
+      // no overlap
+      //if(i > j){
+
+      //}else{
+        // for i-1
+
+        //int[] temp;
+        for(int ind=0;ind<i;ind++){
+          int[] temp = {mat[ind][0],mat[ind][1]};
+          lst.add(temp);
+        }
+        // from ith to jth
+        if(i > j){
+          int[] temp = {arr[0],arr[1]};
+          lst.add(temp);
+        }else{
+          int[] temp = {Math.min(mat[i][0],arr[0]),Math.max(mat[j][1],arr[1])}; 
+          lst.add(temp);
+        }
+        // for j+1
+        for(int ind=j+1;ind<n;ind++){
+          int[] temp =  {mat[ind][0],mat[ind][1]};
+          lst.add(temp);
+        }
+      //}
+
+      int[][] resArr = new int[lst.size()][2];
+      for(int ind=0;ind<lst.size();ind++){
+        resArr[ind][0] = lst.get(ind)[0];
+        resArr[ind][1] = lst.get(ind)[1];
+      }
+
+      return resArr;
+
+    }
+}

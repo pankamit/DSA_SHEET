@@ -1,0 +1,32 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/constant-window/maximum-points-you-can-obtain-from-cards-
+
+class Solution {
+    public int maxScore(int[] arr, int k) {
+        //your code goes here
+        int n = arr.length;
+        int lsum = 0;
+
+        for(int ind=0;ind<k;ind++){
+            lsum += arr[ind];
+        }
+
+        int rsum = 0;
+
+        int max = lsum + rsum;
+
+        //
+        int step = 1;
+    
+        while(step <= k){
+            lsum = lsum - arr[k-step];
+            rsum =  rsum + arr[n-step];
+            max = Math.max(max,(lsum+rsum));
+            step++;
+        }
+
+        return max;
+
+        
+
+    }
+}

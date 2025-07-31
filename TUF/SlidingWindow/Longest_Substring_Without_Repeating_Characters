@@ -1,0 +1,34 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/longest-and-smallest-window-problems/longest-substring-without-repeating-characters
+
+class Solution {
+    public int longestNonRepeatingSubstring(String s) {
+        //your code goes here
+        int n = s.length();
+        int l = 0;
+        int r = 0;
+        int max = 0;
+
+        HashSet<Character> hs = new HashSet<>();
+
+        while(r < n){
+            char ch = s.charAt(r);
+            
+            
+            while(!hs.isEmpty() && hs.contains(ch)){
+               // hs.add(r);
+                //r++;
+                char ch1 = s.charAt(l);
+                l++;
+                hs.remove(ch1);
+                if(ch1 == ch){
+                    break;
+                }
+            }
+            hs.add(ch);
+            max = Math.max(max,r-l+1);
+            r++;
+        }
+
+        return max;
+    }
+}

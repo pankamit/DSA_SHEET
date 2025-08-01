@@ -1,0 +1,52 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/longest-and-smallest-window-problems/max-consecutive-ones-iii
+
+class Solution {
+    public int longestOnes(int[] arr, int k) {
+        //your code goes here
+        int n = arr.length;
+
+        int max = 0;
+        int cnt = 0;
+
+        int l =0;
+        int r=0;
+
+        while(r < n){
+
+            if(arr[r] == 0){
+                if(k > 0){
+                    k--;
+                }else{
+                    // Invalid to make it Valid
+                    while(k == 0){
+                        if(arr[l] == 0){
+                            k++;
+                        }
+                        
+                        l++;
+
+                    }
+                    k--;
+
+
+
+                }
+
+            }else{
+                //cnt++;
+            }
+
+            max = Math.max(max,r-l+1);
+            r++;
+            
+        }
+
+        return max;
+
+
+
+
+
+
+    }
+}

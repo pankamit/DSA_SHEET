@@ -1,0 +1,37 @@
+## https://leetcode.com/contest/weekly-contest-461/problems/trionic-array-i/
+
+class Solution {
+    public boolean isTrionic(int[] arr) {
+        int n = arr.length;
+
+        int ind=1;
+        for(;ind<n;ind++){
+            if(arr[ind]-arr[ind-1] <= 0){
+                break;
+            }
+        }
+        //check for p
+        if(ind == 1){
+            return false;
+        }
+        
+        for(;ind<n;ind++){
+            if(arr[ind]-arr[ind-1] >= 0){
+                break;
+            }
+        }
+
+        if(ind >= n){
+            return false;
+        }
+
+        for(;ind<n;ind++){
+            if(arr[ind]-arr[ind-1] <= 0){
+                return false;
+            }
+        }
+
+        return true;
+        
+    }
+}

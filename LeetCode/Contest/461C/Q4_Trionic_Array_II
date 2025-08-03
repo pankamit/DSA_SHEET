@@ -1,0 +1,117 @@
+## https://leetcode.com/contest/weekly-contest-461/problems/trionic-array-ii/
+
+class Solution {
+    public long maxSumTrionic(int[] arr) {
+
+        int n = arr.length;
+        int[] lArr = new int[n];
+        int[] rArr = new int[n];
+
+        List<Integer> pLst = new ArrayList<>();
+        List<Integer> qLst = new ArrayList<>();
+        
+        
+        lArr[0] = 0;
+        rArr[n-1] = n-1;
+        
+        
+        for(int ind=1;ind<n-1;ind++){
+            if(arr[ind] > arr[ind-1]){
+                lArr[ind] = lArr[ind-1];
+                if(arr[ind] > arr[ind+1]){
+                    pLst.add(ind);        
+                }
+            }else{
+                lArr[ind] = ind;
+            }
+        }
+        
+        
+
+        for(int ind=n-2;ind>=1;ind--){
+            if(arr[ind] < arr[ind+1]){
+                rArr[ind] = rArr[ind+1];
+                if(arr[ind-1] > arr[ind]){
+                    qLst.add(ind);
+                }
+            }else{
+                rArr[ind] = ind;
+            }
+        }
+
+
+        Collections.sort(qLst);
+        
+
+        System.out.println("lArr "+Arrays.toString(lArr)+" pLst "+pLst);
+        System.out.println("rArr "+Arrays.toString(rArr)+" qLst "+qLst);
+
+        int plen = pLst.size();
+        int qlen = qLst.size();
+        if(plen == 0 || qlen== 0){
+            return 0;
+        }
+
+        // for p
+        int l1 = 0;
+        int r1 = 0;
+
+        /*int[] psum = new int[n];
+        psum[0] = arr[0];
+        for(int ind=1;ind<n;ind++){
+            psum[ind] = psum[ind-1]+arr[ind];
+        }*/
+
+        //int sumpq = 0;
+        long max = Long.MIN_VALUE;
+        while(l1 < plen && r1 < qlen){
+
+            if(pLst.get(l1) > qLst.get(r1)){
+                r1++;
+            }else{
+                if(l1+1 < plen && qLst.get(r1) > pLst.get(l1+1)){
+                    l1++;
+                }else{
+                   int a = lArr[pLst.get(l1)];
+                   int b = pLst.get(l1);
+                   int c = qLst.get(r1);
+                   int d = rArr[qLst.get(r1)];
+
+                   long sum1 = 0;
+                   long max1 = Long.MIN_VALUE;
+                   for(int ind=b-1;ind>=a;ind--){
+                       sum1 += arr[ind];
+                       max1 = Math.max(max1,sum1);
+                   }
+                    sum1 = max1;
+
+                    long sum2 = 0;
+                    for(int ind=b;ind<=c;ind++){
+                        sum2 += arr[ind];
+                    }
+
+                    long sum3 = 0;
+                    long max3 = Long.MIN_VALUE;
+                    for(int ind=c+1;ind<=d;ind++){
+                        sum3 += arr[ind];
+                        max3 = Math.max(max3,sum3);
+                    }
+                    sum3 = max3;
+
+                    max = Math.max(max,sum1+sum2+sum3);
+                    
+                    r1++;
+                }
+            }
+            
+            
+        }
+
+        return max;
+
+        
+        
+        
+        
+    }
+}

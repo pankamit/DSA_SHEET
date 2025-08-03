@@ -1,0 +1,25 @@
+## https://leetcode.com/contest/weekly-contest-461/problems/maximum-balanced-shipments/
+
+class Solution {
+    public int maxBalancedShipments(int[] arr) {
+        int n = arr.length;
+
+        if(n == 0){
+            return 0;
+        }
+
+        int max = arr[0];
+        int cnt = 0;
+        for(int ind=1;ind<n;ind++){
+            if(arr[ind] >= max){
+                max = arr[ind];
+            }else{
+                cnt++;
+                max = -1;
+            }
+        }
+
+        return cnt;
+        
+    }
+}

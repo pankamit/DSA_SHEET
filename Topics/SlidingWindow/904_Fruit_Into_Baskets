@@ -1,0 +1,36 @@
+## https://leetcode.com/problems/fruit-into-baskets/?envType=daily-question&envId=2025-08-04
+
+class Solution {
+    public int totalFruit(int[] arr) {
+        int n = arr.length;
+
+        int max = 0;
+        HashMap<Integer,Integer> hm = new HashMap<>();
+
+        int l =0;
+        int r = 0;
+
+        while(r < n){
+            
+            hm.put(arr[r],hm.getOrDefault(arr[r],0)+1);
+
+            // inValid
+            if(hm.size() > 2){
+                int freq = hm.get(arr[l]);
+                if(freq == 1){
+                    hm.remove(arr[l]);
+                }else{
+                    hm.put(arr[l],freq-1);
+                }
+                l++;
+
+            }
+
+            max = Math.max(max,r-l+1);
+            r++;
+        }
+
+        return max;
+        
+    }
+}

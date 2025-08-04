@@ -1,0 +1,61 @@
+## https://leetcode.com/problems/my-calendar-i/description/
+
+class MyCalendar {
+    
+    TreeMap<Integer,Integer> tree;
+
+    public MyCalendar() {
+        tree = new TreeMap<>();
+
+    }
+    
+    public boolean book(int a, int b) {
+       // System.out.println("tree "+tree+" a "+a+" b "+b);
+        Integer prev = tree.floorKey(a);
+        Integer next = tree.ceilingKey(a);
+
+        if((prev == null || tree.get(prev) <= a) && (next == null || b <= next)){
+            tree.put(a,b);
+            return true;
+        }else{
+            return false;
+        }
+
+
+        /* if(tree.isEmpty()){
+            tree.put(a,b);
+            return true;
+        }else{
+            int prev = -1;
+            for(Map.Entry<Integer,Integer> entry : tree.entrySet()){
+                if(entry.getKey() < a){
+                    prev = entry.getValue();
+                }else{
+                    if(entry.getKey() == a){
+                        return false;
+                    }else{
+                        if(prev <= a && b <= entry.getKey()){
+                            tree.put(a,b);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                }
+            }
+            if(prev <= a){
+                tree.put(a,b);
+                return true;
+            }else{
+                return false;
+            }
+        }  */
+        //return true;
+    }
+}
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar obj = new MyCalendar();
+ * boolean param_1 = obj.book(startTime,endTime);
+ */

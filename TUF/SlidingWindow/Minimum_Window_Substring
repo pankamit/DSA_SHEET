@@ -1,0 +1,68 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/longest-and-smallest-window-problems/minimum-window-substring-
+
+class Solution {
+    public String minWindow(String s, String t) {
+        //your code goes here
+        HashMap<Character,Integer> hm = new HashMap<>();
+        for(int ind=0;ind<t.length();ind++){
+            hm.put(t.charAt(ind),hm.getOrDefault(t.charAt(ind),0)+1);
+        }
+
+        //HashMap<Character,Integer> temp = new HashMap<>(hm);
+
+        int l = 0;
+        int r = 0;
+
+        int min = Integer.MAX_VALUE;
+        String minStr = "";
+
+        int cnt = 0;
+        while(r < s.length()){
+            char ch = s.charAt(r);
+            if(hm.containsKey(ch)){
+                if(hm.get(ch) > 0){
+                    cnt++;
+                }
+                hm.put(ch,hm.get(ch)-1);
+                
+            }
+
+            /*boolean valid = true;
+            for(Map.Entry<Character,Integer> entry : hm.entrySet()){
+                if(entry.getValue() > 0){
+                    valid = false;
+                }
+            }*/
+
+          //  System.out.println("hm "+hm+" ch "+ch+" l "+l+" r "+r+" valid "+valid);
+
+            while(cnt == t.length()){
+                if(min > (r-l+1)){
+                    min = r-l+1;
+                    minStr = s.substring(l,r+1);
+                }
+                char ch2 = s.charAt(l);
+                l++;
+                if(hm.containsKey(ch2)){
+                    int freq = hm.get(ch2);
+                    freq++;
+                    hm.put(ch2,freq);
+                    if(freq > 0){
+                        cnt--;
+                    }
+                    /*if(freq > 0){
+                        break;      
+                    }*/
+                }
+                //l++;
+
+            }
+
+
+            r++;
+        }
+
+        return minStr;
+
+    }
+}

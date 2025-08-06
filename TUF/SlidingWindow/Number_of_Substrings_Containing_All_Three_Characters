@@ -1,0 +1,43 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/counting-subarrays-and-substrings-problems/number-of-substrings-containing-all-three-characters
+
+class Solution {    
+    public int numberOfSubstrings(String s) {
+        //your code goes here
+        int n = s.length();
+        int l = 0;
+        int r = 0;
+
+
+        HashMap<Character,Integer> hm = new HashMap<>();
+        int cnt = 0;
+
+        while(r < n){
+
+            char ch = s.charAt(r);
+            if(ch == 'a' || ch == 'b' || ch == 'c'){
+                hm.put(ch,hm.getOrDefault(ch,0)+1);
+            }
+            
+            while(hm.size() == 3){
+                char ch2 = s.charAt(l);
+                if(ch2 == 'a' || ch2 == 'b' || ch2 == 'c'){
+                    int freq = hm.get(ch2);
+                    if(freq == 1){
+                        cnt += l+1;
+                        break;
+
+                    }else{
+                        hm.put(ch2,freq-1);
+                    }
+                }
+                l++;
+            }
+
+          //  System.out.println("hm "+hm+" l "+l+" r "+r+" cnt "+cnt);
+            r++;
+        }
+
+        return cnt;
+
+    }
+}

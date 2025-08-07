@@ -1,0 +1,34 @@
+## https://takeuforward.org/plus/dsa/sliding-window-and-2-pointer/counting-subarrays-and-substrings-problems/binary-subarrays-with-sum
+
+class Solution {
+    public int numSubarraysWithSum(int[] arr, int tar) {
+        //your code goes here
+
+        // [<= tar] - [<=tar-1] or [<=tar] - [<tar]
+        return countSum(arr,tar)-countSum(arr,tar-1);
+
+    }
+   
+    int countSum(int[] arr,int tar){
+        int n = arr.length;
+
+        int l=0;
+        int r = 0;
+        int sum = 0;
+        int cnt = 0;
+
+        while(r < n){
+            sum += arr[r];
+
+            while(l <= r && sum > tar){
+                sum =sum - arr[l];
+                l++;
+            }
+
+            cnt += (r-l+1);
+            r++;
+        }
+
+        return cnt;
+    }
+}

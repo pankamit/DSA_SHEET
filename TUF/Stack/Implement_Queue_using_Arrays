@@ -1,0 +1,51 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-queue-using-arrays
+
+class ArrayQueue {
+    int[] arr;
+    int top;
+    int pos;
+    int len;
+    public ArrayQueue() {
+        arr = new int[10];
+        top=0;
+        pos=-1;
+        len = 0;
+    }
+
+    public void push(int x) {
+        //int len = pos-top+1;
+       if(len >= arr.length){
+        //System.out.println("Stack is full");
+
+        return;
+       }
+       pos++;
+       arr[pos%arr.length] = x;
+       len++;
+    }
+
+    public int pop() {
+        //int len = pos-top+1;
+      if(len == 0){
+        return -1;
+      }
+      int res = arr[top%arr.length];
+      top++;
+      len--;
+      return res;
+    }
+
+    public int peek() {
+     //   int len = pos-top+1;
+       if(len == 0){
+        return -1;
+      }
+      
+      return arr[top%arr.length]; 
+    }
+
+    public boolean isEmpty() {
+        //int len = pos-top+1;
+        return len == 0;
+    }
+}

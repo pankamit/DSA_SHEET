@@ -1,0 +1,86 @@
+## https://leetcode.com/contest/weekly-contest-462/problems/maximum-total-from-optimal-activation-order/
+
+class Solution {
+    public long maxTotal(int[] arr1, int[] arr2) {
+
+        int n = arr1.length;
+
+        Pair[] pArr = new Pair[n];
+        for(int ind=0;ind<n;ind++){
+            pArr[ind] = new Pair(arr1[ind],arr2[ind]);
+            
+        }
+
+        Arrays.sort(pArr, new MyComp());
+
+       // System.out.println("pArr "+Arrays.toString(pArr));
+
+        int cnt = 0;
+        long sum = 0;
+
+        int r = 0;
+        int l = 0;
+
+        HashSet<Integer> hs = new HashSet<>();
+        while(r < n){
+            if(r < l){
+                r++;
+                continue;
+            }
+            
+            if(cnt < pArr[r].b){
+                sum += pArr[r].a;
+                
+                hs.add(r);
+            }
+
+            //int temp = 0;
+            while(l < n){
+                if(pArr[l].b <= cnt){
+                    
+                    if(hs.contains(l)){
+                        hs.remove(l);
+                    }
+                    l++;
+                }else{
+                    break;
+                }
+            }
+
+            cnt = hs.size();
+            r++;
+            
+        }
+
+        return sum;
+        
+    }
+
+    
+}
+
+class Pair{
+    int a;
+    int b;
+
+    Pair(int a,int b){
+        this.a = a;
+        this.b = b;
+    }
+
+    public String toString(){
+        return this.a+"-"+this.b; 
+    }
+}
+
+class MyComp implements Comparator<Pair>{
+
+    public int compare(Pair p1,Pair p2){
+      if(p1.b == p2.b){
+          return p2.a - p1.a;
+      }
+      return p1.b - p2.b;
+    }
+
+    
+}©leetcode

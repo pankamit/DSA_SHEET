@@ -1,0 +1,25 @@
+## https://leetcode.com/problems/flip-square-submatrix-vertically/
+
+class Solution {
+    public int[][] reverseSubmatrix(int[][] mat, int x, int y, int k) {
+            int m = mat.length;
+            int n = mat[0].length;
+           // if(x >= n || y >= n)
+
+           int l = x;
+           int r = x+(k-1);
+
+            while(l < r){
+                for(int ind=0;ind<k;ind++){
+                    int temp = mat[l][y+ind];
+                    mat[l][y+ind] = mat[r][y+ind];
+                    mat[r][y+ind] = temp;
+                }
+                l++;
+                r--;
+            }
+
+            return mat;
+        
+    }
+}

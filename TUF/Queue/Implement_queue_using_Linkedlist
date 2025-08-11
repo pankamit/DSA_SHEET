@@ -1,0 +1,58 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-queue-using-linkedlist
+
+class LinkedListQueue {
+    Node start;
+    Node end;    
+
+    public LinkedListQueue() {
+        start = null;
+        end = null;
+    }
+
+    public void push(int x) {
+       Node temp = new Node(x);
+       if(start == null){
+        end = temp;
+        start = temp;
+       }else{
+        end.next = temp;
+        end = end.next;
+       }
+    }
+
+    public int pop() {
+      if(start == null){
+        return -1;
+      }
+      Node temp = start;
+      int res = temp.data;
+      start = start.next;
+      temp = null;
+      return res;
+    }
+
+    public int peek() {
+
+        if(start == null){
+            return -1;
+        }
+        return start.data;
+        
+    }
+
+    public boolean isEmpty() {
+        return start == null;
+    }
+
+
+
+}
+
+class Node{
+    int data;
+    Node next;
+
+    Node(int data){
+        this.data = data;
+    }
+}

@@ -1,0 +1,39 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-stack-using-queue
+
+class QueueStack {
+    Queue<Integer> qu;
+    int size;
+
+    public QueueStack() {
+        qu = new LinkedList<>();
+        size = 0;
+    }
+
+    public void push(int x) {
+       /*if(size == 0){
+        qu.add(x);
+        size++;
+       }else{*/
+        qu.add(x);
+        int cnt = 0;
+        while(cnt < size){
+            qu.add(qu.remove());
+            cnt++;
+        }
+        size++;
+       //}
+    }
+
+    public int pop() {
+        size--;
+      return qu.remove();
+    }
+
+    public int top() {
+        return qu.peek();
+    }
+
+    public boolean isEmpty() {
+        return qu.isEmpty();
+    }
+}

@@ -1,0 +1,29 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/implementation/balanced-paranthesis
+
+class Solution {
+    public boolean isValid(String str) {
+        int n = str.length();
+
+        HashMap<Character,Character> hm = new HashMap<>();  
+        hm.put(')','(');
+        hm.put('}','{');
+        hm.put(']','[');
+
+        Stack<Character> st = new Stack<>();
+
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(hm.containsKey(ch)){
+                if(st.isEmpty() || hm.get(ch) != st.peek()){
+                    return false;
+                }else{
+                    st.pop();                    
+                }
+            }else{
+                st.push(ch);
+            }
+        }
+
+        return st.isEmpty();
+    }
+}

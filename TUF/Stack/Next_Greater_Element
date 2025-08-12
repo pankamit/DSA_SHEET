@@ -1,0 +1,28 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/monotonic-stack/next-greater-element
+
+class Solution {
+    public int[] nextLargerElement(int[] arr) {
+
+        int n = arr.length;
+
+        int[] res = new int[n];
+
+        Stack<Integer> st = new Stack<>();
+        
+        for(int ind=n-1;ind>=0;ind--){
+            while(!st.isEmpty() && st.peek() <= arr[ind]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                res[ind]=-1;
+            }else{
+                res[ind] = st.peek();
+            }
+            st.push(arr[ind]);
+            
+        }
+
+        return res;
+
+    }
+}

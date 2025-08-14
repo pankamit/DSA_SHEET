@@ -1,0 +1,100 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/monotonic-stack/sum-of-subarray-ranges
+
+class Solution {
+    public long subArrayRanges(int[] arr) {
+        int n = arr.length;
+
+        Stack<Integer> st = new Stack<>();
+
+        int[] rArr = new int[n];
+        for(int ind=n-1;ind>=0;ind--){
+            while(!st.isEmpty() && arr[ind] <= arr[st.peek()]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                rArr[ind] = n;
+            }else{
+                rArr[ind] = st.peek();
+            }
+
+            st.push(ind);
+        }
+
+        st.clear();
+        int[] lArr = new int[n];
+        for(int ind=0;ind<n;ind++){
+            while(!st.isEmpty() && arr[ind] < arr[st.peek()]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                lArr[ind] = -1;
+            }else{
+                lArr[ind] = st.peek();
+            }
+            st.push(ind);
+        }
+
+        
+
+        long[] cntArr = new long[n];
+        long minSum = 0;
+        for(int ind=0;ind<n;ind++){
+            int rcnt = rArr[ind]-ind;
+            int lcnt = ind - lArr[ind];
+            long cnt = rcnt * lcnt;
+            cntArr[ind] = cnt;
+            minSum += arr[ind]*cnt;
+        }
+
+      //  System.out.println("min lArr "+Arrays.toString(lArr));
+       // System.out.println("min rArr "+Arrays.toString(rArr));
+       // System.out.println("min cntArr "+Arrays.toString(cntArr));
+
+        st.clear();
+        rArr = new int[n];
+        for(int ind=n-1;ind>=0;ind--){
+            while(!st.isEmpty() && arr[ind] >= arr[st.peek()]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                rArr[ind]=n;
+            }else{
+                rArr[ind]=st.peek();
+            }
+            st.push(ind);
+        }
+
+        st.clear();
+        lArr = new int[n];
+        for(int ind=0;ind<n;ind++){
+            while(!st.isEmpty() && arr[ind] > arr[st.peek()]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                lArr[ind] = -1;
+            }else{
+                lArr[ind] = st.peek();
+            }
+            st.push(ind);
+        }
+
+        long maxSum = 0;
+        cntArr = new long[n];
+        for(int ind=0;ind<n;ind++){
+            int rcnt = rArr[ind]-ind;
+            int lcnt = ind - lArr[ind];
+            long cnt = rcnt * lcnt;
+            cntArr[ind] = cnt;
+            maxSum += arr[ind]*cnt;
+        }
+
+     //   System.out.println("max lArr "+Arrays.toString(lArr));
+     //   System.out.println("max rArr "+Arrays.toString(rArr));
+     //   System.out.println("max cntArr "+Arrays.toString(cntArr));
+
+     //   System.out.println("maxSum "+maxSum+" minSum "+minSum);
+   
+        return maxSum - minSum;
+     
+    }
+}

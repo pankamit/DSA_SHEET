@@ -1,0 +1,26 @@
+## https://leetcode.com/problems/find-most-frequent-vowel-and-consonant/
+
+class Solution {
+    public int maxFreqSum(String s) {
+        int n = s.length();
+        
+        HashMap<Character,Integer> hm = new HashMap<>();
+     
+       int vmax = 0;
+       int cmax = 0;
+        for(int ind=0;ind<n;ind++){
+            char ch = s.charAt(ind);
+            int freq = hm.getOrDefault(ch,0);
+                hm.put(ch,freq+1);
+            if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'){
+                
+                vmax = Math.max(vmax,freq+1);
+            }else{
+                cmax = Math.max(cmax,freq+1);
+
+            }
+        }
+        return vmax+cmax;
+        
+    }
+}

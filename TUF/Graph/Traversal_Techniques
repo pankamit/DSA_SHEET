@@ -1,0 +1,57 @@
+## https://takeuforward.org/plus/dsa/graph/theory-and-traversals/traversal-techniques
+
+class Solution {
+    public List<Integer> dfsOfGraph(int n, List<List<Integer>> adj) {
+
+        List<Integer> lst = new ArrayList<>();
+        
+        boolean[] visitedArr = new boolean[n];
+
+        lst.add(0);
+        visitedArr[0]=true;
+        traverse(adj,0,lst,visitedArr);
+      
+        return lst;
+    }
+
+    void traverse(List<List<Integer>> adj,int u,List<Integer> lst,boolean[] visitedArr){
+
+        for(int v : adj.get(u)){
+            if(!visitedArr[v]){
+                lst.add(v);
+                visitedArr[v]=true;
+                traverse(adj,v,lst,visitedArr);
+            }
+        }
+
+    }
+    
+    public List<Integer> bfsOfGraph(int n, List<List<Integer>> adj) {
+        
+        Queue<Integer> qu = new LinkedList<>();
+        List<Integer> lst = new ArrayList<>();
+        boolean[] visitedArr = new boolean[n];
+    
+        lst.add(0);
+        visitedArr[0]=true;
+        qu.add(0);
+
+    
+
+        while(!qu.isEmpty()){
+            int u = qu.remove();
+
+            for(int v : adj.get(u)){
+                if(!visitedArr[v]){
+                    visitedArr[v]=true;
+                    lst.add(v);
+                    qu.add(v);
+                }
+            }
+
+        }
+
+        return lst;
+    }
+}
+

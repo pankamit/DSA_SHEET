@@ -1,0 +1,49 @@
+## https://takeuforward.org/plus/dsa/graph/theory-and-traversals/connected-components
+
+class Solution {
+    public int findNumberOfComponent(int n, List<List<Integer>> edges) {
+
+        List<List<Integer>> graph = new ArrayList<>();
+
+        for(int ind=0;ind<n;ind++){
+            graph.add(new ArrayList<>());
+        }
+
+        int m = edges.size();
+
+        for(int ind=0;ind<m;ind++){
+            int u = edges.get(ind).get(0);
+            int v = edges.get(ind).get(1);
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+
+        }
+
+        boolean[] visitArr = new boolean[n];
+
+        int cnt = 0;
+
+        for(int ind=0;ind<n;ind++){
+            if(!visitArr[ind]){
+                visitArr[ind] =true;
+                cnt++;
+                traverse(graph,n,m,ind,visitArr);
+            }
+        }
+
+        return cnt;
+    
+    }
+
+    void traverse(List<List<Integer>> graph,int n,int m,int u,boolean[] visitArr){
+
+        
+        for(Integer v: graph.get(u)){
+            if(!visitArr[v]){
+                visitArr[v] = true;
+                traverse(graph,n,m,v,visitArr);
+            }
+        }        
+
+    }
+}

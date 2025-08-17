@@ -1,0 +1,55 @@
+## https://leetcode.com/problems/best-time-to-buy-and-sell-stock-using-strategy/
+
+class Solution {
+    public long maxProfit(int[] parr, int[] sarr, int k) {
+        long max = Integer.MIN_VALUE;
+        int n = parr.length;
+
+        long[] psum = new long[n];
+        psum[0] = parr[0];
+        for(int ind=1;ind<n;ind++){
+            psum[ind] = psum[ind-1]+parr[ind];
+        }
+
+        long[] tsum = new long[n];
+        tsum[0] = sarr[0]*parr[0];
+        for(int ind=1;ind<n;ind++){
+            tsum[ind] = tsum[ind-1]+parr[ind]*sarr[ind];
+            
+        }
+
+        max = tsum[n-1];
+
+       // System.out.println("psum "+Arrays.toString(psum));
+       // System.out.println("tsum "+Arrays.toString(tsum));
+        //System.out.println("sum "+Arrays.toString(psum));
+        
+        long lsum = 0;
+        long rsum = 0;
+        //int rsum = tsum[n-1]-tsum[k-1];
+        //max = Math.max(max,lsum+rsum+psum[k/2]);
+
+
+        int r = k-1;
+        int l = 0;
+        while(r<n){
+            if(l > 0){
+                lsum = tsum[l-1];
+            }
+            rsum = tsum[n-1] - tsum[r];
+            
+            //int ksum = (r < n-1) ? psum[r+1] : 0;
+            long ksum = psum[r] - psum[r-k/2];
+            max = Math.max(max,lsum + rsum + ksum); 
+                
+        //    System.out.println("lsum "+lsum+" rsum "+rsum+" ksum "+ksum+" l "+l+" r "+r);
+            r++;
+            l++;
+            
+        }
+
+        
+
+        return max;
+    }
+}

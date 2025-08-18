@@ -1,0 +1,33 @@
+## https://takeuforward.org/plus/dsa/graph/traversal-problems/number-of-provinces
+
+class Solution {
+    public int numProvinces(int[][] mat) {
+        int n = mat.length;
+
+        boolean[] visitedArr = new boolean[n];
+
+        int cnt = 0;
+        for(int ind=0;ind<n;ind++){
+            if(!visitedArr[ind]){
+                visitedArr[ind]=true;
+                traverse(mat,n,ind,visitedArr);
+                cnt++;
+            }
+        }
+
+        return cnt;
+
+
+    }
+
+    void traverse(int[][] mat,int n,int u,boolean[] visitedArr){
+        
+        for(int v=0;v<n;v++){
+            if(mat[u][v] == 1 && !visitedArr[v]){
+                visitedArr[v]=true;
+                traverse(mat,n,v,visitedArr);
+            }
+        }
+    }
+}
+

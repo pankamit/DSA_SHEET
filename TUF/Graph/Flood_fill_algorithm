@@ -1,0 +1,51 @@
+## https://takeuforward.org/plus/dsa/graph/traversal-problems/flood-fill-algorithm
+
+class Solution {
+    public int[][] floodFill(int[][] mat, int sr, int sc, int newColor) {
+        
+        int n = mat.length;
+        int m = mat[0].length;
+        //boolean[][] visitedArr = new boolean[n][m];
+        
+        Queue<Pair> qu = new LinkedList<>();
+        qu.add(new Pair(sr,sc));
+        int oldColor = mat[sr][sc];
+        mat[sr][sc] = newColor;
+       // visitedArr[sr][sc]=true;
+
+        while(!qu.isEmpty()){
+            Pair pair = qu.poll();
+            int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
+
+            for(int ind=0;ind<dir.length;ind++){
+                int new_r = pair.r + dir[ind][0];
+                int new_c = pair.c + dir[ind][1];
+
+                if(new_r >= 0 && new_r < n &&
+                 new_c >= 0 && new_c < m &&
+                  mat[new_r][new_c] == oldColor &&
+                 //!visitedArr[new_r][new_c]
+                  mat[new_r][new_c] != newColor
+                 ){
+                 //   visitedArr[new_r][new_c] = true;
+                    mat[new_r][new_c] = newColor;
+        
+                    qu.add(new Pair(new_r,new_c));
+                }
+            }
+        }
+
+        return mat;
+
+    }
+}
+
+class Pair{
+    int r;
+    int c;
+
+    Pair(int r,int c){
+        this.r = r;
+        this.c = c;
+    }
+}

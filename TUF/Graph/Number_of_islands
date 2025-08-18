@@ -1,0 +1,47 @@
+## https://takeuforward.org/plus/dsa/graph/traversal-problems/number-of-islands
+
+class Solution {
+    public int numIslands(char[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        boolean[][] visitedArr = new boolean[n][m];
+        
+        int cnt = 0;
+
+        for(int ind=0;ind<n;ind++){
+            for(int ind1=0;ind1<m;ind1++){
+                if(mat[ind][ind1] == '1' && !visitedArr[ind][ind1]){
+                    visitedArr[ind][ind1]=true;
+                    traverse(mat,n,m,ind,ind1,visitedArr);
+                    cnt++;
+                }
+
+            }
+        }
+
+        return cnt;
+
+
+       
+    }
+
+    void traverse(char[][] mat,int n,int m,int r,int c,boolean[][] visitedArr){
+
+        int[][] dir = {{0,1},{0,-1},{1,0},{-1,0},{1,1},{1,-1},{-1,1},{-1,-1}};
+
+        for(int ind=0;ind<dir.length;ind++){
+            int new_r = r+dir[ind][0];
+            int new_c = c+dir[ind][1];
+
+            if(new_r >=0 && new_r < n && new_c>=0 && new_c<m && mat[new_r][new_c] == '1' && !visitedArr[new_r][new_c]){
+                visitedArr[new_r][new_c] = true;
+                traverse(mat,n,m,new_r,new_c,visitedArr);
+            }
+
+        }
+    }
+
+
+}
+

@@ -1,0 +1,44 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/detect-a-cycle-in-an-undirected-graph
+
+class Solution {
+    public boolean isCycle(int n, List<Integer>[] adj) {
+        boolean[] visitedArr = new boolean[n];
+        
+        // took lst for debuging
+        List<Integer> lst = new ArrayList<>();
+
+        for(int ind=0;ind<n;ind++){
+            if(!visitedArr[ind]){
+                visitedArr[ind]=true;
+                lst.add(ind);
+                if(traverse(adj,ind,-1,visitedArr,lst)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    boolean traverse(List<Integer>[] adj,int u,int par,boolean[] visitedArr,List<Integer> lst){
+
+      //  System.out.println("lst "+lst);
+        for(int v : adj[u]){
+            if(v == par){
+                continue;
+            }else if(visitedArr[v]){
+                return true;
+            }
+            visitedArr[v]=true;
+            lst.add(v);
+            if(traverse(adj,v,u,visitedArr,lst)){
+                return true;
+            }
+           // lst.remove(lst.size()-1);
+          //  visitedArr[v]=false;
+        }
+
+        return false;
+    }
+}

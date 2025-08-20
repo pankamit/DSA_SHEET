@@ -1,0 +1,46 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/bipartite-graph?tab=submissions
+
+class Solution {
+    public boolean isBipartite(int n, List<List<Integer>> adj) {
+      
+        int[] visitedArr = new int[n];
+
+        
+        for(int ind=0;ind<n;ind++){
+            if(visitedArr[ind] == 0){
+                visitedArr[ind]=1;
+                if(!dfs(adj,ind,-1,visitedArr)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    
+    boolean dfs(List<List<Integer>> adj,int u,int par,int[] visitedArr){
+
+        int col = visitedArr[u];
+        int new_col = (col == 1) ? 2 : 1;
+        for(int v : adj.get(u)){
+             if(v == par){
+                continue;
+             }else if(visitedArr[v] == 0){
+                visitedArr[v] = new_col;
+                if(!dfs(adj,v,u,visitedArr)){
+                    return false;
+                }
+             }else if(visitedArr[v] == col){
+                return false;
+             }else if(visitedArr[v] == new_col){
+                continue;
+             }
+        }
+    
+        return true;
+        
+    }
+
+    
+
+}

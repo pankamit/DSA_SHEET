@@ -1,0 +1,60 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/bipartite-graph
+
+class Solution {
+    public boolean isBipartite(int n, List<List<Integer>> adj) {
+      
+        int[] visitedArr = new int[n];
+
+        
+        for(int ind=0;ind<n;ind++){
+            if(visitedArr[ind] == 0){
+                //visitedArr[ind]=true;
+                if(!bfs(adj,ind,visitedArr)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    boolean bfs(List<List<Integer>> adj,int u,int[] visitedArr){
+
+        Queue<Pair> qu = new LinkedList<>();
+        qu.add(new Pair(u,1));
+        visitedArr[u] = 1;
+
+        while(!qu.isEmpty()){
+            Pair pair = qu.poll();
+            u = pair.u;
+            int col = pair.col;
+            int new_col = col == 1 ? 2 : 1;
+
+            for(int v : adj.get(u)){
+                if(visitedArr[v] == 0){
+                    qu.add(new Pair(v,new_col));
+                    visitedArr[v]=new_col;
+                }else if(visitedArr[v] == new_col){
+                    continue;
+                }else if(visitedArr[v] == col){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+
+    }
+
+    static class Pair{
+        int u;
+        int col;
+
+        Pair(int u,int col){
+            this.u = u;
+            this.col = col;
+        }
+    } 
+
+
+}

@@ -1,0 +1,36 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/topological-sort-or-kahns-algorithm
+
+class Solution {
+    public int[] topoSort(int n, List<List<Integer>> adj) {
+        boolean[] visitedArr = new boolean[n];
+
+        Stack<Integer> st = new Stack<>();
+        for(int ind=0;ind<n;ind++){
+            if(!visitedArr[ind]){
+                visitedArr[ind]=true;
+                dfs(adj,ind,-1,visitedArr,st);
+                st.push(ind);
+            }
+        }
+
+        int[] res = new int[st.size()];
+        int pos = 0;
+        while(!st.isEmpty()){
+            res[pos] = st.pop();
+            pos++;
+        }
+
+        return res;
+    }
+
+    void dfs(List<List<Integer>> adj,int u,int par,boolean[] visitedArr,Stack<Integer> st){
+
+        for(int v : adj.get(u)){
+            if(!visitedArr[v]){
+                visitedArr[v]=true;
+                dfs(adj,v,u,visitedArr,st);
+                st.push(v);
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/detect-a-cycle-in-a-directed-graph
+
+class Solution {
+    public boolean isCyclic(int n, List<List<Integer>> adj) {
+      
+        boolean[] visitArr = new boolean[n];
+
+        for(int u=0;u<n;u++){
+            if(!visitArr[u]){
+                visitArr[u]=true;
+                if(dfs(adj,u,visitArr)){
+                    return true;
+                }
+                visitArr[u]=false;
+            }
+        }
+
+        return false;
+
+    }
+
+    boolean dfs(List<List<Integer>> adj,int u,boolean[] visitArr){
+
+
+        for(int v: adj.get(u)){
+            if(!visitArr[v]){
+                visitArr[v]=true;
+                if(dfs(adj,v,visitArr)){
+                    return true;
+                }
+                visitArr[v] = false;
+            }else{
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+}

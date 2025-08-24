@@ -1,0 +1,28 @@
+## https://leetcode.com/problems/gcd-of-odd-and-even-sums/
+
+class Solution {
+    public int gcdOfOddEvenSums(int n) {
+        int esum = 0;
+        int osum = 0;
+
+        for(int ind=1;ind<=2*n;ind++){
+            if(ind%2 == 0){
+                esum += ind;
+            }else{
+                osum += ind;
+            }
+        }
+
+        //System.out.println("esum "+esum+" osum "+osum);
+        return gcd(osum,esum);
+        
+    }
+
+    int gcd(int a,int b){
+        if(b == 0){
+            return a;
+        }
+
+        return gcd(b, a%b);
+    }
+}

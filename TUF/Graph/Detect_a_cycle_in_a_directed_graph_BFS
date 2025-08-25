@@ -1,0 +1,42 @@
+## https://takeuforward.org/plus/dsa/graph/cycles/detect-a-cycle-in-a-directed-graph
+
+class Solution {
+    public boolean isCyclic(int n, List<List<Integer>> adj) {
+      
+      int[] inArr = new int[n];
+
+      for(int ind=0;ind<n;ind++){
+        for(int v: adj.get(ind)){
+            inArr[v]++;
+        }
+      }
+
+      Queue<Integer> qu = new LinkedList<>();
+      
+      for(int ind=0;ind<n;ind++){
+        if(inArr[ind] == 0){
+            qu.add(ind);
+        }
+      }
+
+      int cnt=0;
+      while(!qu.isEmpty()){
+       int u =  qu.poll();
+       cnt++;
+       for(int v: adj.get(u)){
+        inArr[v]--;
+        if(inArr[v] == 0){
+            qu.add(v);
+        }
+       }
+      }
+
+
+      if(cnt == n){
+        return false;
+      }else{
+        return true;
+      }
+
+    }
+}

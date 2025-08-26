@@ -1,0 +1,33 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/faqs/trapping-rainwater
+
+class Solution {
+    public int trap(int[] arr) {
+        int n = arr.length;
+        int[] lArr = new int[n];
+        int[] rArr = new int[n];
+
+        lArr[0]=arr[0];
+        for(int ind=1;ind<n;ind++){
+            lArr[ind] = Math.max(lArr[ind-1],arr[ind]);
+        }
+
+        rArr[n-1]=arr[n-1];
+        for(int ind=n-2;ind>=0;ind--){
+            rArr[ind] = Math.max(rArr[ind+1],arr[ind]);
+        }
+
+
+       // System.out.println(" lArr "+Arrays.toString(lArr));
+       // System.out.println(" rArr "+Arrays.toString(rArr));
+
+        int sum = 0;
+        for(int ind=0;ind<n;ind++){
+            sum += Math.min(lArr[ind],rArr[ind])-arr[ind];
+        }
+
+
+
+        return sum;
+       
+    }
+}

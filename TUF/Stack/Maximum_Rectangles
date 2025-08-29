@@ -1,0 +1,71 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/faqs/maximum-rectangles
+
+class Solution {
+    public int maximalAreaOfSubMatrixOfAll1(int[][] mat) {
+       
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int max = 0;
+
+        int[] arr = new int[m];
+            
+        for(int i=0;i<n;i++){
+            
+            for(int j=0;j<m;j++){
+               /* if(i==0){
+                    arr[j] = mat[0][j];
+                }else{*/
+                    if(mat[i][j] != 0){
+                        arr[j] = mat[i][j]+arr[j];
+                    }else{
+                        arr[j] = 0;
+                    }
+                //}
+            }
+            
+            int[] lArr = new int[m];
+            int[] rArr = new int[m];
+
+
+            Stack<Integer> st = new Stack<>();
+            st.push(m);
+
+            for(int ind=m-1;ind>=0;ind--){
+                while(st.peek() !=m && arr[st.peek()] >= arr[ind]){
+                    st.pop();
+                }
+                rArr[ind] = st.peek();
+                st.push(ind);
+            }
+
+            st.clear();
+            st.push(-1);
+
+            for(int ind=0;ind<m;ind++){
+                while(st.peek() != -1 && arr[st.peek()] >= arr[ind]){
+                    st.pop();
+                }
+
+                lArr[ind] = st.peek();
+                st.push(ind);
+            }
+
+            for(int ind=0;ind<m;ind++){
+                int area = (rArr[ind]-lArr[ind]-1)*arr[ind];
+                max = Math.max(max,area);
+
+                
+            }
+     //       System.out.println("arr "+Arrays.toString(arr));
+       //     System.out.println("lArr "+Arrays.toString(lArr));
+         //   System.out.println("rArr "+Arrays.toString(rArr));
+                
+        }
+
+        return max;
+
+    }
+
+
+}

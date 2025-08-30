@@ -1,0 +1,29 @@
+## https://takeuforward.org/plus/dsa/stack-and-queues/faqs/stock-span-problem
+
+class Solution {
+    public int[] stockSpan(int[] arr, int n) {
+
+        Stack<Integer> st = new Stack<>();
+        int[] lArr = new int[n];
+        int[] res = new int[n];
+        
+        st.push(-1);
+        for(int ind=0;ind<n;ind++){
+            while(st.peek() != -1 && arr[st.peek()] <= arr[ind]){
+                st.pop();
+            }
+            lArr[ind]=st.peek();
+
+            st.push(ind);
+        }
+
+       // System.out.println("lArr "+Arrays.toString(lArr));
+
+        for(int ind=0;ind<n;ind++){
+            res[ind] = ind-lArr[ind];
+        }
+     
+        return res;
+    }
+}
+

@@ -1,0 +1,22 @@
+## https://leetcode.com/problems/restore-finishing-order/
+
+class Solution {
+    public int[] recoverOrder(int[] arr, int[] farr) {
+        HashSet<Integer> hs = new HashSet<>();
+        for(int ind=0;ind<farr.length;ind++){
+            hs.add(farr[ind]);
+        }
+
+        int[] res = new int[farr.length];
+        int pos = 0;
+        for(int ind=0;ind<arr.length;ind++){
+            
+            if(hs.contains(arr[ind])){
+                res[pos] = arr[ind];
+                pos++;
+            }
+        }
+
+        return res;
+    }
+}

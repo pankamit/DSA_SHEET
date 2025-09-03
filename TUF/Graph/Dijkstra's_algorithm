@@ -1,0 +1,62 @@
+## https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/dijkstra's-algorithm
+## find min distance from src node to all nodes in undirected graph
+
+class Solution
+{
+    static class Pair implements Comparable<Pair>{
+        int node;
+        int d;
+
+        Pair(int node,int d){
+            this.node = node;
+            this.d = d;
+        }
+
+        public int compareTo(Pair pair){
+            if(this.d == pair.d){
+                return this.node - pair.node;
+            }
+            return this.d - pair.d;
+        }
+
+    }
+
+    public  int[] dijkstra(int n, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+        int[] dist = new int[n];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[S] = 0;
+
+        pq.add(new Pair(S,0));
+
+        while(!pq.isEmpty()){
+            Pair pair = pq.remove();
+            int u = pair.node;
+            //int d = pair.wt;
+            for(ArrayList<Integer> lst: adj.get(u)){
+                if(lst.isEmpty()){
+                   continue; 
+                }
+                int v = lst.get(0);
+                int d = lst.get(1);
+
+                if(dist[v] > (dist[u]+d)){
+                    dist[v] = dist[u]+d;
+                    pq.add(new Pair( v, dist[v]));
+                } 
+            }
+        }
+
+        for(int ind=0;ind<n;ind++){
+            if(dist[ind] == Integer.MAX_VALUE){
+                dist[ind] = 1000000000;
+            }
+        }
+
+        return dist;
+
+    }
+}

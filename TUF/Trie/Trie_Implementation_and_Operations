@@ -1,0 +1,89 @@
+## https://takeuforward.org/plus/dsa/tries/triessubc/trie-implementation-and-operations
+
+class Node{
+    Node[] links = new Node[26];
+    boolean flag = false;
+
+    boolean containsKey(char ch){
+        return links[ch-'a'] != null;
+    }
+
+    Node get(char ch){
+        return links[ch-'a'];
+    }
+
+    void put(char ch,Node node){
+        links[ch-'a'] = node;
+    }
+
+    void setEnd(){
+        flag = true;
+    }
+
+    boolean isEnd(){
+        return flag;
+    }
+}
+
+
+class Trie {
+
+    Node root;
+
+    Trie() {
+        root = new Node();
+    }
+
+    void insert(String str) {
+        Node node = root;
+        int n = str.length();
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(node.containsKey(ch)){
+                node = node.get(ch);
+            }else{
+                node.put(ch,new Node());
+                node = node.get(ch);
+            }
+            
+        }
+        node.setEnd();
+    }
+
+    boolean search(String str) {
+        Node node = root;
+        int n = str.length();
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.containsKey(ch)){
+                return false;
+            }
+            node = node.get(ch);
+        }
+        return node.isEnd();
+
+    }
+
+    boolean startsWith(String str) {
+        Node node = root;
+        int n = str.length();
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.containsKey(ch)){
+                return false;
+            }
+            node = node.get(ch);
+            
+        }
+
+        return true;
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */

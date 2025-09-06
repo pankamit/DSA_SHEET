@@ -1,0 +1,117 @@
+## https://takeuforward.org/plus/dsa/tries/triessubc/trie-implementation-and-advanced-operations
+
+class Trie {
+    static class Node{
+        Node[] links = new Node[26];
+        int wc;
+        int pc;
+
+        boolean contains(char ch){
+            return links[ch-'a'] != null;
+        }
+
+        Node get(char ch){
+            return links[ch-'a'];
+        }
+
+        void add(char ch){
+            links[ch-'a'] = new Node();
+        }
+
+        void incWc(){
+            wc++;
+        }
+
+        int getWc(){
+            return wc;
+        }
+
+        void incPc(){
+            pc++;
+        }
+
+        int getPc(){
+            return pc;
+        }
+
+        void decWc(){
+            wc--;
+        }
+
+        void decPc(){
+            pc--;
+        }
+
+
+    }
+    Node root;
+
+    public Trie() {
+        root = new Node();
+    }
+
+    public void insert(String str) {
+        int n = str.length();
+        Node node = root;
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.contains(ch)){
+                node.add(ch);
+            }
+            node = node.get(ch);
+            node.incPc();
+        }
+        node.incWc();
+    }
+
+    public int countWordsEqualTo(String str) {
+        int n = str.length();
+        Node node = root;
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.contains(ch)){
+                return 0;
+            }
+            node = node.get(ch);
+        }
+        return node.getWc();
+
+    }
+
+    public int countWordsStartingWith(String str) {
+        int n = str.length();
+        Node node = root;
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.contains(ch)){
+                return 0;
+            }
+            node = node.get(ch);
+        }
+        return node.getPc();
+    }
+
+    public void erase(String str) {
+        if(countWordsEqualTo(str) == 0){
+            return;
+        }
+        int n = str.length();
+        Node node = root;
+        for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            node = node.get(ch);
+            node.decPc();
+        }
+        node.decWc();
+        
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * int param_2 = obj.countWordsEqualTo(word);
+ * int param_3 = obj.countWordsStartingWith(prefix);
+ * obj.erase(word);
+ */

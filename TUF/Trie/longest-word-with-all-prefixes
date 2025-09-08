@@ -1,0 +1,75 @@
+## https://takeuforward.org/plus/dsa/tries/problems/longest-word-with-all-prefixes
+
+class Solution {
+
+    String max = "";
+
+    static class Node{
+        Node[] links = new Node[26];
+        boolean end;
+
+        boolean contains(char ch){
+            return links[ch-'a'] != null;
+        }
+
+        Node get(char ch){
+            return links[ch-'a'];
+        }
+
+
+        void add(char ch){
+            links[ch-'a'] = new Node();
+        }
+
+        void setEnd(){
+            end = true;
+        }
+
+        boolean isEnd(){
+            return end;
+        }
+
+    }
+    public String completeString(List<String> lst) {
+        //your code goes here
+        //int n = lst.size();
+
+        Node root = new Node();
+
+        for(String str : lst){
+          int n = str.length();
+          Node node = root;
+          for(int ind=0;ind<n;ind++){
+            char ch = str.charAt(ind);
+            if(!node.contains(ch)){
+                node.add(ch);
+            }
+            node = node.get(ch);
+
+          }
+          node.setEnd();  
+        }
+
+        Node node = root;
+        tr(node,"");
+
+        return max;
+        
+
+    }
+
+    void tr(Node node,String res){
+
+        if(max.length() < res.length()){
+            max = res;
+        }
+
+        //Node node = root;
+        for(char ch='a'; ch<='z'; ch++){
+            if(node.contains(ch) && node.get(ch).isEnd()){
+                tr(node.get(ch),res+ch);
+            }
+        }
+
+    }
+}

@@ -1,4 +1,6 @@
 ## https://takeuforward.org/plus/dsa/tries/problems/number-of-distinct-substrings-in-a-string
+## TC -> O(N*N)
+## SC -> O(N*N)
 
 class Solution {
     

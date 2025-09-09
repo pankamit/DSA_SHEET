@@ -1,0 +1,56 @@
+## https://takeuforward.org/plus/dsa/tries/problems/number-of-distinct-substrings-in-a-string
+
+class Solution {
+    
+    static class Node{
+        Node[] links = new Node[26];
+        boolean end;
+
+        boolean contains(char ch){
+            return links[ch-'a'] != null;
+        }
+
+        void  add(char ch){
+            links[ch-'a'] = new Node();
+        }
+
+        Node get(char ch){
+            return links[ch-'a'];
+        }
+
+        void setEnd(){
+            end = true;
+        }
+
+        boolean isEnd(){
+            return end;
+        }
+
+    }
+
+    Node root = new Node();
+    
+    public int countDistinctSubstring(String s) {
+        //your code goes here
+        int n = s.length();
+        
+        int cnt = 1;
+
+        for(int i=0;i<n;i++){
+            Node node = root;
+            for(int j=i;j<n;j++){
+                char ch = s.charAt(j);
+                if(!node.contains(ch)){
+                    node.add(ch);
+                    cnt++;
+                }
+                node = node.get(ch);
+            }
+            node.setEnd();
+        }
+
+        return cnt;
+
+
+    }
+}

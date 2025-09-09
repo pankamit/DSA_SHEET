@@ -1,0 +1,99 @@
+## https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/print-shortest-path-
+
+class Solution {
+    
+    class Pair implements Comparable<Pair>{
+        int node;
+        int d;
+        
+        Pair(int node,int d){
+            this.node = node;
+            this.d = d;
+        }
+
+        public int compareTo(Pair pair){
+            if(this.d == pair.d){
+                return this.node - pair.node;
+            }
+            return this.d - pair.d;
+        }
+        
+    }
+    
+    public List<Integer> shortestPath(int n, int m, int[][] mat) {
+     
+        List<List<Pair>> adj = new ArrayList<>();
+
+        for(int ind=0;ind<=n;ind++){
+            adj.add(new ArrayList<>());
+        }
+
+        for(int ind=0;ind<mat.length;ind++){
+            adj.get(mat[ind][0]).add(new Pair(mat[ind][1],mat[ind][2]));
+            adj.get(mat[ind][1]).add(new Pair(mat[ind][0],mat[ind][2]));
+        }
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        
+        int[] dist = new int[n+1];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[1]=0;
+
+        int[] par = new int[n+1];
+        for(int ind=1;ind<=n;ind++){
+            par[ind] = ind;
+        }
+
+        pq.add(new Pair(1,0));
+
+        while(!pq.isEmpty()){
+            Pair pair = pq.remove();
+            int u = pair.node;
+            int d = pair.d;
+
+            for(Pair p: adj.get(u)){
+                int v = p.node;
+                int w = p.d;
+                if(dist[v] > d+w){
+                    dist[v] = d+w;
+                    par[v] = u;
+                    pq.add(new Pair(v,dist[v]));
+                }
+            }
+
+
+
+        }
+
+   //     System.out.println("dist "+Arrays.toString(dist));
+     //   System.out.println("par "+Arrays.toString(par));
+
+        List<Integer> lst = new ArrayList<>();
+        lst.add(n);
+        int node = n;
+        while(par[node] != node){
+            node = par[node];    
+            lst.add(node);
+          //  System.out.println("node "+node+" lst "+lst);    
+        }
+
+        lst.add(dist[n]);
+
+        Collections.reverse(lst);
+      //  System.out.println("lst "+lst);
+        
+
+        if(node != 1){
+            lst.clear();
+            lst.add(-1);
+            return lst;
+        }
+
+        return lst;
+
+
+    }
+}
+
+
+

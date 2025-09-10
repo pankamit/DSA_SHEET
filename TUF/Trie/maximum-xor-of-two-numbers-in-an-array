@@ -1,0 +1,74 @@
+## https://takeuforward.org/plus/dsa/tries/problems/maximum-xor-of-two-numbers-in-an-array
+
+class Solution {
+    
+    static class Node{
+        Node[] links = new Node[2];
+
+        boolean contains(int bit){
+            return links[bit] != null;
+        }
+
+        void add(int bit){
+            links[bit] = new Node();
+        }
+
+        Node get(int bit){
+            return links[bit];
+        }
+    }
+
+    Node root = new Node();
+    
+    public int findMaximumXOR(int[] arr) {
+        //your code goes here
+        int n = arr.length;
+
+        insert(arr[0]);
+        int max = arr[0];
+        for(int ind=1;ind<n;ind++){
+            max = Math.max(max,getMax(arr[ind]));
+            insert(arr[ind]);
+        }
+
+        return max;
+
+    }
+
+    void insert(int x){
+
+        Node node = root;
+        for(int ind=31;ind>=0;ind--){
+            int bit = 0;
+            if((x & (1<<ind)) != 0){
+                bit = 1;
+            }
+            
+            if(!node.contains(bit)){
+                node.add(bit);
+            }
+            node = node.get(bit);
+        }
+    }
+
+    int getMax(int x){
+        int res = 0;
+        Node node = root;
+
+        for(int ind=31;ind>=0;ind--){
+            int bit = 0;
+            if((x & (1<<ind)) != 0){
+                bit = 1;
+            }
+            int toggleBit = 1-bit;
+            if(node.contains(toggleBit)){
+                res = (res | (1<<ind));
+                node = node.get(toggleBit);
+            }else{
+                node = node.get(bit);
+            }
+        }
+
+        return res;
+    }
+}

@@ -1,0 +1,113 @@
+## https://takeuforward.org/plus/dsa/tries/problems/maximum-xor-with-an-element-from-an-array
+
+class Solution {
+    static class Pair implements Comparable<Pair>{
+        int a;
+        int b;
+        int ind;
+
+        Pair(int a,int b,int ind){
+            this.a = a;
+            this.b = b;
+            this.ind = ind;
+        }
+
+
+        public int compareTo(Pair pair){
+            return this.b - pair.b;
+        }
+
+
+    }
+
+    static class Node{
+        Node[] links = new Node[2];
+
+        boolean contains(int bit){
+            return links[bit] != null;
+        }
+
+        void add(int bit){
+            links[bit] = new Node();
+        }
+
+        Node get(int bit){
+           return links[bit];
+        }
+
+    }
+
+    Node root = new Node();
+    int addcnt = 0;
+
+    int findMax(Pair pair,int[] arr){
+        int n = arr.length;
+        int a = pair.a;
+        int b = pair.b;
+
+
+        while(addcnt < n && arr[addcnt] <= b){
+            int ele = arr[addcnt];
+            Node node = root;
+            for(int ind=31;ind>=0;ind--){
+                int bit = (ele>>ind) & 1;
+                if(!node.contains(bit)){
+                    node.add(bit);
+                }
+                node = node.get(bit);
+            }
+
+
+
+            addcnt++;
+        }
+
+        Node node = root;
+        int res = 0;
+        for(int ind=31;ind>=0;ind--){
+            int bit = (a>>ind) & 1;
+            int toggleBit = 1-bit;
+
+            if(node.contains(toggleBit)){
+                node = node.get(toggleBit);
+                res = res | (1<<ind);
+            }else{
+                node = node.get(bit);
+            }
+        }
+
+        return res;
+
+
+    }
+
+    public List<Integer> maximizeXor(int[] arr, int[][] qu) {
+        //your code goes here
+        int n = arr.length;
+        int m = qu.length;
+        
+        Arrays.sort(arr);
+
+        List<Pair> lst = new ArrayList<>();
+
+        for(int ind=0;ind<qu.length;ind++){
+            int a = qu[ind][0];
+            int b = qu[ind][1];
+
+            lst.add(new Pair(a,b,ind));
+        }
+
+        Collections.sort(lst);
+
+        Integer[] res = new Integer[m];
+        //List<Integer> lst = new ArrayList<>();
+        for(int i=0;i<m;i++){
+            int index = lst.get(i).ind;
+            res[index] = findMax(lst.get(i),arr);
+        }
+
+
+        return Arrays.asList(res);
+
+    }
+}

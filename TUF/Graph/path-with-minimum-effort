@@ -1,0 +1,78 @@
+## https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/path-with-minimum-effort
+
+class Solution {
+
+    static class Pair implements Comparable<Pair>{
+        int d;
+        int r;
+        int c;
+
+        Pair(int d,int r,int c){
+            this.d = d;
+            this.r = r;
+            this.c = c;
+        }
+
+        public int compareTo(Pair pair){
+            return this.d - pair.d;
+        }
+
+
+        
+    }
+
+
+    public int MinimumEffort(List<List<Integer>> adj) {
+
+        int n = adj.size();
+        int m = adj.get(0).size();
+
+        int[][] dist = new int[n][m];
+        for(int ind=0;ind<n;ind++){
+            for(int ind1=0;ind1<m;ind1++){
+                dist[ind][ind1] = Integer.MAX_VALUE;
+            }
+        }
+
+        dist[0][0] = 0;
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        
+        pq.add(new Pair(0,0,0));
+
+        while(!pq.isEmpty()){
+            Pair pair = pq.remove();
+            int d = pair.d;
+            int r = pair.r;
+            int c = pair.c;
+
+            int[][] dir = {{0,-1},{0,1},{-1,0},{1,0}};
+
+            for(int ind=0;ind<dir.length;ind++){
+                int new_r = r+dir[ind][0];
+                int new_c = c+dir[ind][1];
+
+
+                if(new_r >= 0 && new_r < n && new_c >=0 && new_c < m){
+                    int diff = Math.abs(adj.get(r).get(c) - adj.get(new_r).get(new_c));
+                    diff = Math.max(diff,d);
+                    if(dist[new_r][new_c] > diff){
+                        dist[new_r][new_c] = diff;
+                        pq.add(new Pair(diff,new_r,new_c));
+                    }
+
+                }
+
+
+            }
+        }
+
+
+        return dist[n-1][m-1];
+
+
+
+
+
+
+    }
+}

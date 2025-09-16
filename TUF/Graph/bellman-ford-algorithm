@@ -1,0 +1,80 @@
+## https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/bellman-ford-algorithm
+
+class Solution {
+
+    static class Pair{
+        int node;
+        int d;
+
+        Pair(int node,int d){
+            this.node = node;
+            this.d = d;
+        }
+    }
+
+    static int[] bellman_ford(int n,
+                              ArrayList<ArrayList<Integer>> edges, int S) {
+    
+        int m = edges.size();
+
+        int val = 1000000000;
+
+        List<List<Pair>> adj = new ArrayList<>();
+
+        for(int ind=0;ind<n;ind++){
+            adj.add(new ArrayList<>());
+        }
+        
+        for(int ind=0;ind<m;ind++){
+            int u = edges.get(ind).get(0);
+            int v = edges.get(ind).get(1);
+            int w = edges.get(ind).get(2);
+
+            adj.get(u).add(new Pair(v,w));
+            
+        }
+
+        int[] dist = new int[n];
+        Arrays.fill(dist,val);
+
+        dist[S] = 0;
+
+        int cnt = 0;
+        while(cnt < n-1){            
+            for(int ind=0;ind<m;ind++){
+                int u = edges.get(ind).get(0);
+                int v = edges.get(ind).get(1);
+                int w = edges.get(ind).get(2);
+
+
+                if(dist[u] != val && dist[v] > (dist[u]+w)){
+                    dist[v] = dist[u]+w;
+                }
+
+            }
+
+
+            cnt++;
+        }
+
+        for(int ind=0;ind<m;ind++){
+            int u = edges.get(ind).get(0);
+            int v = edges.get(ind).get(1);
+            int w = edges.get(ind).get(2);
+//2000000000
+
+            if(dist[u] != val && dist[v] > dist[u]+w){
+                return new int[]{-1};
+            }
+        }
+        
+
+        /*for(int ind=0;ind<n;ind++){
+            if(dist[ind] == Integer.MAX_VALUE){
+                dist[ind] = 1000000000;
+            }
+        }*/
+        return dist;                                
+    
+    }
+}

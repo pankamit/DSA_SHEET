@@ -1,0 +1,26 @@
+## https://leetcode.com/submissions/detail/1776991016/
+
+class Solution {
+    public int maxDifference(String s) {
+        int n = s.length();
+
+        HashMap<Character,Integer> hm = new HashMap<>();
+
+        for(int ind=0;ind<n;ind++){
+            char ch = s.charAt(ind);
+            hm.put(ch,hm.getOrDefault(ch,0)+1);
+        }
+
+        int odd = Integer.MIN_VALUE;
+        int even = Integer.MAX_VALUE;
+        for(Map.Entry<Character,Integer> entry : hm.entrySet()){
+            if(entry.getValue() % 2 == 0){
+                even = Math.min(even,entry.getValue());
+            }else{
+                odd = Math.max(odd,entry.getValue());
+            }
+        }
+
+        return odd-even;
+    }
+}

@@ -1,0 +1,17 @@
+## https://leetcode.com/problems/maximum-total-subarray-value-i/description/
+
+class Solution {
+    public long maxTotalValue(int[] arr, int k) {
+        int n = arr.length;
+
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+
+        for(int ind=0;ind<n;ind++){
+            min = Math.min(min,arr[ind]);
+            max = Math.max(max,arr[ind]);
+        }
+        long diff = max-min;
+        return diff*k;
+    }
+}

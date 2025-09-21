@@ -1,0 +1,16 @@
+## https://leetcode.com/problems/bitwise-or-of-even-numbers-in-an-array/
+
+class Solution {
+    public int evenNumberBitwiseORs(int[] arr) {
+        int res = 0;
+        for(int ele: arr){
+            if(ele%2 == 0){
+                res = res | ele;
+            }
+        }
+
+        return res;
+        
+        
+    }
+}

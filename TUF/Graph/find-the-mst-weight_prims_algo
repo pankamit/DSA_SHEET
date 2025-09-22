@@ -1,0 +1,70 @@
+## https://takeuforward.org/plus/dsa/graph/minimum-spanning-tree/find-the-mst-weight
+
+class Solution {
+    
+    static class Pair implements Comparable<Pair>{
+        int d;
+        int node;
+        int par;
+
+        Pair(int d,int node,int par){
+            this.d = d;
+            this.node = node;
+            this.par = par;
+        }
+
+        Pair(int node,int par){
+            this.node = node;
+            this.par = par;
+        }
+
+        public int compareTo(Pair pair){
+            return this.d - pair.d;
+        }
+        
+    }
+
+    public int spanningTree(int n, List<List<List<Integer>>> adj) {
+
+        boolean[] vis = new boolean[n];
+
+        PriorityQueue<Pair> pq  = new PriorityQueue<>();
+
+        pq.add(new Pair(0,0,-1));
+
+        int sum = 0;
+        List<Pair> lst = new ArrayList<>();
+
+        while(!pq.isEmpty() ){
+           Pair pair = pq.poll();
+           
+           int d = pair.d;
+           int u = pair.node;
+           int par = pair.par;
+
+           if(vis[u]){
+                continue;
+           }
+
+           vis[u] = true;
+
+           sum += d;
+           if(par != -1){
+              lst.add(pair);
+           }
+
+           for(List<Integer> it: adj.get(u)){
+                int v = it.get(0);
+                int w = it.get(1);
+
+                if(!vis[v]){
+                    pq.add(new Pair(w,v,u));
+                }
+           }
+        }
+
+        return sum;
+
+    }
+}
+

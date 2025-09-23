@@ -1,0 +1,84 @@
+## https://takeuforward.org/plus/dsa/graph/minimum-spanning-tree/disjoint-set-
+
+class DisjointSet {
+    int[] rank;
+    int[] par;
+    
+    int[] size;
+
+    public DisjointSet(int n) {
+        rank = new int[n];
+        par = new int[n];
+        size = new int[n];
+
+
+        for(int ind=0;ind<n;ind++){
+            par[ind]=ind;
+        }
+
+        Arrays.fill(size,1);
+      
+    }
+
+
+    public boolean find(int u, int v) {
+
+        return findUPar(u) == findUPar(v);
+
+    }
+
+    int findUPar(int u){
+        
+        if(par[u] == u){
+            return u;
+        }
+
+        int res = findUPar(par[u]);
+        par[u] = res;
+        return res;
+    }
+
+    public void unionByRank(int u, int v) {
+        
+       int pu = findUPar(u);
+       int pv = findUPar(v);
+
+       if(pu == pv){
+        return;
+       }
+
+       if(rank[pu] > rank[pv]){
+            par[pv] = pu;
+       }else if(rank[pv] > rank[pu]){
+            par[pu] = pv; 
+       }else{
+            par[pu] = pv;
+            rank[pv]++;
+       }
+
+    }
+
+    public void unionBySize(int u, int v) {
+
+       int pu = findUPar(u);
+       int pv = findUPar(v);
+
+       if(pu == pv){
+        return;
+       }
+       
+       if(size[pu] > size[pv]){
+            par[pv] = pu;
+            size[pu] += size[pv];
+       }else if(size[pv] > size[pu]){
+            par[pu] = pv;
+            size[pv] += size[pu];
+       }else{
+            par[pu] = pv;
+            size[pv] += size[pu];
+       }
+
+       
+
+    }
+}

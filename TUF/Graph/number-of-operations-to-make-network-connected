@@ -1,0 +1,123 @@
+## https://takeuforward.org/plus/dsa/graph/hard-problems-ii/number-of-operations-to-make-network-connected
+
+class Solution {
+  
+    class Disjoint{
+        int[] rank;
+        int[] par;
+        int[] size;
+
+        Disjoint(int n){
+            rank = new int[n+1];
+            par = new int[n+1];
+            size = new int[n+1];
+
+            for(int ind=0;ind<=n;ind++){
+                par[ind] = ind;
+            }
+            Arrays.fill(size,1);
+
+        }
+
+        int findUPar(int u){
+            if(par[u] == u){
+                return u;
+            }
+
+            int res = findUPar(par[u]);
+            par[u] = res;
+            return res;
+        }
+
+        void unionByRank(int u,int v){
+            int pu = findUPar(u);
+            int pv = findUPar(v);           
+
+            if(pu == pv){
+                return;
+            }
+
+            if(rank[pu] < rank[pv]){
+                par[pu] = pv;
+            }else if(rank[pu] > rank[pv]){
+                par[pv] = pu;
+            }else{
+                par[pv] = pu;
+                rank[pu]++;
+            }
+        }
+
+        void unionBySize(int u,int v){
+            int pu = findUPar(u);
+            int pv = findUPar(v);           
+
+            if(pu == pv){
+                return;
+            }
+
+            if(size[pu] < size[pv]){
+                par[pu] = pv;
+                size[pv] += size[pu];
+            }else if(size[pu] > size[pv]){
+                par[pv] = pu;
+                size[pu] += size[pv];
+            }else{
+                par[pv] = pu;
+                size[pu] += size[pv];
+            }
+        }
+
+        boolean isConnected(int u,int v){
+            return findUPar(u) == findUPar(v);
+        }
+
+
+
+    }
+  
+    public int solve(int n, int[][] edges) {
+        int m = edges.length;
+
+
+        int extra = 0;
+
+        Disjoint dj = new Disjoint(n);
+        for(int ind=0;ind<m;ind++){
+            int u = edges[ind][0];
+            int v = edges[ind][1];
+
+            if(dj.isConnected(u,v)){
+                extra++;
+            }else{
+                dj.unionBySize(u,v);
+            }
+        }
+
+        
+
+       // HashSet<Integer> hs= new HashSet<>();
+       int compsize = 0;
+        for(int ind=0;ind<n;ind++){
+            if(dj.par[ind] == ind){
+                compsize++;
+            }
+         //   hs.add(dj.par[ind]);
+       
+        }
+
+       // int compsize = hs.size();
+
+
+     //     System.out.println("dj.rank "+Arrays.toString(dj.rank));
+     //   System.out.println("dj.size "+Arrays.toString(dj.size));        
+    //    System.out.println("dj.par "+Arrays.toString(dj.par));
+     //   System.out.println("extra "+extra+" compsize "+compsize);
+
+        if(compsize-1 > extra){
+            return -1;
+        }
+
+        return compsize-1;
+      
+    }
+}

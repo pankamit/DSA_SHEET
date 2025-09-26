@@ -1,0 +1,153 @@
+## https://takeuforward.org/plus/dsa/graph/hard-problems-ii/making-a-large-island
+
+class Solution {
+    static class Disjoint{
+        int[] rank;
+        int[] size;
+        int[] par;
+
+        Disjoint(int n){
+            rank = new int[n];
+            size = new int[n];
+            par = new int[n];
+
+            Arrays.fill(size,1);
+            
+            for(int ind=0;ind<n;ind++){
+                par[ind] = ind;
+            }
+        }
+
+        int findUPar(int u){
+            if(par[u] == u){
+                return u;
+            }
+            int res = findUPar(par[u]);
+            par[u] = res;
+            return res;
+        }
+
+        void unionByRank(int u,int v){
+            int pu = findUPar(u);
+            int pv = findUPar(v);
+
+            if(pu == pv){
+                return;
+            }
+
+            if(rank[pu] < rank[pv]){
+                par[pu] = pv;
+            }else if(rank[pv] < rank[pu]){
+                par[pv] = pu; 
+            }else{
+                par[pv] = pu;
+                rank[pu]++;
+            }
+        }
+
+
+        void unionBySize(int u,int v){
+            int pu = findUPar(u);
+            int pv = findUPar(v);
+
+            if(pu == pv){
+                return;
+            }
+
+            if(size[pu] < size[pv]){
+                par[pu] = pv;
+                size[pv] += size[pu];
+            }else if(size[pv] < size[pu]){
+                par[pv] = pu; 
+                size[pu] += size[pv]; 
+            }else{
+                par[pv] = pu;
+                size[pu] += size[pv];
+            }
+        }
+
+        boolean isConnected(int u,int v){
+            return findUPar(u) == findUPar(v);
+        }
+    }
+    
+    public int largestIsland(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        Disjoint dj = new Disjoint(n*m);
+
+        int[][] dir = {{0,-1},{0,1},{-1,0},{1,0}};
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 1){
+                    int u = (m*i) + j;
+                    
+                    //dj.size[u] = 1;
+
+                    for(int ind=0;ind<dir.length;ind++){
+                        int new_r = i + dir[ind][0];
+                        int new_c = j + dir[ind][1];
+
+                        if(new_r >=0 && new_r < n && new_c>=0 && new_c < m && mat[new_r][new_c] == 1){
+                            int v = (m*new_r) + new_c;
+                            if(!dj.isConnected(u,v)){
+                                dj.unionBySize(u,v);
+                            }
+                        }
+
+                    }  
+
+
+
+                }
+            }
+        }
+
+        
+
+        int max = 0;
+
+   //     System.out.println("size "+Arrays.toString(dj.size));
+
+        for(int ind=0;ind<dj.size.length;ind++){
+            max = Math.max(max,dj.size[ind]);
+        }
+
+        for(int r=0;r<n;r++){
+            for(int c=0;c<m;c++){
+                if(mat[r][c] == 0){
+                    Set<Integer> hs = new HashSet<>();
+
+                    for(int ind=0;ind<dir.length;ind++){
+                        int new_r = r + dir[ind][0];
+                        int new_c = c + dir[ind][1];
+
+                       
+                        if(new_r >=0 && new_r < n && new_c >=0 && new_c < m && mat[new_r][new_c] == 1){
+                             int v = m*new_r + new_c;
+                            hs.add(dj.findUPar(v));
+                        }
+
+                    }
+                   // System.out.println("hs "+hs);
+                    int cnt = 1;
+                    for(Integer ele: hs){
+                        cnt += dj.size[ele];
+                    }
+                    max = Math.max(max,cnt);
+                    
+
+                }
+
+            }
+        }
+
+        return  max;
+    }
+}
+
+
+
+

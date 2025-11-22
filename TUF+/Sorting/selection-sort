@@ -1,0 +1,27 @@
+## https://takeuforward.org/plus/dsa/sorting/algorithms/selection-sort
+
+class Solution {
+    public int[] selectionSort(int[] arr) {
+        int n = arr.length;
+        int mini = -1;
+
+        for(int i=0;i<n;i++){
+            mini = i;
+            // find the min element index
+            for(int j=i+1;j<n;j++){
+                if(arr[j] < arr[mini]){
+                    mini = j;
+                }
+            }
+            // place the min element in front
+            if(mini != i){
+                int temp = arr[mini];
+                arr[mini] = arr[i];
+                arr[i] = temp;
+            }
+        }
+
+        return arr;
+
+    }
+}

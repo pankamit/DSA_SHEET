@@ -1,0 +1,17 @@
+## https://leetcode.com/problems/find-minimum-operations-to-make-all-elements-divisible-by-three/?envType=daily-question&envId=2025-11-22
+
+class Solution {
+    public int minimumOperations(int[] arr) {
+        int n = arr.length;
+
+        int cnt =0;
+        for(int ind =0;ind<n;ind++){
+            arr[ind] = arr[ind]%3;
+            if(arr[ind] != 0){
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+}

@@ -1,0 +1,22 @@
+## https://takeuforward.org/plus/dsa/arrays/fundamentals/second-largest-element
+
+class Solution {
+    public int secondLargestElement(int[] arr) {
+        int n = arr.length;
+        int max = Integer.MIN_VALUE;
+        int smax = max;
+
+        for(int ind=0;ind<n;ind++){
+            if(max < arr[ind]){
+                smax = max;
+                max = arr[ind];
+            }else if(max != arr[ind] && smax < arr[ind]){
+                smax = arr[ind];
+            }
+        }
+
+        smax = (smax == Integer.MIN_VALUE ? -1 : smax);
+
+        return smax;
+    }
+}

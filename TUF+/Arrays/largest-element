@@ -1,0 +1,13 @@
+## https://takeuforward.org/plus/dsa/arrays/fundamentals/largest-element
+
+class Solution {
+    public int largestElement(int[] arr) {
+        int n = arr.length;
+        int max = arr[0];
+        for(int i=1;i<n;i++){
+           max = Math.max(max,arr[i]);
+        }
+
+        return max;
+    }
+}

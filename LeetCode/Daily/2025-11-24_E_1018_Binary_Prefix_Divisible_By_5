@@ -1,0 +1,21 @@
+##https://leetcode.com/problems/binary-prefix-divisible-by-5/?envType=daily-question&envId=2025-11-24
+
+class Solution {
+    public List<Boolean> prefixesDivBy5(int[] arr) {
+        int n = arr.length;
+        
+        List<Boolean> lst = new ArrayList<>();
+        long sum = 0;
+        for(int ind=0;ind<n;ind++){
+            sum = sum*2+arr[ind];
+           // System.out.println("sum "+sum);
+            
+            lst.add(sum %5 == 0);
+            sum=sum%5;
+        }
+
+       // Collections.reverse(lst);
+        return lst;
+
+    }
+}

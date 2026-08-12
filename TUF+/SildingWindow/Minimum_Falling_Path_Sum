@@ -1,0 +1,115 @@
+##https://takeuforward.org/plus/dsa/problems/minimum-falling-path-sum?subject=dsa&approach=optimal
+
+class Solution {
+    public int minFallingPathSum(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        //Integer[][] memo = new Integer[n][m];
+
+        int min = Integer.MAX_VALUE;
+        // for(int j=0;j < m; j++){
+        //     min = Math.min(min,tr(mat,n,m,0,j,memo));
+        // }
+
+        min = tr1(mat,n,m);
+        
+
+        return min;
+
+    }
+
+    int tr1(int[][] mat,int n,int m){
+
+        int[][] dp = new int[n][m];
+
+        for(int j=0;j<m;j++){
+            dp[n-1][j] = mat[n-1][j];
+        }
+
+        // if(r == n-1){
+        //     return mat[r][c];
+        // }
+
+        for(int r=n-2;r>=0;r--){
+            for(int c=m-1;c>=0;c--){
+
+                int sum = mat[r][c];
+                int min = Integer.MAX_VALUE;
+
+               // if(r+1 < n){
+                    int res = dp[r+1][c];
+                  //  if(res != Integer.MAX_VALUE){
+                     min = Math.min(min,sum + res);
+                   // }
+                //}
+                if(c-1 >=0){
+                    
+                     res = dp[r+1][c-1];
+                    //if(res != Integer.MAX_VALUE){
+                        min = Math.min(min,sum + res);
+                    //}
+                    
+                }
+                if(c+1 < m){
+                    
+                     res = dp[r+1][c+1];
+                    //if(res != Integer.MAX_VALUE){
+                        min = Math.min(min,sum + res);
+                    //}
+                
+                }
+
+                dp[r][c] = min;
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+        for(int j=0;j<m;j++){
+           min = Math.min(min,dp[0][j]);
+        }
+        return min;
+
+    }
+
+
+    int tr(int[][] mat,int n,int m,int r,int c,Integer[][] memo){
+
+        if(r == n-1){
+            return mat[r][c];
+        }
+
+        if(memo[r][c] != null){
+            return memo[r][c];
+        }
+
+        int sum = mat[r][c];
+        int min = Integer.MAX_VALUE;
+
+        if(r+1 < n){
+            int res = tr(mat,n,m,r+1,c,memo);
+            if(res != Integer.MAX_VALUE){
+                min = Math.min(min,sum + res);
+            }
+        }
+        if(r+1 < n && c-1 >=0){
+            
+            int res = tr(mat,n,m,r+1,c-1,memo);
+            if(res != Integer.MAX_VALUE){
+                min = Math.min(min,sum + res);
+            }
+            
+        }
+        if(r+1 < n && c+1 < m){
+            
+            int res = tr(mat,n,m,r+1,c+1,memo);
+            if(res != Integer.MAX_VALUE){
+                min = Math.min(min,sum + res);
+            }
+        
+        }
+
+        memo[r][c] = min;
+        return min;
+    }
+}

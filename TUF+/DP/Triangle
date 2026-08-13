@@ -1,0 +1,60 @@
+## https://takeuforward.org/plus/dsa/problems/triangle?subject=dsa&approach=optimal
+
+class Solution {
+    public int minTriangleSum(int[][] mat) {
+        int n = mat.length;
+        
+        // int[][] memo = new int[n][n];
+        // for(int ind=0;ind<n;ind++){
+        //     Arrays.fill(memo[ind],Integer.MAX_VALUE);
+        // }
+
+        // return  tr(mat,n,0,0,memo);
+    
+        return tr1(mat,n);
+    }
+
+    int tr1(int[][] mat,int n){
+        int[][] dp = new int[n+1][n+1];
+
+        // if(i == n){
+        //     return 0;
+        // }
+
+        for(int i=n-1;i>=0;i--){
+            for(int j=i;j>=0;j--){
+
+                int sum = mat[i][j];
+
+                int min = sum + dp[i+1][j];
+                //if((j+1) <= (i+1)){
+                    min = Math.min(min,sum + dp[i+1][j+1]);
+                //}
+
+                dp[i][j] = min;
+            }
+        }
+
+        return dp[0][0];
+    }
+
+    int tr(int[][] mat,int n,int i,int j,int[][] memo){
+        if(i == n){
+            return 0;
+        }
+
+        if(memo[i][j] != Integer.MAX_VALUE){
+            return memo[i][j];
+        }
+
+        int sum = mat[i][j];
+
+        int min = sum + tr(mat,n,i+1,j,memo);
+        if((j+1) <= (i+1)){
+            min = Math.min(min,sum + tr(mat,n,i+1,j+1,memo));
+        }
+
+        memo[i][j] = min;
+        return memo[i][j];
+    }
+}

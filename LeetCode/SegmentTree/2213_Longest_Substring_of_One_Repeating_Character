@@ -1,0 +1,161 @@
+##https://leetcode.com/problems/longest-substring-of-one-repeating-character/?envType=daily-question&envId=2026-08-13
+
+class Solution {
+
+    class Node{
+        char leftChar;
+        char rightChar;
+        int suffix;
+        int prefix;
+        int max;
+        int len;
+
+        Node(){
+
+        }
+
+        
+        Node(char ch){
+            this.leftChar = ch;
+            this.rightChar = ch;
+            this.suffix = 1;
+            this.prefix = 1;
+            this.max = 1;
+            this.len = 1;
+        }
+
+    }
+
+    Node[] tree;
+    
+
+
+    public int[] longestRepeating(String s, String qu, int[] quArr) {
+        
+        int n = s.length();
+        int k = qu.length();
+
+        int[] res = new int[k];
+
+        tree = new Node[n*4];
+        char[] chArr = s.toCharArray();
+
+
+        build(1,0,n-1,chArr);
+
+        for(int ind=0;ind<k;ind++){
+            chArr[quArr[ind]] = qu.charAt(ind);
+            update(1,0,n-1,chArr,quArr[ind]);
+            
+            res[ind] = tree[1].max;
+        }
+
+        return res;
+
+    }
+
+    void update(int node,int l,int r,char[] chArr,int index){
+
+        if(l == r){
+            tree[node] = new Node(chArr[index]);
+            return;
+        }
+
+        int mid = (l+r)/2;
+
+        if(index <= mid){
+            update(2*node,l,mid,chArr,index);
+        }else{
+            update(2*node+1,mid+1,r,chArr,index);
+        }
+
+        tree[node] = merge(tree[2*node],tree[2*node+1]);
+
+    }
+
+    void build(int node,int l,int r, char[] chArr){
+
+        if(l == r){
+            tree[node] = new Node(chArr[l]);
+            return;
+        }
+
+        int mid = (l+r)/2;
+
+
+        build(2*node,l,mid,chArr);
+        build(2*node+1,mid+1,r,chArr);
+
+        tree[node] = merge(tree[2*node],tree[2*node+1]);
+
+
+    }
+
+    Node merge(Node left, Node right){
+
+        Node node = new Node();
+        node.leftChar = left.leftChar;
+        node.rightChar = right.rightChar;
+        node.prefix = left.prefix;
+        node.suffix = right.suffix;
+        node.len = left.len + right.len;
+
+        int max = Math.max(left.max,right.max);
+
+        if(left.rightChar == right.leftChar){
+            int comb = left.suffix + right.prefix;
+            max = Math.max(max,comb);
+
+            if(left.prefix ==  left.len){
+              node.prefix =  left.prefix+right.prefix;
+            }
+
+            if(right.suffix == right.len){
+                node.suffix = left.suffix + right.suffix;
+            }
+
+
+        }
+
+        node.max = max;
+
+
+        return node;
+
+    }
+
+    // int find(String s,int n){
+
+    //     int l = 0;
+    //     int r = 0;
+
+    //     HashMap<Character,Integer> hm = new HashMap<>();
+
+    //     int max = 0;
+
+    //     while(r < n){
+    //         char ch = s.charAt(r);
+    //         hm.put(ch,hm.getOrDefault(ch,0)+1);
+
+    //         // Make it valid
+    //         while(hm.size() > 1){
+    //             ch = s.charAt(l);
+    //             int freq = hm.get(ch);
+    //             if(freq == 1){
+    //                 hm.remove(ch);
+    //             }else{
+    //                 hm.put(ch,freq-1);
+
+    //             }
+
+    //             l++;
+    //         }
+
+    //         max =Math.max(max,r-l+1);    
+    //         r++;
+    //     }
+
+    //     return max;
+
+    // }
+}

@@ -1,0 +1,46 @@
+## https://takeuforward.org/plus/dsa/problems/binary-subarrays-with-sum?subject=dsa&approach=optimal
+
+class Solution {
+    public int numSubarraysWithSum(int[] arr, int x) {
+        //your code goes here
+        int n = arr.length;
+
+        int a = tr(arr,n,x+1);
+        System.out.println("a "+a);
+        int b = tr(arr,n,x);
+        System.out.println("b "+b);
+        
+        return (a-b);
+
+    }
+
+    int tr(int[] arr,int n,int x){
+
+
+        int l = 0;
+        int r = 0;
+
+        int cnt = 0;
+        int sum = 0;
+
+        //System.out.println("checking for x "+x);
+        while(r < n){
+            sum += arr[r];
+
+           // System.out.println("sum "+sum+" r "+r+" l "+l);
+            // Make it valid
+            while(l <= r && sum >= x ){
+                sum = sum - arr[l];
+                l++;
+            }
+
+            cnt += (r-l+1);
+
+            r++;
+        }
+
+        return cnt;
+    }
+
+
+}

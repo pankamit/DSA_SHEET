@@ -1,0 +1,42 @@
+## https://takeuforward.org/plus/dsa/problems/count-number-of-nice-subarrays?subject=dsa&approach=optimal
+
+class Solution {
+    public int numberOfOddSubarrays(int[] arr, int k) {
+        //your code goes here
+        int n = arr.length;
+
+        int res = tr(arr,n,k+1) - tr(arr,n,k);
+        return res;
+        
+
+    }
+
+    int tr(int[] arr,int n,int k){
+
+        int l =0;
+        int r = 0;
+
+        int cnt = 0;
+        int sum = 0;
+
+        while(r < n){
+            if(arr[r]%2 != 0){
+                sum++;
+            }
+
+            // Make it valid
+            while(sum >= k){
+                if(arr[l]%2 != 0){
+                    sum--;
+                }
+                l++;
+            }
+
+            cnt += (r-l+1);
+            r++;
+        }
+
+        return cnt;
+
+    }
+}

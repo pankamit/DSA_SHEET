@@ -1,0 +1,27 @@
+## https://leetcode.com/problems/longest-subsequence-with-non-zero-bitwise-xor/description/?envType=daily-question&envId=2026-08-15
+
+class Solution {
+    public int longestSubsequence(int[] arr) {
+        int n = arr.length;
+
+        int xor = 0;
+        boolean nonZeroFlag = false; 
+        for(int ele: arr){
+            xor = xor ^ ele;
+            if(ele > 0){
+                nonZeroFlag = true;
+            }
+        }
+
+        if(xor > 0){
+            return n;
+        }
+
+        if(nonZeroFlag){
+            return n-1;
+        }else{
+            return 0;
+        }
+
+    }
+}

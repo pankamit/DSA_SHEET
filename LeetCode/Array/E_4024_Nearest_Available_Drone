@@ -1,0 +1,31 @@
+## https://leetcode.com/problems/nearest-available-drone/
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int nearestDrone(int[][] mat, int[] tArr) {
+        int x = tArr[0];
+        int y = tArr[1];
+
+        int n = mat.length;
+
+        int min = Integer.MAX_VALUE;
+        int mini = -1;
+        for(int ind=0;ind<n ; ind++){
+            int r = mat[ind][0];
+            int c = mat[ind][1];
+            int range = mat[ind][2];
+
+            int d = Math.abs(r-x)+Math.abs(c-y);
+            if(range >= d){
+                if(min > d){
+                    min = d;
+                    mini = ind;
+                }
+            }
+                
+        }
+
+        return mini;
+    }
+}

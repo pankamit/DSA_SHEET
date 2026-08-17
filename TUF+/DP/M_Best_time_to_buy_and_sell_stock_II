@@ -1,0 +1,43 @@
+## https://takeuforward.org/plus/dsa/problems/best-time-to-buy-and-sell-stock-ii?subject=dsa&approach=optimal
+# TC - O(n)
+# SC - O(n)
+
+
+class Solution {
+    public int stockBuySell(int[] arr, int n) {
+        
+        int[][] memo = new int[n][2];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<2;j++){
+                memo[i][j] = -1;
+            }
+        }
+
+        return tr(arr,n,0,0,memo);
+    }
+    
+    int tr(int[] arr,int n,int l,int canSell,int[][] memo){
+
+        if(l == n){
+            return 0;
+        }
+
+        if(memo[l][canSell] != -1){
+            return memo[l][canSell];
+        }
+
+        int max = tr(arr,n,l+1,canSell,memo);
+        if(canSell == 0){
+            
+            max = Math.max(max,-arr[l] + tr(arr,n,l+1,1,memo));
+        }else{
+            
+            max = Math.max(max,arr[l] + tr(arr,n,l+1,0,memo));
+        }
+
+        memo[l][canSell] = max;
+        return memo[l][canSell];
+    }
+}
+

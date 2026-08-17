@@ -1,0 +1,37 @@
+## https://leetcode.com/problems/minimize-the-maximum-waiting-time-at-synchronized-traffic-lights/
+# TC : O(nlogn+n+m)
+# SC : O(logN)
+
+// period
+// lights => duration of grean phase
+// period - lights[i] -> duration of red phase
+
+
+class Solution {
+    public int minPenalty(int time, int[] arr, int[] cArr) {
+        Arrays.sort(arr);
+
+        int n = arr.length;
+
+        int m = cArr.length;
+
+        int maxG = arr[0];
+        for(int ind=1;ind<n;ind++){
+            maxG = Math.max(maxG,arr[ind]);
+        }
+
+        int max = 0;
+        
+        for(int ind=0;ind<m;ind++){
+            int r = cArr[ind]%time;
+            if(r >= maxG){
+               max = Math.max(max,time-r);        
+            }
+        }
+
+        return max;
+
+
+        
+    }
+}

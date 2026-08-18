@@ -1,0 +1,84 @@
+## https://takeuforward.org/plus/dsa/problems/best-time-to-buy-and-sell-stock-iii?subject=dsa&approach=using-bounds
+# TC - O(n*k)
+# SC - O(n*k)
+
+class Solution {
+    public int stockBuySell(int[] arr, int n) {
+        int k = 2;
+
+        // int[][][] memo = new int[n][k+1][2];
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<=k;j++){
+        //         Arrays.fill(memo[i][j],Integer.MIN_VALUE);
+        //     }
+        // }
+
+        // return tr(arr,n,k,0,0,memo);
+        return tr1(arr,n,k);
+
+    }
+
+    int tr1(int[] arr,int n,int x){
+
+        int[][][] dp = new int[n+1][x+1][2];
+
+        // if(l == n){
+        //     return 0;
+        // }
+
+        // if(k == 0){
+        //     return 0;
+        // }
+
+        
+        for(int l =n-1;l>=0;l--){
+            for(int k=1;k<=x;k++){
+                for(int canSell=1;canSell>=0;canSell--){
+
+                    int max = dp[l+1][k][canSell];
+
+                    if(canSell == 0){
+                        // buy            
+                        max = Math.max(max,-arr[l] + dp[l+1][k][1]);
+                    }else{
+                        //int res = (k-1 >= 0) ? dp[l+1][k-1][0] : 0;
+                        max = Math.max(max,arr[l] + dp[l+1][k-1][0]);
+                    }
+
+                    dp[l][k][canSell] = max;
+                
+                }
+            }
+        }
+
+        return dp[0][x][0];
+    }
+
+    int tr(int[] arr,int n,int k,int l,int canSell,int[][][] memo){
+
+        if(l == n){
+            return 0;
+        }
+
+        if(k == 0){
+            return 0;
+        }
+
+        if(memo[l][k][canSell] != Integer.MIN_VALUE){
+            return memo[l][k][canSell];
+        }
+
+        int max = tr(arr,n,k,l+1,canSell,memo);
+
+        if(canSell == 0){
+            // buy            
+            max = Math.max(max,-arr[l] + tr(arr,n,k,l+1,1,memo));
+        }else{
+            max = Math.max(max,arr[l] + tr(arr,n,k-1,l+1,0,memo));
+        }
+
+        memo[l][k][canSell] = max;
+        return memo[l][k][canSell];
+    }
+}
+

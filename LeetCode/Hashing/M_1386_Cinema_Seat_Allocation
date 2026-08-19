@@ -1,0 +1,72 @@
+## https://leetcode.com/problems/cinema-seat-allocation/?envType=daily-question&envId=2026-08-19
+# TC : O(m) where m = mat.length
+# SC : O(m) where m = mat.length
+
+class Solution {
+    public int maxNumberOfFamilies(int n, int[][] mat) {
+      
+
+        HashMap<Integer,List<Integer>> hm = new HashMap<>();
+        for(int ind=0;ind<mat.length;ind++){
+            int r = mat[ind][0];
+            int c = mat[ind][1];
+
+          //  if(c >= 2 && c<= 9){
+                if(!hm.containsKey(r)){
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(c);
+                    hm.put(r,temp);
+                }else{
+                    List<Integer> temp = hm.get(r);
+                    temp.add(c);
+                    hm.put(r,temp);
+                }
+            //}
+        }
+
+       // System.out.println("hm "+hm);
+
+        int cnt = 0;
+        for(Map.Entry<Integer,List<Integer>> entry: hm.entrySet()){
+            int key = entry.getKey();
+            boolean a = true,b = true,c = true;
+            
+            for(int ele : entry.getValue()){
+                if(ele >= 2 && ele <= 5){
+                    a = false;
+                }
+                if(ele >= 4 && ele <= 7){
+                    b = false;
+                }
+                if(ele >= 6 && ele <= 9){
+                    c = false;
+                }
+
+            }
+
+          //  System.out.println(" key "+key+" a "+a+" b "+b+" c "+c+ " cnt "+cnt);
+
+            if(a && b && c){
+                cnt+=2;
+            }else if(a && c){
+                cnt+=2;
+            }else if((a && b) || (b && c)){
+                cnt++;
+            }else if((a && !b && !c) || (!a && b && !c) || (!a && !b && c)){
+                cnt++;
+            }
+
+          //  System.out.println("After cnt "+cnt);
+
+        }
+
+        cnt = cnt + (n-hm.size())*2;
+
+        return cnt;
+
+
+
+    }
+
+
+}

@@ -1,0 +1,38 @@
+## https://takeuforward.org/plus/dsa/problems/deletion-of-the-kth-element-of-ll?subject=dsa&approach=memoization
+# TC : O(k)
+# SC : O(1)
+
+
+/*
+Definition of singly linked list:
+class ListNode{
+    public int data;
+    public ListNode next;
+    ListNode() { data = 0; next = null; }
+    ListNode(int x) { data = x; next = null; }
+    ListNode(int x, ListNode next) { data = x; this.next = next; }
+}
+*/
+
+class Solution {
+    public ListNode deleteKthNode(ListNode head, int k) {
+        // Your code goes here
+        ListNode node = head;
+        if(k == 1){
+            return node.next;
+        }
+
+        int cnt = 2;
+        while(node != null && cnt < k){
+            node = node.next;
+            cnt++;
+        }
+
+        ListNode next = node.next;
+        if(next != null){
+           node.next = node.next.next; 
+        }
+
+        return head;
+    }
+}

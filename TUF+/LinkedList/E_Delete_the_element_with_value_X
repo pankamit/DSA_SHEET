@@ -1,0 +1,41 @@
+## https://takeuforward.org/plus/dsa/problems/delete-the-element-with-value-x?subject=dsa&approach=optimal
+# TC : O(N)
+# SC : O(1)
+
+/*
+Definition of singly linked list:
+class ListNode{
+    public int data;
+    public ListNode next;
+    ListNode() { data = 0; next = null; }
+    ListNode(int x) { data = x; next = null; }
+    ListNode(int x, ListNode next) { data = x; this.next = next; }
+}
+*/
+
+class Solution {
+    public ListNode deleteNodeWithValueX(ListNode head, int x) {
+        //YOUR CODE GOES HERE
+        ListNode node = head;
+
+        if(node == null){
+            return null;
+        }
+
+        if(node.data == x){
+            return node.next;
+        }
+
+
+        while(node.next != null){
+
+            if(node.next.data == x){
+                node.next = node.next.next;
+                return head;
+            }
+            node = node.next;
+        }
+
+        return head;
+    }
+}

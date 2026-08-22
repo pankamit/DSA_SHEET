@@ -1,0 +1,22 @@
+## https://leetcode.com/problems/check-divisibility-by-digit-sum-and-product/?envType=daily-question&envId=2026-08-22
+# TC : O(X) x -> no of digits
+# SC : O(1)
+
+class Solution {
+    public boolean checkDivisibility(int n) {
+        int sum = 0;
+        int fact = 1;
+
+        int div = n;
+
+        while(div != 0){
+            int rem = div%10;
+            div = div / 10;
+            sum += rem;
+            fact *= rem;
+
+        }
+
+        return n%(sum+fact) == 0;
+    }
+}

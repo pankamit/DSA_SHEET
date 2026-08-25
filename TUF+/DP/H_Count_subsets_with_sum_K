@@ -1,0 +1,81 @@
+## https://takeuforward.org/plus/dsa/problems/count-subsets-with-sum-k?subject=dsa&approach=tabulation&tab=submissions
+# TC : O(N*K)
+# SC : O(N*K)
+
+// 10^9 modulus is pending
+class Solution {
+
+    private static final int MOD = 1_000_000_007;
+
+    public int perfectSum(int[] arr, int k) {
+  
+        int n = arr.length;
+
+        // int[][] memo = new int[n][k+1];
+        // for(int ind=0;ind<n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // return tr(arr,n,0,k,memo);
+
+        return tr1(arr,n,k);
+    }
+
+    int tr1(int[] arr,int n,int tar){
+
+        int[][] dp = new int[n+1][tar+1];
+
+        for(int ind=0;ind<=n;ind++){
+            dp[ind][0] = 1;
+        }
+
+        // if(k == 0){
+        //     return 1;
+        // }
+
+        // if(l == n){
+        //     return 0;
+        // }
+
+        for(int l=n-1;l>=0;l--){
+            for(int k=1;k<=tar;k++){
+                    
+                int cnt = dp[l+1][k];
+               
+                if(arr[l] <= k){
+                    cnt += dp[l+1][k-arr[l]];
+                }
+
+
+                dp[l][k] = cnt%MOD;
+            }
+        }
+
+        return dp[0][tar];
+    }
+
+    int tr(int[] arr,int n,int l,int k,int[][] memo){
+
+        if(k == 0){
+            return 1;
+        }
+
+        if(l == n){
+            return 0;
+        }
+
+        if(memo[l][k] != -1){
+            return  memo[l][k];
+        }
+
+        int cnt = tr(arr,n,l+1,k,memo);
+        if(arr[l] <= k){
+           cnt += tr(arr,n,l+1,k-arr[l],memo);
+        }
+
+
+        memo[l][k] = cnt%MOD;
+        return memo[l][k];
+    }
+}
+

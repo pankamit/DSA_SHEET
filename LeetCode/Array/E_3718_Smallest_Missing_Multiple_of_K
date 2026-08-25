@@ -1,0 +1,18 @@
+## https://leetcode.com/problems/smallest-missing-multiple-of-k/?envType=daily-question&envId=2026-08-25
+# TC : O(NLogN)
+# SC : O(1)
+
+class Solution {
+    public int missingMultiple(int[] arr, int k) {
+        int n = arr.length;
+
+        Arrays.sort(arr);
+        int fact = 1;
+        for(int ind=0;ind<n;ind++){
+            if(fact*k == arr[ind]){
+                fact++;
+            }
+        }
+        return fact*k;
+    }
+}

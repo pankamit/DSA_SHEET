@@ -1,0 +1,91 @@
+## https://takeuforward.org/plus/dsa/problems/count-partitions-with-given-difference?subject=dsa&approach=binary-search
+# TC: O(N*S2) where S2 = (total-k)/2
+# SC : O(N*S2) where S2 = (total-k)/2
+
+// (total)-2*s2 = k
+// s2 = (total-k)/2
+
+class Solution {
+
+ private static final int MOD = 1_000_000_007;
+ 
+ public int countPartitions(int n, int k, int[] arr) {
+        int total = 0;
+        for(int ind=0;ind<n;ind++){
+            total += arr[ind];
+        }
+
+        int diff = total -k;
+        if(diff < 0 || diff%2 == 1){
+            return 0;
+        }
+
+        int s2 = (diff)/2;
+        
+
+        System.out.println("s2 "+s2);
+        // int[][] memo = new int[n][s2+1];
+        // for(int ind=0;ind<n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // return tr(arr,n,0,s2,memo);
+
+        return tr1(arr,n,s2);
+    }
+
+    int tr1(int[] arr,int n,int sum2){
+
+        int[][] dp = new int[n+1][sum2+1];
+
+        dp[n][0] = 1;
+
+        // if(l == n){
+        //     if(s2 == 0){
+        //         return 1;
+        //     }
+        //     return 0;
+        // }
+
+        for(int l=n-1;l>=0;l--){
+            for(int s2=0;s2<=sum2;s2++){
+                    
+                int cnt = dp[l+1][s2];
+                if(s2 - arr[l] >= 0){
+                    cnt += dp[l+1][s2-arr[l]];
+                }
+                
+                dp[l][s2] = cnt%MOD;
+            }
+        }
+
+        return dp[0][sum2];
+
+    }
+
+    int tr(int[] arr,int n,int l,int s2,int[][] memo){
+
+        if(l == n){
+            if(s2 == 0){
+                return 1;
+            }
+            return 0;
+        }
+
+        if(memo[l][s2] != -1){
+            return memo[l][s2];
+        }
+
+
+        int cnt = tr(arr,n,l+1,s2,memo);
+        if(s2 - arr[l] >= 0){
+            cnt += tr(arr,n,l+1,s2-arr[l],memo);
+        }
+        
+        memo[l][s2] = cnt%MOD;
+        return memo[l][s2];
+
+    }
+
+
+}

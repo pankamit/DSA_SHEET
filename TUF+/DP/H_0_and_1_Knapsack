@@ -1,0 +1,67 @@
+## https://takeuforward.org/plus/dsa/problems/0-and-1-knapsack?subject=dsa&approach=binary-search
+# TC : O(N*W)
+# SC : O(N*W)
+
+class Solution {
+    public int knapsack01(int[] wArr, int[] vArr, int n, int W) {
+
+        // int[][] memo = new int[n][W+1];
+        // for(int ind=0;ind<n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // return tr(wArr,vArr,n,0,W,memo);
+
+        return tr1(wArr,vArr,n,W);
+    }
+
+    int tr1(int[] wArr,int[] vArr,int n,int WT){
+
+        int[][] dp = new int[n+1][WT+1];
+
+
+        // if(l == n){
+        //     return 0;
+        // }
+        // if(W == 0){
+        //     return 0;
+        // }
+
+        
+        for(int l=n-1;l>=0;l--){
+            for(int W=1;W<=WT;W++){
+                    
+                int max = dp[l+1][W];
+                if(wArr[l] <= W){
+                    max = Math.max(max,vArr[l] + dp[l+1][W-wArr[l]]);
+                }
+
+                dp[l][W] = max;
+            }
+        }
+
+        return dp[0][WT];
+    }
+
+    int tr(int[] wArr,int[] vArr,int n,int l,int W,int[][] memo){
+
+        if(l == n){
+            return 0;
+        }
+        if(W == 0){
+            return 0;
+        }
+
+        if(memo[l][W] != -1){
+            return memo[l][W];
+        }
+
+        int max = tr(wArr,vArr,n,l+1,W,memo);
+        if(wArr[l] <= W){
+            max = Math.max(max,vArr[l] + tr(wArr,vArr,n,l+1,W-wArr[l],memo));
+        }
+
+        memo[l][W] = max;
+        return memo[l][W];
+    }
+}

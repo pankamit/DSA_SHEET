@@ -1,0 +1,84 @@
+## https://takeuforward.org/plus/dsa/problems/minimum-coins?subject=dsa&approach=recursion
+# TC : O(N*amt)
+# SC : O(n*amt)
+
+class Solution {
+    public int MinimumCoins(int[] arr, int amt) {
+
+        int n = arr.length;
+
+        // int[][] memo = new int[n][amt+1];
+        // for(int ind=0;ind<n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // int res = tr(arr,n,0,amt,memo);
+        int res = tr1(arr,n,amt);
+        return res != Integer.MAX_VALUE ? res : -1;
+    }
+
+    int tr1(int[] arr,int n,int total){
+
+        int[][] dp = new int[n+1][total+1];
+        
+        // if(amt == 0){
+        //     return 0;
+        // }
+
+        // if(l == n){
+        //     return Integer.MAX_VALUE;
+        // }
+
+        for(int ind=0;ind<=total;ind++){
+            dp[n][ind] = Integer.MAX_VALUE;
+        }
+
+        for(int l=n-1;l>=0;l--){
+            for(int amt=1;amt<=total;amt++){
+                    
+                int min = dp[l+1][amt];
+                if(arr[l] <= amt){
+                    int res = dp[l][amt-arr[l]];
+                    if(res != Integer.MAX_VALUE){
+                        min = Math.min(min,1 + res);
+                    }
+                }
+
+                dp[l][amt] = min;
+            }
+        }
+      
+        return dp[0][total];
+        
+    }
+
+    int tr(int[] arr,int n,int l,int amt,int[][] memo){
+        
+        if(amt == 0){
+            return 0;
+        }
+
+       
+        if(l == n){
+            return Integer.MAX_VALUE;
+        }
+
+        if(memo[l][amt] != -1){
+            return memo[l][amt];
+        }
+
+
+        int min = tr(arr,n,l+1,amt,memo);
+        if(arr[l] <= amt){
+            int res = tr(arr,n,l,amt-arr[l],memo);
+            if(res != Integer.MAX_VALUE){
+                min = Math.min(min,1 + res);
+            }
+        }
+
+        memo[l][amt] = min;
+        return memo[l][amt];
+
+    }
+}
+

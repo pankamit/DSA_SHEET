@@ -1,0 +1,48 @@
+## https://takeuforward.org/plus/dsa/problems/target-sum?subject=dsa&approach=recursion
+# TC : O(N*2*sum)
+# SC : O(N*2*sum)
+
+class Solution {
+    private static final int MOD = 1_000_000_007;
+
+    public int targetSum(int n, int x, int[] arr) {
+        
+        int sum = 0;
+        for(int ind=0;ind<n;ind++){
+            sum += arr[ind];
+        }
+
+        int[][] memo = new int[n][2*sum+1];
+        
+        for(int ind=0;ind<n;ind++){
+            Arrays.fill(memo[ind],Integer.MAX_VALUE);
+        }
+
+        return tr(arr,n,0,0,x,sum,memo);
+    }
+
+    int tr(int[] arr,int n,int l,int s,int x,int sum,int[][] memo){
+
+        if(l == n){
+            if(x == s){
+                return 1;
+            }else{
+                return 0;
+            }
+        } 
+
+        if(memo[l][s+sum] != Integer.MAX_VALUE){
+            return memo[l][s+sum];
+        }  
+
+
+        int cnt = tr(arr,n,l+1,s+arr[l],x,sum,memo);
+        cnt += tr(arr,n,l+1,s-arr[l],x,sum,memo);
+
+        memo[l][s+sum] = cnt%MOD;
+        return  memo[l][s+sum];
+      //  return cnt%MOD;
+    }
+
+}
+

@@ -1,0 +1,40 @@
+## https://leetcode.com/problems/removing-minimum-and-maximum-from-array/?envType=daily-question&envId=2026-08-30
+# O(N)
+# O(1)
+
+class Solution {
+    public int minimumDeletions(int[] arr) {
+
+        int n = arr.length;
+
+        int max = arr[0];
+        int min = arr[0];
+        int maxi = 0;
+        int mini = 0;
+
+        for(int ind=1;ind<n;ind++){
+            if(max < arr[ind]){
+                max = arr[ind];
+                maxi = ind;
+            }
+            if(min > arr[ind]){
+                min = arr[ind];
+                mini = ind;
+            }
+
+        }
+
+        // a = 1,b = 5, n = 8
+
+        int a = Math.min(maxi,mini);
+        int b = Math.max(maxi,mini);
+
+        // a to b
+        int res = (a+1)+Math.min(n-b,b-a);
+
+        // b to a
+        res = Math.min(res,(n-b)+Math.min(a+1,b-a));
+        return res;
+
+    }
+}

@@ -1,0 +1,58 @@
+## https://takeuforward.org/plus/dsa/problems/book-allocation-problem?subject=dsa&approach=binary-search&tab=editorial
+# TC : O(N*log(sum(arr) - max(arr)))
+# SC : O(1)
+
+
+class Solution {
+    public int findPages(int[] arr, int m) {
+        int n = arr.length;
+
+        if(n < m){
+            return -1;
+        }
+
+        int sum = 0;
+        int max = 0;
+        for(int ind=0;ind<n;ind++){
+            sum += arr[ind];
+            max = Math.max(max,arr[ind]);
+        }
+
+        int l = max;
+        int r = sum;
+
+        int res = -1;
+        while(l <= r){
+            int mid = l+(r-l)/2;
+
+            if(check(arr,n,m,mid)){
+                res = mid;
+                r = mid-1;
+            }else{
+                l = mid+1;
+            }
+        }
+
+        return res;
+    }
+
+    boolean check(int[] arr,int n,int m,int x){
+
+        int cnt = 1;
+        int temp = 0;
+        for(int ind=0;ind<n;ind++){
+            temp += arr[ind];
+            if(temp > x){
+                cnt++;
+                temp = arr[ind];
+            }
+        }
+
+        if(cnt <= m){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+}

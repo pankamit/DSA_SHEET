@@ -1,4 +1,6 @@
 ## https://takeuforward.org/plus/dsa/problems/aggressive-cows?subject=dsa&approach=linear-search&tab=submissions
+# TC : O(NlogN + log(max(arr) - min(arr)))
+# SC : O(1)
 
 class Solution {
     public int aggressiveCows(int[] arr, int k) {

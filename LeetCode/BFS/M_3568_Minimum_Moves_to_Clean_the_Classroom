@@ -1,0 +1,150 @@
+## https://leetcode.com/problems/minimum-moves-to-clean-the-classroom/?envType=daily-question&envId=2026-09-01
+
+
+class Solution {
+    public int minMoves(String[] sArr, int energy) {
+        int n = sArr.length;
+        int m = sArr[0].length();
+
+        char[][] mat = new char[n][m];
+        for(int ind=0;ind<n;ind++){
+            mat[ind] = sArr[ind].toCharArray();
+        }
+
+
+        int r =0;
+        int c = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 'S'){
+                    r =i;
+                    c = j;
+                    break;
+                }
+            }
+        }
+
+        int[][] lMat = new int[n][m];
+
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 'L'){
+                    cnt++;
+                    lMat[i][j] = cnt;
+                }
+            }
+        }
+
+        boolean[][][][] visited = new boolean[n][m][energy + 1][1 << cnt];
+
+        
+        Queue<Pair> qu = new ArrayDeque<>();
+        int mask = 0;
+        
+        visited[r][c][energy][mask] = true;
+        qu.add(new Pair(r,c,0,energy,mask));
+
+        int[][] dir = {{-1,0},{1,0},{0,-1},{0,1}};
+
+       // System.out.println("cnt "+cnt);
+
+        int fullMask = (1<<cnt)-1;
+
+        while(!qu.isEmpty()){
+           Pair pair = qu.remove();
+           r = pair.r;
+           c = pair.c;
+           int d = pair.d;
+           int e = pair.e;
+           int curr_mask = pair.mask;
+           
+          // System.out.println("pair "+pair);
+           if(fullMask == curr_mask){
+             return d;
+           }
+
+
+           if(e == 0){
+             continue; 
+           }
+
+           for(int ind=0;ind<dir.length;ind++){
+               int new_r = r + dir[ind][0];
+               int new_c = c + dir[ind][1];
+
+               if(new_r >=0 && new_r < n && new_c >= 0 && new_c < m){
+                    if(mat[new_r][new_c] == 'X'){
+                        continue;
+                    }
+                    
+                    int li = lMat[new_r][new_c];
+                    int new_mask = curr_mask;
+
+                    if(mat[new_r][new_c] == 'L'){
+                        
+                        int bit = 1<<(li-1);
+            
+                        new_mask = new_mask | bit;
+                        if(!visited[new_r][new_c][e-1][new_mask]){
+                            visited[new_r][new_c][e-1][new_mask] = true;
+                            Pair tpair = new Pair(new_r,new_c,d+1,e-1,new_mask);
+                            qu.add(tpair);
+                        }
+                                     
+                    }else if(mat[new_r][new_c] == 'R'){
+                        if(!visited[new_r][new_c][energy][new_mask]){
+                            visited[new_r][new_c][energy][new_mask] = true;
+                            Pair tpair = new Pair(new_r,new_c,d+1,energy,new_mask);
+                            qu.add(tpair);
+                        }
+                    }else{
+                       
+                         if(!visited[new_r][new_c][e-1][new_mask]){
+                            visited[new_r][new_c][e-1][new_mask]=true;
+                            Pair tpair = new Pair(new_r,new_c,d+1,e-1,new_mask);
+                            qu.add(tpair);
+                         }
+                    }
+               }
+
+           }
+
+        }
+
+        return -1;
+
+    }
+
+    // private String createKey(
+    //         int r,
+    //         int c,
+    //         int energy,
+    //         int mask) {
+
+    //     return r + ":" + c +
+    //            ":" + energy +
+    //            ":" + mask;
+    // }
+
+    class Pair{
+        int r;
+        int c;
+        int d;
+        int e;
+        int mask;
+ 
+        Pair(int r,int c,int d,int e,int mask){
+            this.r = r;
+            this.c = c;
+            this.d = d;
+            this.e = e;
+            this.mask = mask;
+
+        }
+        
+        public String toString(){
+            return " [ r "+r+" c "+c+" d "+d+" e "+e+" mask "+mask+" ] ";
+        }
+    }
+}

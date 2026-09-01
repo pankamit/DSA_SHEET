@@ -1,0 +1,101 @@
+## https://takeuforward.org/plus/dsa/problems/rod-cutting-problem?subject=dsa&approach=binary-search
+# TC : O(N*N)
+# SC : O(N*N)
+
+class Solution{
+    public int RodCutting(int arr[], int n) {
+
+        // int[][] memo = new int[n+1][n+1];
+        
+        // for(int ind=0;ind<=n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // return  tr(arr,n,0,memo);
+       
+        return  tr1(arr,n);
+
+    }
+
+    int tr1(int[] arr,int len){
+
+        int[][] dp = new int[len+2][len+2];
+
+        // if(n == 0){
+        //     return 0;
+        // }
+
+        // if(l > n){
+        //     return 0;
+        // }
+
+        for(int n=1;n<=len;n++){
+            for(int l=n;l>=0;l--){
+                    
+                // Not Pick
+                int max = dp[n][l+1];
+                
+                // Pick
+                if(l > 0){
+                    max = Math.max(max,arr[l-1] + dp[n-l][0]);
+                }
+
+
+                dp[n][l] = max;
+            }
+        }
+
+        return dp[len][0];
+        
+
+    }
+
+    int tr(int[] arr,int n,int l,int[][] memo){
+
+        if(n == 0){
+            return 0;
+        }
+
+        if(l > n){
+            return 0;
+        }
+
+        if(memo[n][l] != -1){
+            return memo[n][l];
+        }
+
+        // Not Pick
+        int max = tr(arr,n,l+1,memo);
+        
+        // Pick
+        if(l > 0){
+            max = Math.max(max,arr[l-1] + tr(arr,n-l,0,memo));
+        }
+
+
+        memo[n][l] = max;
+        return memo[n][l];
+        
+
+    }
+
+    // int tr(int[] arr,int n,int[] memo){
+
+    //     if(n == 0){
+    //         return 0;
+    //     }
+
+    //     if(memo[n] != -1){
+    //         return memo[n];
+    //     }
+
+    //     int max = 0;
+    //     for(int ind=1;ind<=n;ind++){
+    //         max = Math.max(max,arr[ind-1] + tr(arr,n-ind,memo));
+    //     }
+
+    //     memo[n] = max;
+    //     return memo[n];
+
+    // }
+}

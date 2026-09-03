@@ -1,0 +1,56 @@
+##https://takeuforward.org/plus/dsa/problems/print-longest-increasing-subsequence?subject=dsa&approach=optimal
+# TC : O(N^2)
+# SC : O(N)
+
+
+import java.util.stream.Collectors;
+
+class Solution {
+    public List<Integer> longestIncreasingSubsequence(int[] arr) {
+        int n = arr.length;
+
+        List<Integer> lst = new ArrayList<>();
+
+        if(n == 0){
+            return lst;
+        }
+
+        int[] lArr = new int[n];
+        int[] pArr = new int[n];
+
+        Arrays.fill(lArr,1);
+
+        int prev = -1;
+
+        int max = Integer.MIN_VALUE;
+        for(int ind=0; ind<n; ind++){
+            pArr[ind] = ind;
+
+            for(int j=0;j<ind;j++){
+                if(arr[j] < arr[ind] && (lArr[j]+1 > lArr[ind])){
+                    lArr[ind] = lArr[j]+1;
+                    pArr[ind] = j; 
+                }
+            }
+
+            if(max < lArr[ind]){
+                max = lArr[ind];
+                prev = ind;
+            }
+
+        }
+
+        
+        
+        
+        while(pArr[prev] != prev){
+            lst.add(arr[prev]);
+            prev = pArr[prev];
+        }
+        lst.add(arr[prev]);
+        Collections.reverse(lst);
+        
+        
+        return lst;
+    }
+}

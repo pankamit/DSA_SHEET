@@ -1,0 +1,87 @@
+## https://takeuforward.org/plus/dsa/problems/minimum-insertions-or-deletions-to-convert-string-a-to-b?subject=dsa&approach=optimal
+# TC : O(N*M)
+# SC : O(N*M)
+
+class Solution {
+    public int minOperations(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+
+        // int[][] memo = new int[n+1][m+1];
+        // for(int ind=0;ind<=n;ind++){
+        //     Arrays.fill(memo[ind],-1);
+        // }
+
+        // return tr(s1,s2,n,m,memo);
+
+        return tr1(s1,s2,n,m);
+    }
+
+    int tr1(String s1,String s2,int n,int m){
+
+        int[][] dp = new int[n+1][m+1];
+       
+        for(int r=1;r<=m;r++){
+            dp[0][r] = r;
+        }
+        // if(l == 0){
+        //     return r;
+        // }
+
+        for(int l=1;l<=n;l++){
+            dp[l][0] = l;
+        }
+
+        // if(r == 0){
+        //     return l;
+    //    }
+
+        for(int l=1;l<=n;l++){
+            for(int r=1;r<=m;r++){
+                    
+                int min = Integer.MAX_VALUE;
+                if(s1.charAt(l-1) == s2.charAt(r-1)){
+                    min = dp[l-1][r-1];
+                }else{
+                    min = Math.min(min,1+dp[l][r-1]);
+                    min = Math.min(min,1+dp[l-1][r]);
+                }
+                
+                dp[l][r] = min;
+            }
+        }
+
+        return dp[n][m];
+
+    }
+
+  
+    int tr(String s1,String s2,int l,int r,int[][] memo){
+       
+        if(l == 0){
+            return r;
+        }
+
+        if(r == 0){
+            return l;
+        }
+
+        if(memo[l][r] != -1){
+            return memo[l][r];
+        }
+
+
+        int min = Integer.MAX_VALUE;
+        if(s1.charAt(l-1) == s2.charAt(r-1)){
+            min = tr(s1,s2,l-1,r-1,memo);
+        }else{
+            min = Math.min(min,1+tr(s1,s2,l,r-1,memo));
+            min = Math.min(min,1+tr(s1,s2,l-1,r,memo));
+        }
+        
+        memo[l][r] = min;
+        return memo[l][r];
+
+    }
+}
+

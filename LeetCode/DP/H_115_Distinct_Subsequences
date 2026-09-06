@@ -1,0 +1,78 @@
+## https://leetcode.com/problems/distinct-subsequences/?envType=daily-question&envId=2026-09-06
+# TC : O(N*M)
+# SC : O(N*M)
+
+class Solution {
+    public int numDistinct(String s, String t) {
+        int n = s.length();
+        int m = t.length();
+
+        // int[][] memo = new int[n+1][m+1];
+        // for(int i=0;i<=n;i++){
+        //     for(int j=0;j<=m;j++){
+        //         memo[i][j] = -1;
+        //     }
+        // }
+
+        // return tr(s,t,n,m,memo);
+
+        return tr1(s,t,n,m);
+    }
+
+    int tr1(String s,String t,int len1,int len2){
+
+        int[][] dp = new int[len1+1][len2+1];
+
+        for(int i=0;i<=len1;i++){
+            dp[i][0] = 1;
+        }
+        // if(m == 0){
+        //     return 1;
+        // }
+
+        // if(n == 0){
+        //     return 0;
+        // }
+
+        for(int n=1;n<=len1;n++){
+            for(int m=1;m<=len2;m++){
+                    
+                int cnt = 0;
+                if(s.charAt(n-1) == t.charAt(m-1)){
+                    cnt += dp[n-1][m-1];
+                }
+                cnt += dp[n-1][m];
+                
+                dp[n][m] = cnt;
+            }
+        }
+
+        return dp[len1][len2];
+        
+    }
+
+    int tr(String s,String t,int n,int m,int[][] memo){
+
+        if(m == 0){
+            return 1;
+        }
+
+        if(n == 0){
+            return 0;
+        }
+
+        if(memo[n][m] != -1){
+            return memo[n][m];
+        }
+
+        int cnt = 0;
+        if(s.charAt(n-1) == t.charAt(m-1)){
+            cnt += tr(s,t,n-1,m-1,memo);
+        }
+        cnt += tr(s,t,n-1,m,memo);
+        
+        memo[n][m] = cnt;
+        return memo[n][m];
+
+    }
+}

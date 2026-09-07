@@ -1,0 +1,42 @@
+## https://leetcode.com/problems/distinct-subsequences-ii/?envType=daily-question&envId=2026-09-07
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    private static final int MOD = 1_000_000_007;
+    public int distinctSubseqII(String s) {
+        int n = s.length();
+        int[] dp = new int[n];
+
+        HashMap<Character,Integer> hm = new HashMap<>();
+
+        dp[0]=2;
+        hm.put(s.charAt(0),0);
+
+
+        for(int ind=1;ind<n;ind++){
+            char ch = s.charAt(ind);
+            
+
+            if(hm.containsKey(ch)){
+                int prev = hm.get(ch);
+                int sub = 1;
+                if(prev > 0){
+                    sub = dp[prev-1];
+                }
+                
+                dp[ind] = (int)((2L*dp[ind-1]-sub+MOD)%MOD);
+            }else{
+                dp[ind] = (int)(2L*dp[ind-1]%MOD);
+            
+            }
+
+            hm.put(ch,ind); 
+            System.out.println(" dp[ind] "+dp[ind]+" hm"+hm);
+        }
+
+        
+
+        return (int)((dp[n-1]-1+MOD)%MOD);
+    }
+}

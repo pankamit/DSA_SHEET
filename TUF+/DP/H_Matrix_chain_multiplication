@@ -1,0 +1,80 @@
+## https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication?subject=dsa&approach=optimal&sidebar=open
+# TC : O(N*N*N)
+# SC : O(N*N*N)
+
+class Solution {
+    public int matrixMultiplication(int[] arr) {
+        //your code goes here
+        int n = arr.length;
+
+
+        // int[][] memo = new int[n][n];
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<n;j++){
+        //         memo[i][j] = -1;
+        //     }
+        // }      
+
+        // return tr(arr,0,n-1,memo);
+
+        return tr1(arr,n);
+    }
+
+    int tr1(int[] arr,int n){
+      
+        int[][] dp = new int[n][n]; 
+
+        // if(i == j){
+        //     return 0;
+        // }
+
+        // if(j == i+1){
+        //     return 0;
+        // }
+// i -> 1 
+// j -> n-1
+        for(int i=n-1;i>=0;i--){
+            for(int j=i+2;j<n;j++){
+
+                int min = Integer.MAX_VALUE;
+                for(int k=i+1;k<j;k++){
+                    int res = (arr[i]*arr[k]*arr[j])
+                    + dp[i][k]
+                    + dp[k][j];
+
+                    min = Math.min(min,res);
+                }
+
+                dp[i][j] = min;
+            }
+        }
+
+        return dp[0][n-1];
+    }
+
+    int tr(int[] arr,int i,int j,int[][] memo){
+
+        if(i == j){
+            return 0;
+        }
+
+        if(j == i+1){
+            return 0;
+        }
+
+        if(memo[i][j] != -1){
+            return memo[i][j];
+        }
+
+        int min = Integer.MAX_VALUE;
+        for(int k=i+1;k<j;k++){
+            int res = (arr[i]*arr[k]*arr[j])
+            + tr(arr,i,k,memo)
+            + tr(arr,k,j,memo);
+            min = Math.min(min,res);
+        }
+
+        memo[i][j] = min;
+        return memo[i][j];
+    }
+}

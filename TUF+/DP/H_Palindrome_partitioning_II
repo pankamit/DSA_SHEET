@@ -1,0 +1,91 @@
+## https://takeuforward.org/plus/dsa/problems/palindrome-partitioning-ii-?subject=dsa&approach=optimal
+# TC : O(N*N)
+# SC : O(N)
+
+class Solution {
+    int minCut(String s) {
+        //your code goes here
+        int n = s.length();
+
+        char[] chArr = s.toCharArray();
+
+        // int[] memo = new int[n];
+        // Arrays.fill(memo,-1);
+
+        // return tr(chArr,n,0,memo);
+
+        return tr1(chArr,n);
+    }
+
+    int tr1(char[] chArr,int n){
+
+        // if(i == n){
+        //     return 0;
+        // }
+
+        int[] dp = new int[n+1];
+
+        for(int i=n-2;i>=0;i--){
+
+            if(isPall(chArr,i,n-1)){
+                dp[i] = 0;
+                continue;
+            }
+
+            int min = Integer.MAX_VALUE;
+            for(int k=i;k<n-1;k++){
+                if(isPall(chArr,i,k)){
+                    int res = 1+dp[k+1];
+                    min = Math.min(min,res);
+                }
+            }
+
+            dp[i] = min;
+        }
+
+        return dp[0];
+        
+    }
+
+    int tr(char[] chArr,int n,int i,int[] memo){
+
+        if(i == n){
+            return 0;
+        }
+
+        if(isPall(chArr,i,n-1)){
+            return 0;
+        }
+
+        if(memo[i] != -1){
+            return memo[i];
+        }
+
+       
+        int min = Integer.MAX_VALUE;
+        for(int k=i;k<n-1;k++){
+            if(isPall(chArr,i,k)){
+               int res = 1+tr(chArr,n,k+1,memo);
+               min = Math.min(min,res);
+            }
+        }
+
+        memo[i] = min;
+        return memo[i];
+        
+    }
+
+    boolean isPall(char[] chArr,int l,int r){
+        
+        while(l <= r){
+            if(chArr[l] != chArr[r]){
+                return false;
+            }
+            l++;
+            r--;
+        }
+
+        return true;
+
+    }
+}

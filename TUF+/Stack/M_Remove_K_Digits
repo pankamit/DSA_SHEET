@@ -1,0 +1,57 @@
+## https://takeuforward.org/plus/dsa/problems/remove-k-digits?subject=dsa&approach=optimal
+# TC : O(N*N)
+# SC : O(N)
+
+
+class Solution {
+    public String removeKdigits(String s, int k) {
+       int n = s.length();
+
+       char[] chArr = s.toCharArray();
+
+       if(k == n){
+          return "0";
+       }
+
+       int r = 0;
+
+       Stack<Character> stack = new Stack<>();
+
+       while(r < n){
+        while(!stack.isEmpty() && stack.peek() > chArr[r] && k > 0){
+            stack.pop();
+            k--;
+        }
+        stack.push(chArr[r]);
+        r++;
+       }
+
+       while(k > 0){
+        stack.pop();
+        k--;
+       }
+
+       String res = "";
+
+       while(!stack.isEmpty()){
+        res = stack.pop() + res;
+       }
+
+       int l = 0;
+       while(l < res.length() && res.charAt(l) == '0'){
+
+        l++;
+       }
+
+       res = res.substring(l);
+       if(res.isEmpty()){
+        return "0";
+       }
+
+       return res;
+
+              
+
+
+    }
+}

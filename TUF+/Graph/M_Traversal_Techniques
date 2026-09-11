@@ -1,0 +1,89 @@
+## https://takeuforward.org/plus/dsa/problems/traversal-techniques?subject=dsa&approach=optimal-approach&sidebar=open
+# TC : O(V+E)
+# SC : O(V+E)
+
+class Solution {
+    public List<Integer> dfsOfGraph(int V, List<List<Integer>> edArr) {
+
+      List<Integer> lst = new ArrayList<>();
+
+      List<List<Integer>> gr = buildGraph(V,edArr);
+
+      boolean[] visitArr = new boolean[V];
+      
+      visitArr[0]=true;
+      dfs(gr,0,lst,visitArr);
+      return lst;
+
+
+    }
+
+    void dfs(List<List<Integer>> gr,int u,List<Integer> lst,boolean[] visitArr){
+
+        lst.add(u);
+
+        for(int v: gr.get(u)){
+            if(!visitArr[v]){
+                visitArr[v] = true;
+                dfs(gr,v,lst,visitArr);
+            }
+        }
+
+    }
+
+    
+    public List<Integer> bfsOfGraph(int V, List<List<Integer>> edArr) {
+
+      List<Integer> lst = new ArrayList<>();
+
+      List<List<Integer>> gr = buildGraph(V,edArr);
+      boolean[] visitArr = new boolean[V];
+
+      Queue<Integer> qu = new LinkedList<>();
+      qu.add(0);
+
+
+      visitArr[0]=true;
+      
+      while(!qu.isEmpty()){
+        int u = qu.remove();
+        lst.add(u);
+
+        for(int v: gr.get(u)){
+            if(!visitArr[v]){
+                visitArr[v] = true;
+                qu.add(v);
+            }
+        }
+
+      }
+      
+
+      return lst;
+
+
+
+    }
+
+    
+    List<List<Integer>> buildGraph(int n,List<List<Integer>> edArr){
+
+        List<List<Integer>> gr = new ArrayList<>();
+
+        for(int ind=0;ind<n;ind++){
+            gr.add(new ArrayList<>());
+        }
+
+        for(int ind=0;ind<edArr.size();ind++){
+            int u = edArr.get(ind).get(0);
+            int v = edArr.get(ind).get(1);
+
+            gr.get(u).add(v);
+            gr.get(v).add(u);
+        }
+
+        return gr;
+
+    }
+}
+

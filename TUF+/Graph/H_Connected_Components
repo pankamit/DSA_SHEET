@@ -1,0 +1,56 @@
+## https://takeuforward.org/plus/dsa/problems/connected-components?subject=dsa&approach=optimal-approach
+# TC: O(V+E)
+# SC: O(V+E)
+
+class Solution {
+    public int findNumberOfComponent(int V, List<List<Integer>> edLst) {
+
+        List<List<Integer>> adj = build(edLst,V);    
+
+        boolean[] visitArr = new boolean[V];
+
+        int cnt = 0;
+        for(int ind=0;ind<V;ind++){
+            if(!visitArr[ind]){
+                cnt++;
+                visitArr[ind]=true;
+                
+                tr(adj,ind,visitArr);
+            }
+        }
+
+        return cnt;
+    }
+
+    void tr(List<List<Integer>> adj,int u,boolean[] visitArr){
+
+        for(int v : adj.get(u)){
+            if(!visitArr[v]){
+                visitArr[v]=true;
+                tr(adj,v,visitArr);
+            }
+        }
+
+    }
+
+    List<List<Integer>> build(List<List<Integer>> edList,int V){
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for(int ind=0;ind<V;ind++){
+            adj.add(new ArrayList<>());
+        }
+
+
+        for(int ind=0;ind<edList.size();ind++){
+            int u = edList.get(ind).get(0);
+            int v = edList.get(ind).get(1);
+        
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        return adj;
+    }
+
+}
+ 

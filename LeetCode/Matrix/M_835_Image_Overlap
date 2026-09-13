@@ -1,0 +1,56 @@
+## https://leetcode.com/problems/image-overlap/?envType=daily-question&envId=2026-09-13
+# TC : O(N*N)
+# SC : O(N*N)
+
+class Solution {
+    public int largestOverlap(int[][] mat1, int[][] mat2) {
+
+        int n = mat1.length;
+
+        List<Pair> pLst1 = build(mat1,n);
+        List<Pair> pLst2 = build(mat2,n);
+                
+        HashMap<String,Integer> hm = new HashMap<>();
+
+        for(Pair p1: pLst1){
+            for(Pair p2: pLst2){
+                String key = (p1.r-p2.r)+":"+(p1.c-p2.c);
+                hm.put(key,hm.getOrDefault(key,0)+1);        
+            }
+        }        
+
+        int max = 0;
+        for(int ele : hm.values()){
+            max = Math.max(max,ele);
+        }
+
+        return max;
+
+    }
+
+    List<Pair> build(int[][] mat,int n){
+        List<Pair> pLst = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j] == 1){
+                    pLst.add(new Pair(i,j));
+                }
+            }
+        }
+
+        return pLst;
+
+    }
+
+    class Pair{
+        int r;
+        int c;
+
+
+        Pair(int r,int c){
+            this.r = r;
+            this.c = c;
+        }
+    
+    }
+}

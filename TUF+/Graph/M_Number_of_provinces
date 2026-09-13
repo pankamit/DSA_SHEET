@@ -1,0 +1,35 @@
+## https://takeuforward.org/plus/dsa/problems/number-of-provinces?subject=dsa&approach=optimal-approach
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public int numProvinces(int[][] adj) {
+        int n = adj.length;
+
+        boolean[] visitArr = new boolean[n];
+
+        int cnt = 0;
+        for(int ind=0;ind<n;ind++){
+            if(!visitArr[ind]){
+                visitArr[ind]=true;
+                cnt++;
+                tr(adj,n,ind,visitArr);
+            }
+        }
+
+        return cnt;
+
+
+    }
+
+    void tr(int[][] adj,int n,int u,boolean[] visitArr){   
+
+        for(int v=0;v<n;v++){
+            if(!visitArr[v] && adj[u][v] == 1){
+                visitArr[v] = true;
+                tr(adj,n,v,visitArr);
+            }
+        }
+    }
+}
+

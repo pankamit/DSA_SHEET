@@ -1,0 +1,30 @@
+## https://leetcode.com/problems/rectangle-overlap/?envType=daily-question&envId=2026-09-14
+# TC : O(1)
+# SC: O(1)
+
+class Solution {
+    public boolean isRectangleOverlap(int[] arr1, int[] arr2) {
+
+        int al1 = arr1[0];
+        int al2 = arr1[2];
+        int ar1 = arr1[1];
+        int ar2 = arr1[3];  
+        
+        
+        int bl1 = arr2[0];
+        int bl2 = arr2[2];
+        int br1 = arr2[1];
+        int br2 = arr2[3];  
+        
+        // check if ractengle is actually a line
+        if(al1 == al2 || ar1 == ar2 || bl1 == bl2 || br1 == br2){
+            return false;
+        }
+
+
+        if((al2 <= bl1) ||(al1 >= bl2) || (ar1 >= br2) || (ar2 <= br1)){
+            return false; 
+        }
+        return true;
+    }
+}

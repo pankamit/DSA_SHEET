@@ -1,0 +1,47 @@
+## https://leetcode.com/problems/maximum-number-of-non-overlapping-palindrome-substrings/?envType=daily-question&envId=2026-09-15
+# TC : O(N*N*N)
+# SC : O(1)
+
+class Solution {
+    public int maxPalindromes(String s, int k) {
+        int n = s.length();
+
+        int l = 0;
+        int r = 0;
+
+        int res = 0;
+        while(r < n){
+
+            int cnt = r-l+1;
+
+            if(cnt >= k){
+              int i = l;
+              while(i <= r && (r-i+1) >= k){
+                if(isPall(s,i,r)){
+                    l=r+1;
+                    res++;
+                    break;
+                }
+                i++;
+              }
+            }
+
+            r++;
+        }
+
+        return res;
+
+    }
+
+    boolean isPall(String s,int l,int r){
+        while(l <= r){
+            if(s.charAt(l) != s.charAt(r)){
+                return false;
+            }
+            l++;
+            r--;
+        }
+
+        return true;
+    }
+}

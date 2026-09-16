@@ -1,0 +1,96 @@
+## https://leetcode.com/problems/number-of-sets-of-k-non-overlapping-line-segments/description/?envType=daily-question&envId=2026-09-16
+# TC : O(N*K)
+# SC : O(N*K)
+
+class Solution {
+    private final int MOD = 1_000_000_007;
+    public int numberOfSets(int n, int k) {
+        
+        // int[][] memo = new int[n][k+1];
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<=k;j++){
+        //         memo[i][j] = -1;
+        //     }
+        // }
+
+        // return tr(n,0,k,memo);
+    
+        return tr1(n,k);
+    }
+
+    int tr1(int n,int x){
+
+        int[][] dp = new int[n+1][x+1];
+
+        // if(k == 0){
+        //     return 1;
+        // }
+
+        for(int i=0;i<n;i++){
+            dp[i][0]=1;
+        }
+
+
+        // if(l == n){
+        //     return 0;
+        // }
+
+
+        long[][] psum = new long[n+1][x+1];
+        psum[n-1][0]=1;
+        for(int i=n-2;i>=0;i--){
+            psum[i][0] = psum[i+1][0]+1;
+        }
+
+        for(int l=n-1;l>=0;l--){
+            for(int k=1;k<=x;k++){
+                    
+                // skip
+                long cnt = dp[l+1][k];
+                
+                // take
+
+                cnt += psum[l+1][k-1];
+                
+             //   cnt += dp[l+1][k-1] + dp[l+2][k-1];
+
+                // for(int seg=l+1;seg<n;seg++){
+                //     cnt += dp[seg][k-1];
+                //     cnt = cnt%MOD;
+                // }
+
+                dp[l][k] = (int)(cnt%MOD);
+                psum[l][k] = psum[l+1][k]+dp[l][k]; 
+            }
+        
+        }
+
+        return dp[0][x];
+    }
+
+    int tr(int n,int l,int k,int[][] memo){
+        if(k == 0){
+            return 1;
+        }
+
+        if(l == n){
+            return 0;
+        }
+
+        if(memo[l][k] != -1){
+            return memo[l][k];
+        }
+
+        // skip
+        long cnt = tr(n,l+1,k,memo);
+           
+        // take
+        for(int seg=l+1;seg<n;seg++){
+            cnt += tr(n,seg,k-1,memo);
+            cnt = cnt%MOD;
+        }
+
+        memo[l][k] = (int)(cnt%MOD);
+        return memo[l][k];
+    }
+}

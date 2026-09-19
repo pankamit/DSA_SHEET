@@ -1,0 +1,77 @@
+## https://takeuforward.org/plus/dsa/problems/surrounded-regions?subject=dsa&approach=optimal-approach&sidebar=open
+# TC: O(N*M)
+# SC : O(N*M)
+
+class Solution {
+    public char[][] fill(char[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        Queue<int[]> qu = new LinkedList<>();
+
+        boolean[][] visitArr = new boolean[n][m];
+
+        for(int j=0;j<m;j++){
+            if(mat[0][j] == 'O' && !visitArr[0][j]){
+                qu.add(new int[]{0,j});
+                visitArr[0][j] = true;
+            }
+
+            if(0 != n-1){
+                if(mat[n-1][j] == 'O' && !visitArr[n-1][j]){
+                    qu.add(new int[]{n-1,j});
+                    visitArr[n-1][j] = true;
+                }   
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(mat[i][0] == 'O' && !visitArr[i][0]){
+                qu.add(new int[]{i,0});
+                visitArr[i][0] = true;
+            }
+
+            if(0 != m-1){
+                if(mat[i][m-1] == 'O' && !visitArr[i][m-1]){
+                    qu.add(new int[]{i,m-1});
+                    visitArr[i][m-1] = true;
+                }   
+            }
+        }
+
+
+        int[][] dir = {{1,0},{0,-1},{-1,0},{0,1}};
+
+        while(!qu.isEmpty()){
+            int[] temp = qu.remove();
+            int r = temp[0];
+            int c = temp[1];
+
+            for(int ind=0;ind<dir.length;ind++){
+                int new_r = r+dir[ind][0];
+                int new_c = c+dir[ind][1];
+
+                if(new_r >=0 && new_r <n && new_c >=0 &&  new_c < m && !visitArr[new_r][new_c] && mat[new_r][new_c] == 'O'){
+
+                    qu.add(new int[]{new_r,new_c});
+                    visitArr[new_r][new_c] = true;
+
+                }
+            }
+
+
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(!visitArr[i][j] && mat[i][j] == 'O'){
+                    mat[i][j] = 'X';
+                }
+            }
+        }
+
+        return mat;
+
+
+    }
+}

@@ -1,0 +1,56 @@
+## https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public long maxValue(int[] arr) {
+        int n = arr.length;
+        long[] psum = new long[n];
+        long[] msum = new long[n];
+
+        
+        
+        psum[0]= arr[0];
+        msum[0] = -arr[0];
+        for(int ind=1;ind<n;ind++){
+            if(ind%2 == 0){
+               psum[ind] = psum[ind-1]+arr[ind];
+               msum[ind] = msum[ind-1]-arr[ind];
+            }else{
+               psum[ind] = psum[ind-1]-arr[ind];
+               msum[ind] = msum[ind-1]+arr[ind];
+            }
+        }
+
+      //  System.out.println("psum "+Arrays.toString(psum));
+      //  System.out.println("msum "+Arrays.toString(msum));
+
+        long[] maxArr = new long[n];
+        //int[] sArr = new int[n];
+        long max = psum[n-1];
+        long total = max;
+        
+        for(int ind=1;ind<n;ind++){
+            // corner case need handle
+            long diff1 = psum[ind]-(((ind-2) >= 0) ? psum[ind-2] : 0);
+            long diff2 = msum[ind]-(((ind-2) >= 0) ? msum[ind-2] : 0);
+            long a = -diff1+diff2;
+
+            long asum = a+(((ind-2) >= 0) ? maxArr[ind-2] : 0); 
+            if(asum > a){
+                maxArr[ind] = asum;
+          //      sArr[ind] = sArr[ind-2];
+            }else{
+                maxArr[ind] = a;
+            //    sArr[ind] = ind-2; 
+            } 
+
+            
+            max = Math.max(max,total+maxArr[ind]);
+         //   System.out.println("maxArr "+Arrays.toString(maxArr)+" total "+total+" max "+max);        
+        }
+
+        return max;
+        
+    }
+}

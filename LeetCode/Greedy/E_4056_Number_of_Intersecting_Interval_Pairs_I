@@ -1,0 +1,26 @@
+## https://leetcode.com/problems/number-of-intersecting-interval-pairs-i/
+# TC : O(N*N)
+# SC : O(1)
+
+class Solution {
+    public int countIntersectingIntervals(int[][] mat) {
+        int n = mat.length;
+
+        Arrays.sort(mat,(e1,e2) -> e1[1]-e2[1]);
+
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            int start1 = mat[i][0];
+            int end1 = mat[i][1];
+            for(int j=i+1;j<n;j++){
+                int start2 = mat[j][0];
+                int end2 = mat[j][1];
+                if(start2 <= end1){
+                    cnt++;
+                }
+            }
+        }
+
+        return cnt;
+    }
+}

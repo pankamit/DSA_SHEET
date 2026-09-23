@@ -1,0 +1,52 @@
+## https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/?envType=daily-question&envId=2026-09-23
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int minOperations(int[] arr, int x) {
+        int n = arr.length;
+
+        int total = 0;
+        for(int ele: arr){
+            total += ele;
+        }
+
+        if(total < x){
+            return -1;
+        }
+
+        int k = total-x;
+        //System.out.println("total "+total+" k "+k);
+
+        // find max len for which sum = k
+
+        int l = 0;
+        int r = 0;
+
+        int max = -1;
+
+        int sum = 0;
+        while(r < n){
+            sum += arr[r];
+            while(sum > k){
+                sum -= arr[l];
+                l++;
+            }
+
+            if(sum == k){
+               max = Math.max(max,r-l+1);
+            }
+
+
+            r++;       
+        }
+
+        if(max == -1){
+            return -1;
+        }
+
+        return n-max;
+
+        
+    }
+}

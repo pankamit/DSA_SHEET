@@ -1,0 +1,46 @@
+## https://takeuforward.org/practice/dsa/find-peak-element-ii
+# TC : O(N*logM)
+# SC : O(1)
+
+class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+      int n = mat.length;
+      int m = mat[0].length;
+
+        int r = 0;
+        int c = 0;
+
+       while(r >=0 && r<n && c>=0 && c<m){
+
+            boolean up = (r-1 < 0 || mat[r-1][c] < mat[r][c]);
+            boolean right = (c+1 == m || mat[r][c+1] < mat[r][c]);
+            boolean down = (r+1 == n || mat[r+1][c] < mat[r][c]);
+            boolean left = (c-1 < 0 || mat[r][c-1] < mat[r][c]);
+            
+            if(up && right && down && left){
+                return new int[]{r,c};
+            }
+            
+
+            if(!down){
+                r++;
+            }else if(!right){
+                c++;
+            }else if(!up){
+                r--;
+            }else{
+                c--;
+            }
+
+
+       }
+
+       return new int[]{-1,-1}; 
+
+    }
+}
+
+
+// 10 20 15
+// 21 30 14
+// 7  16 32

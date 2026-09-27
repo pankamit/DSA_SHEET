@@ -1,0 +1,59 @@
+## https://takeuforward.org/practice/dsa/remove-duplicates-from-an-unsorted-linked-list
+# TC : O(N)
+# SC : O(N)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicatesUnsorted(ListNode head) {
+        // Your code goes here
+        ListNode node = head;
+
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        while(node != null){
+            hm.put(node.val,hm.getOrDefault(node.val,0)+1);
+            node = node.next;
+        }
+
+        node = head;
+        
+        while(node.next != null){
+            if(hm.get(node.next.val) > 1){
+                node.next = node.next.next;
+            }else{
+                node =  node.next;
+            }
+        }
+
+        if(hm.get(head.val) > 1){
+            return head.next;
+        }
+        return head;
+
+        // ListNode newHead = null;
+        // ListNode curr = null;
+        // while(node != null){
+        //     if(hm.get(node.val) == 1){
+        //         ListNode temp = new ListNode(node.val);
+        //         if(curr == null){
+        //             curr = temp;
+        //             newHead = curr;
+        //         }else{
+        //             curr.next = temp;
+        //             curr = temp;
+        //         }    
+        //     }
+        //     node = node.next;
+        // }
+
+        //return newHead;
+    }
+}

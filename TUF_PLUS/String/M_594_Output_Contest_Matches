@@ -1,0 +1,30 @@
+## https://takeuforward.org/practice/dsa/output-contest-matches
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public String findContestMatch(int n) {
+        // Your code goes here
+        
+        
+        List<String> lst = new ArrayList<>();
+        for(int ind=1;ind<=n;ind++){
+            lst.add(""+ind);
+        }
+
+        while(lst.size() > 1){
+            int l = 0;
+            int r = lst.size()-1;
+            List<String> temp = new ArrayList<>();
+            while(l < r){
+                temp.add("("+lst.get(l)+","+lst.get(r)+")");
+                l++;
+                r--;         
+            }
+            lst = new ArrayList<>(temp);
+
+        }
+
+        return lst.get(0);
+    }
+}

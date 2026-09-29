@@ -1,0 +1,18 @@
+## https://takeuforward.org/practice/dsa/bitwise-or-of-adjacent-elements
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public List<Integer> orArray(List<Integer> lst) {
+        // User code goes here
+        List<Integer> resLst = new ArrayList<>();
+        
+        for(int ind=1;ind<lst.size();ind++){
+            int a = lst.get(ind-1);
+            int b = lst.get(ind);
+            resLst.add(a|b);
+        }
+
+        return resLst;
+    }
+}

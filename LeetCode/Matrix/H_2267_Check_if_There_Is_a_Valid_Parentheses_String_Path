@@ -1,0 +1,61 @@
+## https://leetcode.com/problems/check-if-there-is-a-valid-parentheses-string-path/?envType=daily-question&envId=2026-09-29
+# TC : O(N*M*(N+M)) -> O(N*N*N)
+# SC : O(N*M*(N+M)) -> O(N*N*N)
+
+class Solution {
+    public boolean hasValidPath(char[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        Queue<int[]> qu = new LinkedList<>();
+
+        HashSet<String> hs = new HashSet<>();
+
+        if(mat[0][0] == ')'){
+            return false;
+        }
+        qu.add(new int[]{0,0,1});
+        String key = "0:0:1";
+        hs.add(key);
+
+        int[][] dir = {{0,1},{1,0}};
+
+        while(!qu.isEmpty()){
+
+            int[] temp = qu.remove();
+            int r = temp[0];
+            int c = temp[1];
+            int cnt = temp[2];
+
+            if(r == n-1 && c == m-1 && cnt == 0){
+                return true;
+            }
+
+            for(int ind=0;ind<dir.length;ind++){
+                int new_r = r + dir[ind][0];
+                int new_c = c + dir[ind][1] ;
+
+                if(new_r >= 0 && new_r < n && new_c >= 0 && new_c < m){
+                    int newCnt = cnt;
+                    if(mat[new_r][new_c] == '('){
+                        newCnt++;
+                    }else{
+                        newCnt--;
+                    }
+
+                    if(newCnt < 0){
+                        continue;
+                    }
+
+                    key = new_r+":"+new_c+":"+newCnt;
+                    if(hs.add(key)){
+                        qu.add(new int[]{new_r,new_c,newCnt});
+                    }
+                }
+            }
+
+        }
+
+        return false;
+    }
+}

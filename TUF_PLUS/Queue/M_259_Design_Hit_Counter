@@ -1,0 +1,34 @@
+## https://takeuforward.org/practice/dsa/design-hit-counter
+# TC : O(N)
+# SC : O(N)
+
+class HitCounter {
+
+    Queue<Integer> qu;
+    public HitCounter() {
+        qu = new LinkedList<>();
+    }
+    
+    public void hit(int t) {
+        qu.add(t);
+    }
+    
+    public int getHits(int t) {
+        t = t-300;
+      //  System.out.println("stack "+stack+" t "+t);
+        while(!qu.isEmpty() && qu.peek() <= t){
+            qu.remove();
+        }
+       // System.out.println("After stack "+stack+" t "+t);
+        
+
+        return qu.size();
+    }
+}
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter obj = new HitCounter();
+ * obj.hit(timestamp);
+ * int param_2 = obj.getHits(timestamp);
+ */

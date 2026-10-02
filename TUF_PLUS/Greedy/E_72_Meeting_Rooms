@@ -1,0 +1,20 @@
+## https://takeuforward.org/practice/dsa/meeting-rooms
+# TC : O(N*LogN)
+# SC : O(1)
+
+class Solution {
+    public boolean canAttendMeetings(int[][] mat) {
+        // Your code goes here
+        int n = mat.length;
+
+        Arrays.sort(mat,(e1,e2) -> e1[1]-e2[1]);
+
+        for(int ind=1;ind<n;ind++){
+            if(mat[ind-1][1] > mat[ind][0]){
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

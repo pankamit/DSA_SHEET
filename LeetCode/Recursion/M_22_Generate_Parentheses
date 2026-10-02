@@ -1,0 +1,35 @@
+## https://leetcode.com/problems/generate-parentheses/?envType=daily-question&envId=2026-10-02
+# TC : O(4^n/(n^(1/2))
+# SC :  O(n*(4^n/(n^(1/2)))) => O(n*(4^n))
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        
+        List<String> lst = new ArrayList<>();
+        
+        tr(n,0,0,"",lst);
+        return lst;
+    }
+
+    void tr(int n,int l,int r,String s,List<String> lst){
+
+        if(l > n){
+            return;
+        }
+
+        if(l == n && r == n){
+            lst.add(s);
+            return;
+        }
+
+
+        if(l > r){
+            tr(n,l,r+1,s+")",lst);
+            tr(n,l+1,r,s+"(",lst);
+        }else if(l == r){
+            tr(n,l+1,r,s+"(",lst);
+        }else{
+            return;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+## https://leetcode.com/problems/longest-valid-parentheses/?envType=daily-question&envId=2026-10-03
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public int longestValidParentheses(String s) {
+        int n = s.length();
+
+        
+        Stack<Integer> stack = new Stack<>();
+
+        boolean[] visitArr = new boolean[n];
+        for(int ind=0;ind<n;ind++){
+            char ch = s.charAt(ind);
+
+            if(ch == '('){
+                stack.push(ind);
+            }else{
+                if(stack.isEmpty()){
+                    
+                }else{
+                    visitArr[ind] = true;
+                    visitArr[stack.pop()] = true;
+                }
+            }
+        }
+
+        int max = 0;
+        int cnt = 0;
+        for(int ind=0;ind<n;ind++){
+            if(visitArr[ind]){
+                cnt++;
+            }else{
+                cnt=0;
+            }
+            max = Math.max(max,cnt);
+        }
+
+        return max;
+        
+    }
+}

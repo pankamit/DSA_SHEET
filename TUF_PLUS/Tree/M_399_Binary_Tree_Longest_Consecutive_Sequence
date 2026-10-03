@@ -1,0 +1,56 @@
+## https://takeuforward.org/practice/dsa/binary-tree-longest-consecutive-sequence
+# TC : O(N)
+# SC : O(N)
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int max = 0;
+    public int longestConsecutive(TreeNode root) {
+        // Your code goes here
+        TreeNode node = root;
+
+        tr(node,1);
+
+        return max;
+    }
+    
+    void tr(TreeNode node,int cnt){
+
+        if(node == null){
+            return;
+        }
+
+        max = Math.max(max,cnt);
+
+        if(node.left != null){
+            if(node.val == (node.left.val-1)){
+                tr(node.left,cnt+1);
+            }else{
+                tr(node.left,1);
+            }
+        }
+        if(node.right != null){
+            if(node.val == (node.right.val-1)){
+                tr(node.right,cnt+1);
+            }else{
+                tr(node.right,1);
+            }
+        }
+
+
+    }
+}

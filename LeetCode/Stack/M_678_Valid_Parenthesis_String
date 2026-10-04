@@ -1,0 +1,65 @@
+## https://leetcode.com/problems/valid-parenthesis-string/?envType=daily-question&envId=2026-10-04
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public boolean checkValidString(String s) {
+        int n = s.length();
+
+        Stack<Character> stack = new Stack<>();
+
+        for(int ind=0;ind<n;ind++){
+            if(s.charAt(ind) == '('){
+                stack.push('(');
+            }else if(s.charAt(ind) == ')'){
+                if(!isValid(stack)){
+                    return false;
+                }
+            }else{
+                stack.push('*');
+            }
+        }
+
+        int cnt = 0;
+        while(!stack.isEmpty()){
+            if(stack.pop() == '*'){
+                cnt++;
+            }else{
+                cnt--;
+            }
+            if(cnt < 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    boolean isValid(Stack<Character> stack){
+        int cnt = 0;
+        while(!stack.isEmpty()){
+            if(stack.peek() == '('){
+                stack.pop();
+
+                for(int i=0;i<cnt;i++){
+                    stack.push('*');
+                }
+                return true;
+            }else{
+                stack.pop();
+                cnt++;
+            }
+        }
+
+        if(cnt > 0){
+            cnt--;
+            for(int i=0;i<cnt;i++){
+                stack.push('*');
+            }
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+}

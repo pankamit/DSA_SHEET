@@ -1,0 +1,17 @@
+## https://takeuforward.org/practice/dsa/find-missing-number?source=planly&planly_plan=dsa-preparation&planly_task_id=24465181&planly_day_id=3053056&subject=array
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int missingNumber(int[] arr) {
+        int n = arr.length;
+        int sum = 0;
+        for(int ele: arr){
+            sum += ele;
+        }
+
+        int total = (n*(n+1))/2;
+        return total-sum;
+        
+    }
+}

@@ -1,0 +1,25 @@
+## https://takeuforward.org/practice/dsa/remove-duplicates-from-sorted-array?source=planly&planly_plan=dsa-preparation&planly_task_id=24465180&planly_day_id=3053056&subject=strivers-150-master-patterns-in-dsa
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int removeDuplicates(int[] arr) {
+        int n = arr.length;
+
+        int l = 0;
+        int r = 1;
+
+        while(r < n){
+            if(arr[l] != arr[r]){
+                l++;
+                arr[l] = arr[r];
+            }
+            r++;
+        }
+
+        return l+1;
+
+
+        
+    }
+}

@@ -1,0 +1,62 @@
+## https://takeuforward.org/practice/dsa/construct-string-with-minimum-cost-easy?tab=problem
+# TC : O(n*k*l) n -> length of target, k -> no of words, l -> max length of a word
+# SC : O(n)
+
+class Solution {
+    public int minimumCost(String t, List<String> wlst, List<Integer> clst) {
+        int n = t.length();
+
+        int[] memo = new int[n];
+        Arrays.fill(memo,-1);
+        int res = tr(t,n,0,wlst,clst,memo);
+        if(res == Integer.MAX_VALUE){
+            return -1;
+        }
+        return res;
+
+    }
+
+    int tr(String t,int n,int l,List<String> wlst,List<Integer> clst,int[] memo){
+
+        if(l == n){
+            return 0;
+        }
+
+        if(memo[l] != -1){
+            return memo[l];
+        }
+        
+        int min = Integer.MAX_VALUE;
+
+        for(int ind=0;ind<wlst.size();ind++){
+
+            int m = wlst.get(ind).length();
+            if((l+m) <= n){
+                if(t.substring(l,(l+m)).equals(wlst.get(ind))){
+                   int res =  tr(t,n,l+m,wlst,clst,memo);
+                   if(res != Integer.MAX_VALUE){
+                        min = Math.min(min,res += clst.get(ind));
+                   }
+                }
+            }
+
+            if(n <= m && t.substring(m).equals(wlst.get(ind))){
+                int res = tr(t,n,m,wlst,clst,memo);
+                if(res != Integer.MAX_VALUE){
+                    min = Math.min(min,res += clst.get(ind));
+                }
+            }
+            
+
+        }
+
+        memo[l] = min;
+        return min;
+
+
+    }
+
+    
+}
+
+

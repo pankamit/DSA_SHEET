@@ -1,0 +1,23 @@
+## https://takeuforward.org/practice/dsa/move-zeros-to-end?source=planly&planly_plan=dsa-preparation&planly_task_id=24465179&planly_day_id=3053056&subject=array
+# TC: O(N)
+# SC : O(1)
+
+class Solution {
+    public void moveZeroes(int[] arr) {
+        int n = arr.length;
+
+        int l = -1;
+        int r = 0;
+
+        while(r < n){
+            if(arr[r] != 0){
+                l++;
+                int temp = arr[l];
+                arr[l] = arr[r];
+                arr[r] = temp;
+            }
+            r++;
+        }
+        
+    }
+}

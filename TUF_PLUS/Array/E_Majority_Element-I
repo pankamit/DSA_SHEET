@@ -1,0 +1,33 @@
+## https://takeuforward.org/practice/dsa/majority-element-i?source=planly&planly_plan=dsa-preparation&planly_task_id=24465182&planly_day_id=3053056&subject=array
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int majorityElement(int[] arr) {
+        int n = arr.length;
+
+        int cnt = 0;
+        int ele = Integer.MAX_VALUE;
+
+        int r = 0;
+        while(r < n){
+            if(arr[r] == ele){
+                cnt++;
+            }else{
+                if(cnt == 0){
+                    ele = arr[r];
+                    cnt++;
+                }else{
+                    cnt--;
+                }
+            }
+
+            r++;
+        }
+
+        return ele;
+
+
+        
+    }
+}

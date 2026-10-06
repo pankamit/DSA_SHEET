@@ -1,0 +1,28 @@
+## https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/?envType=daily-question&envId=2026-10-06
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int minAddToMakeValid(String s) {
+        int n = s.length();
+
+        int res = 0;
+
+        int cnt = 0;
+        for(int ind=0;ind<n;ind++){
+            if(s.charAt(ind) == '('){
+                cnt++;
+            }else{
+                if(cnt == 0){
+                    res++;
+                }else{
+                    cnt--;
+                }
+            }
+        }
+
+        
+
+        return cnt+res;
+    }
+}

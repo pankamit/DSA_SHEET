@@ -1,0 +1,24 @@
+## https://takeuforward.org/practice/dsa/palindrome-check?source=planly&planly_plan=dsa-preparation&planly_task_id=24465185&planly_day_id=3053057&subject=strivers-150-master-patterns-in-dsa
+# TC : O(N)
+# SC : (1)
+
+class Solution {   
+    public boolean palindromeCheck(String s) {
+        //your code goes here
+        int n = s.length();
+
+        int l = 0;
+        int r = n-1;
+
+        while(l <= r){
+            if(s.charAt(l) != s.charAt(r)){
+                return false;
+            }
+
+            l++;
+            r--;
+        }
+
+        return true;
+    }
+}

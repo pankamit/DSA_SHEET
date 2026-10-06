@@ -1,0 +1,31 @@
+## https://takeuforward.org/practice/dsa/kadane's-algorithm?source=planly&planly_plan=dsa-preparation&planly_task_id=24465183&planly_day_id=3053057&subject=array
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int maxSubArray(int[] arr) {
+        int n = arr.length;
+
+
+        int sum = 0;
+        int r = 0;
+        int max = Integer.MIN_VALUE;
+
+
+        while(r < n){
+            int new_sum = arr[r]+sum;
+            if(new_sum > arr[r]){
+                sum = new_sum;
+            }else{
+                sum = arr[r];
+            }
+            max = Math.max(max,sum);
+            r++;
+        }
+
+        return max;
+
+        
+
+    }
+}

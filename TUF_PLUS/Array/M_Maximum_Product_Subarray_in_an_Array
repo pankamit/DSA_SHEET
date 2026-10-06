@@ -1,0 +1,42 @@
+## https://takeuforward.org/practice/dsa/maximum-product-subarray-in-an-array?source=planly&planly_plan=dsa-preparation&planly_task_id=24465184&planly_day_id=3053057&subject=array
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int maxProduct(int[] arr) {
+
+        int n = arr.length;
+        if(n == 1){
+            return arr[0];
+        }
+        
+        int max = Integer.MIN_VALUE;
+        int prod = 1;
+
+        int r = 0;
+
+        int psum = 1;
+        
+        while(r < n){
+            psum = psum * arr[r];
+            max = Math.max(max,psum);
+            if(arr[r] == 0){
+                psum = 1;
+            }
+            r++;
+        }
+        
+        int ssum = 1;
+        r = n-1;
+        while(r >= 0){
+            ssum = ssum * arr[r];
+            max = Math.max(max,ssum);
+            if(arr[r] == 0){
+                ssum = 1;
+            }
+            r--;
+        }
+
+        return max;
+    }
+}

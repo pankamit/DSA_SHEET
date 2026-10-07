@@ -1,0 +1,31 @@
+## https://takeuforward.org/practice/dsa/sort-an-array-of-0's-1's-and-2's?source=planly&planly_plan=dsa-preparation&planly_task_id=24465186&planly_day_id=3053058&subject=array
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public void sortZeroOneTwo(int[] arr) {
+        int n = arr.length;
+
+        int l = -1;
+        int r = n;
+
+        for(int ind=0;ind<r;ind++){
+            if(arr[ind] == 0){
+                l++;
+                int temp = arr[l];
+                arr[l] = arr[ind];
+                arr[ind] = temp;
+                
+            }else if(arr[ind] == 2){
+                r--;
+                int temp = arr[r];
+                arr[r] = arr[ind];
+                arr[ind] = temp;
+                ind--;
+            }
+        }
+
+
+
+    }
+}

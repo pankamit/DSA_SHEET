@@ -1,0 +1,71 @@
+## https://leetcode.com/problems/remove-invalid-parentheses/?envType=daily-question&envId=2026-10-07
+# TC : O(2^N)
+# SC : O(N*W) where W -> no of unique words
+
+
+class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        int n = s.length();
+
+        int res = 0;
+        int cnt = 0;
+
+        int r = 0;
+        while(r < n){
+            if(s.charAt(r) == '('){
+                cnt++;
+            }else if(s.charAt(r) == ')'){
+                if(cnt == 0){
+                    res++;
+                }else{
+                    cnt--;
+                }
+            }
+            r++;
+        }
+
+        int min = cnt+res;
+
+        
+        List<String> lst = new ArrayList<>();
+        if(min == 0){
+            
+            lst.add(s);
+            return lst;
+        }
+
+        HashSet<String> hs = new HashSet<>();
+
+        tr(s,n,0,0,min,"",hs);
+        
+        lst = new ArrayList<>(hs);
+        
+        return lst;
+    }
+
+    void tr(String s,int n,int l,int cnt,int k,String str,HashSet<String> hs){
+
+        if(l == n){
+            if(cnt == 0 && k == 0){
+                hs.add(str);
+            }
+            return;
+        }
+    
+        char ch = s.charAt(l);
+        if(ch == '('){
+            tr(s,n,l+1,cnt+1,k,str+ch,hs);   
+        }else if(ch == ')'){
+            if(cnt > 0){
+                tr(s,n,l+1,cnt-1,k,str+ch,hs);
+            }
+        }else{
+            tr(s,n,l+1,cnt,k,str+ch,hs);
+        }
+
+        if(k > 0 && (ch == '(' || ch == ')')){
+                tr(s,n,l+1,cnt,k-1,str,hs);
+            
+        }
+    }
+}

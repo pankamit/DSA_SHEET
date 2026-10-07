@@ -1,0 +1,27 @@
+## https://takeuforward.org/practice/dsa/rearrange-array-elements-by-sign?source=planly&planly_plan=dsa-preparation&planly_task_id=24465187&planly_day_id=3053058&subject=array
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int[] rearrangeArray(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+
+        int pind = 0;
+        int nind = 1;
+        for(int ind=0;ind<n;ind++){
+            if(arr[ind] >= 0){
+                res[pind] = arr[ind];
+                pind=pind+2;
+            }else{
+                res[nind] = arr[ind];
+                nind = nind+2;
+            }
+        }
+
+        return res;
+
+
+        
+    }
+}

@@ -1,0 +1,40 @@
+## https://takeuforward.org/practice/dsa/rotate-matrix-by-90-degrees?source=planly&planly_plan=dsa-preparation&planly_task_id=24465189&planly_day_id=3053059&subject=array
+# TC : O(N*M)
+# SC : O(1)
+
+class Solution {
+    public void rotateMatrix(int[][] mat) {
+
+        int n = mat.length;
+        int m = mat[0].length;
+
+        transpose(mat,n,m);
+        reverseCol(mat,n,m);
+        
+    }
+
+    void transpose(int[][] mat,int n,int m){
+        for(int i=0;i < n;i++){
+            for(int j=i;j<m;j++){
+                int temp = mat[i][j];
+                mat[i][j] = mat[j][i];
+                mat[j][i] = temp;
+            }
+        }
+    }
+
+    void reverseCol(int[][] mat,int n,int m){
+        int l = 0;
+        int r = m-1;
+
+        while(l < r){
+            for(int i=0;i<n;i++){
+                int temp = mat[i][l];
+                mat[i][l] = mat[i][r];
+                mat[i][r] = temp;
+            }
+            l++;
+            r--;
+        }
+    }
+}

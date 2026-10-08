@@ -1,6 +1,6 @@
 ## https://takeuforward.org/practice/dsa/3-sum?source=planly&planly_plan=dsa-preparation&planly_task_id=24465190&planly_day_id=3053059&subject=array
 # TC : O(N*N)
-# SC : O(1)
+# SC : O(N*N)
 
 class Solution {
     public List<List<Integer>> threeSum(int[] arr) {

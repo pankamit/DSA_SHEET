@@ -1,0 +1,23 @@
+## https://takeuforward.org/practice/dsa/check-if-a-large-number-is-divisible-by-9
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public boolean isDivisibleBy9(String s) {
+        // Your code goes here
+        int n = s.length();
+
+        int sum = 0;
+        int r = 0;
+
+        while(r < n){
+            int d = s.charAt(r)-'0';
+            sum += d;
+            sum = sum%9;
+            r++;
+        }
+
+        return sum == 0;
+
+    }
+}

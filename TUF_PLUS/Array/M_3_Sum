@@ -1,0 +1,61 @@
+## https://takeuforward.org/practice/dsa/3-sum?source=planly&planly_plan=dsa-preparation&planly_task_id=24465190&planly_day_id=3053059&subject=array
+# TC : O(N*N)
+# SC : O(1)
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] arr) {
+        int n = arr.length;
+
+        List<List<Integer>> resLst = new ArrayList<>();
+
+        if(n < 3){
+            return resLst;
+        }
+
+        Arrays.sort(arr);
+
+        int i = 0;
+        while(i<n){
+            
+            int j = i+1;
+            int k = n-1;
+            while(j < k){
+                int sum = arr[i]+arr[j]+arr[k];
+                if(sum < 0){
+                    j++;
+                }else if(sum > 0){
+                    k--;
+                }else{
+                    List<Integer> temp = new ArrayList<>(Arrays.asList(arr[i],arr[j],arr[k]));
+                    // temp.add(arr[i]);
+                    // temp.add(arr[j]);
+                     //temp.add(arr[k]);
+                    resLst.add(temp);
+
+                    int prev = arr[j];
+                    
+                    while(j < n && arr[j] == prev){
+                        j++;
+                    }
+                    
+                    prev = arr[k];
+                    while(k >= 0 && arr[k] == prev){
+                        k--;
+                    }
+                }
+            }
+
+            int prev = arr[i];
+                    
+            while(i < n && arr[i] == prev){
+                i++;
+            }
+            
+        }
+
+        return resLst;
+
+        
+        
+    }
+}

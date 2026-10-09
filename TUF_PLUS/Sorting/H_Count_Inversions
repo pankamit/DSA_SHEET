@@ -1,0 +1,66 @@
+## https://takeuforward.org/practice/dsa/count-inversions?source=planly&planly_plan=dsa-preparation&planly_task_id=24465192&planly_day_id=3053060&subject=array
+# TC : O(NLogN)
+# SC : O(N)
+
+class Solution {
+    public long numberOfInversions(int[] arr) {
+        int n = arr.length;
+
+        return tr(arr,0,n-1);
+    }
+
+    long tr(int[] arr,int l,int r){
+        if(l >= r){
+            return 0;
+        }
+        
+        int mid = (l+r)/2;
+
+        long cnt = tr(arr,l,mid);
+        cnt += tr(arr,mid+1,r);
+
+        int len = r-l+1;
+        int[] temp = new int[len];
+
+        int a = l;
+        int b = mid+1;
+        int ind = 0;
+
+        while(a <= mid && b <= r){
+            if(arr[a] <= arr[b]){
+                
+                temp[ind] = arr[a];
+                a++;
+            }else{
+                cnt += (mid-a+1);
+                temp[ind] = arr[b];
+                b++;
+            }
+            ind++;
+        }
+
+        while(a <= mid){
+            temp[ind] = arr[a];
+            a++;
+            ind++;
+        }
+
+        while(b <= r){
+            temp[ind] = arr[b];
+            b++;
+            ind++;
+        }
+
+        ind=0;
+        while(ind < len){
+            arr[l+ind] = temp[ind];
+            ind++;
+        }
+
+        return cnt;
+
+        
+
+        
+    }
+}

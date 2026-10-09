@@ -1,0 +1,44 @@
+## https://takeuforward.org/practice/dsa/trapping-rainwater?source=planly&planly_plan=dsa-preparation&planly_task_id=24465191&planly_day_id=3053060&subject=dsa-concept-revision
+# TC : O(N)
+# SC : O(N)
+
+import java.util.Arrays;
+
+class Solution {
+    public int trap(int[] arr) {
+        int n = arr.length;
+
+        int[] lArr = new int[n];
+        int[] rArr = new int[n];
+
+        int lmax = 0;
+        for(int ind=0;ind<n;ind++){
+            lArr[ind] = lmax;
+            lmax = Math.max(arr[ind],lmax);
+        }
+        
+        int rmax = 0;
+        for(int ind=n-1;ind>=0;ind--){
+            rArr[ind] = rmax;
+            rmax = Math.max(arr[ind],rmax);
+        }
+
+        // System.out.println("lArr "+Arrays.toString(lArr));
+        // System.out.println("rArr "+Arrays.toString(rArr));
+
+        int cnt =0;
+
+        for(int ind=0;ind<n;ind++){
+            int min = Math.min(lArr[ind],rArr[ind]);
+            if(arr[ind] >= min){
+                continue;
+            }
+            cnt += min-arr[ind];
+        }
+
+        return cnt;
+
+
+       
+    }
+}

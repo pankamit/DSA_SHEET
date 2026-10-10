@@ -1,0 +1,25 @@
+## https://takeuforward.org/practice/dsa/two-sum?source=planly&planly_plan=dsa-preparation&planly_task_id=24465194&planly_day_id=3053061&subject=array
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public int[] twoSum(int[] arr, int tar) {
+        int n = arr.length;
+
+        int[] res = new int[2];
+
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int ind=0;ind<n;ind++){
+            int diff = tar-arr[ind];
+            if(hm.containsKey(diff)){
+             res[0] = hm.get(diff);
+             res[1] = ind;
+             return res;
+            }
+            hm.put(arr[ind],ind);
+        }
+
+        return res;
+        
+    }
+}

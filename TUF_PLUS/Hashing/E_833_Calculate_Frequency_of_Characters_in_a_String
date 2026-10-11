@@ -1,0 +1,28 @@
+## https://takeuforward.org/practice/dsa/calculate-frequency-of-characters-in-a-string
+# TC : O(N*LongN)
+# SC : O(N)
+
+class Solution {
+    public String characterFrequency(String s) {
+        // Your code goes here
+        int n = s.length();
+        Map<Character,Integer> tree = new TreeMap<>();
+
+        int r = 0;
+        while(r < n){
+            char ch = s.charAt(r);
+            tree.put(ch,tree.getOrDefault(ch,0)+1);
+
+            r++;
+        } 
+
+        String res = "";
+        for(Map.Entry<Character,Integer> entry: tree.entrySet()){
+            String temp = entry.getKey()+""+entry.getValue()+" ";
+            res += temp;
+        }
+
+        return res.trim();
+    }
+
+}

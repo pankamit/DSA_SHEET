@@ -1,0 +1,24 @@
+## https://takeuforward.org/practice/dsa/sort-characters-by-frequency?source=planly&planly_plan=dsa-preparation&planly_task_id=24465196&planly_day_id=3053063&subject=strings
+# TC : O(n+klogk) where k = entry stored in HashMap
+# SC : O(k)
+
+import java.util.stream.Collectors;
+
+class Solution {    
+    public List<Character> frequencySort(String s) {
+        // Your code goes here
+        int n = s.length();
+
+        HashMap<Character,Integer> hm = new HashMap<>();
+        for(int ind=0;ind<n;ind++){
+            char ch = s.charAt(ind);
+            hm.put(ch,hm.getOrDefault(ch,0)+1);
+        }
+
+        return hm.entrySet().stream().sorted((e1,e2)-> {if(e1.getValue() == e2.getValue()){
+            return e1.getKey() - e2.getKey();
+        }else{
+            return Integer.compare(e2.getValue(),e1.getValue());
+        }}).map(e -> e.getKey()).collect(Collectors.toList());
+    }
+}

@@ -1,0 +1,28 @@
+## https://takeuforward.org/practice/dsa/longest-subarray-with-sum-k?source=planly&planly_plan=dsa-preparation&planly_task_id=24465198&planly_day_id=3053064&subject=array
+# TC : O(N)
+# SC : O(N)
+
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+       int n = arr.length;
+       HashMap<Integer,Integer> hm = new HashMap<>();
+       hm.put(0,-1);
+
+       int max = 0;
+       int sum = 0;
+       for(int ind=0;ind<n;ind++){
+            sum += arr[ind];
+            int diff = sum-k;
+            if(hm.containsKey(diff)){
+                int last = hm.get(diff);
+                max = Math.max(max,ind-last);
+            }
+            if(!hm.containsKey(sum)){
+                hm.put(sum,ind);
+            }
+       }
+
+       return max;
+
+    }
+}

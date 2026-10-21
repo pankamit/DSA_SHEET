@@ -2,6 +2,7 @@
 # TC : O(logN)
 # SC : O(1)
 
+
 class Solution {
     public int singleNonDuplicate(int[] arr) {
       int n = arr.length;

@@ -1,0 +1,28 @@
+## https://leetcode.com/problems/maximum-k-to-sort-a-permutation/?envType=daily-question&envId=2026-10-23
+# TC : O(N)
+# SC : O(1)
+
+class Solution {
+    public int sortPermutation(int[] arr) {
+        int n = arr.length;
+        int ans = -1;
+        for(int ind=0;ind<n;ind++){
+            if(arr[ind] == ind){
+                continue;
+            }
+            if(ans == -1){
+                ans = arr[ind];
+            }else{
+                ans = ans & arr[ind];
+            }
+        }
+
+        if(ans == -1){
+            return 0;
+        }else{
+            return ans;
+        }
+        
+        
+    }
+}

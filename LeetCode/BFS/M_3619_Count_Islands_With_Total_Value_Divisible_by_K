@@ -1,0 +1,47 @@
+## https://leetcode.com/problems/count-islands-with-total-value-divisible-by-k/?envType=daily-question&envId=2026-10-26
+# TC : O(N*M)
+# SC : O(N*M)
+
+class Solution {
+    public int countIslands(int[][] mat, int k) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        boolean[][] visitArr = new boolean[n][m];
+
+        int cnt = 0;
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] > 0 && !visitArr[i][j]){
+                    visitArr[i][j] = true;
+                    int sum = mat[i][j] + tr(mat,n,m,i,j,k,visitArr);
+                    if(sum % k == 0){
+                        cnt++;
+                    }
+                }
+            }
+        }   
+
+        return cnt;
+    }
+
+    int tr(int[][] mat,int n,int m,int r,int c,int k,boolean[][] visitArr){
+
+        int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
+
+        int sum = 0;
+        for(int ind=0;ind<dir.length;ind++){
+            int new_r = r+dir[ind][0];
+            int new_c = c+dir[ind][1];
+
+            if(new_r >= 0 && new_r < n && new_c >= 0 && new_c < m && !visitArr[new_r][new_c] && mat[new_r][new_c] > 0){
+                visitArr[new_r][new_c]=true;
+                sum += mat[new_r][new_c] +tr(mat,n,m,new_r,new_c,k,visitArr);
+                sum = sum%k;
+            }
+        }
+
+        return sum;
+    }
+}

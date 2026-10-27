@@ -1,0 +1,27 @@
+## https://leetcode.com/problems/create-grid-with-exactly-one-path/?envType=daily-question&envId=2026-10-27
+# TC : O(N*M)
+# SC : O(N*M)
+
+class Solution {
+    public String[] createGrid(int n, int m) {
+        String[] resArr = new String[n];
+        String temp = "";
+        for(int j=0;j<m;j++){
+            temp += ".";
+        }
+        resArr[0] = temp;
+
+        for(int i=1;i<n;i++){
+            temp = "";
+            for(int j=0;j<m-1;j++){
+                temp += "#";
+            }
+            temp += ".";
+            resArr[i] = temp;
+        }
+
+        return resArr;
+
+
+    }
+}

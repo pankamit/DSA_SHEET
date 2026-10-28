@@ -1,0 +1,61 @@
+## https://leetcode.com/problems/minimum-xor-path-in-a-grid/?envType=daily-question&envId=2026-10-28
+# TC : O(n*m*K) where K = 1024
+# SC : O(n*m*K) where K = 1024
+
+class Solution {
+
+    public int minCost(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int min = Integer.MAX_VALUE;
+    
+        Queue<int[]> qu = new LinkedList<>();
+        
+        //HashSet<String> hs = new HashSet<>();
+
+        boolean[][][] memo = new boolean[n][m][1024];
+        
+        //hs.add("0:0"+":"+mat[0][0]);
+        memo[0][0][mat[0][0]]=true;
+        qu.add(new int[]{0,0,mat[0][0]});
+
+
+        while(!qu.isEmpty()){
+            int[] temp = qu.remove();
+            int r = temp[0];
+            int c = temp[1];
+            int x = temp[2];
+
+
+        
+            if(r == n-1 && c == m-1){
+                min = Math.min(min,x);
+                continue;
+            }
+
+            int[][] dir = {{0,1},{1,0}};
+            
+            for(int ind=0;ind<dir.length;ind++){
+                int new_r = r+dir[ind][0];
+                int new_c = c+dir[ind][1];
+
+                if(new_r < n && new_c < m){
+                    
+                    int new_x = x^mat[new_r][new_c];
+                    //String key = new_r+":"+new_c+":"+new_x;
+                    
+                    if(!memo[new_r][new_c][new_x]){
+                        memo[new_r][new_c][new_x]=true;
+                        qu.add(new int[]{new_r,new_c,new_x});
+                    }
+                }
+            }
+
+        }
+
+        return min;
+    }
+
+
+}

@@ -2,6 +2,7 @@
 # TC : O(n*logN)
 # SC : O(1)
 
+
 class Solution {
     public List<Integer> targetIndices(int[] arr, int x) {
         int n = arr.length;

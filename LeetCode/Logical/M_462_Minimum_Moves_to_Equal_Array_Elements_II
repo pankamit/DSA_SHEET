@@ -1,0 +1,22 @@
+## https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/?envType=daily-question&envId=2026-11-02
+# TC : O(n*logN)
+# SC : O(1)
+
+class Solution {
+    public int minMoves2(int[] arr) {
+        int n = arr.length;
+
+        Arrays.sort(arr);
+
+        int med = arr[n/2];
+
+        int cnt = 0;
+        for(int ind=0;ind<n;ind++){
+            int diff = Math.abs(arr[ind]-med);
+
+            cnt += diff;
+        }
+
+        return cnt;
+    }
+}

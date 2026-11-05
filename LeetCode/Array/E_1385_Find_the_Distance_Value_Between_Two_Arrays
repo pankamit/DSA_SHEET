@@ -1,0 +1,31 @@
+## https://leetcode.com/problems/find-the-distance-value-between-two-arrays/description/?envType=daily-question&envId=2026-11-05
+# TC : O(N*N)
+# SC : O(1)
+
+class Solution {
+    public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
+        
+        int n = arr2.length;
+
+        //Arrays.sort(arr2);
+
+        int  cnt = 0;
+        for(int ind=0;ind<arr1.length;ind++){
+            boolean flag = true;
+            for(int ind1=0;ind1<arr2.length;ind1++){
+                int diff = Math.abs(arr1[ind]-arr2[ind1]);
+                if(diff <= d){
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag){
+                cnt++;
+            }
+        }
+
+        return cnt;
+
+    }
+}

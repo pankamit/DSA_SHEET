@@ -1,0 +1,59 @@
+## https://leetcode.com/problems/process-tasks-using-servers/?envType=daily-question&envId=2026-11-07
+# TC : O(nlogn + mlogn) where n -> no of jobs, m -> no of tasks
+# SC : O(n)
+
+class Solution {
+    public int[] assignTasks(int[] sArr, int[] tArr) {
+        int n = sArr.length;
+        int m = tArr.length;
+
+        int[] ans = new int[m];
+
+        // w,idx
+        PriorityQueue<int[]> idle = new PriorityQueue<>((e1,e2) -> {
+            if(e1[0] == e2[0]){
+                return e1[1]-e2[1];
+            }else{
+                return e1[0]-e2[0];
+            }
+        });
+
+
+        // t,idx
+        PriorityQueue<int[]> busy = new PriorityQueue<>((e1,e2) -> e1[0] - e2[0]);
+
+        for(int ind=0;ind<n;ind++){
+            idle.add(new int[]{sArr[ind],ind});
+        }
+
+        int t = 0;
+        for(int ind=0;ind<m;ind++){
+            t = Math.max(t,ind);
+
+            release(idle,busy,sArr,t);
+
+            if(idle.isEmpty()){
+                int[] temp = busy.peek();
+                t = Math.max(t,temp[0]);
+                release(idle,busy,sArr,t);
+            }
+
+            int[] temp = idle.remove();
+        
+            int idx = temp[1];
+            ans[ind] = idx;
+            busy.add(new int[]{t+tArr[ind],idx});
+        }
+
+        return ans;
+
+    }
+
+    void release(PriorityQueue<int[]> idle,PriorityQueue<int[]> busy,int[] sArr,int t){
+
+        while(!busy.isEmpty() && busy.peek()[0] <= t){
+            int[] temp = busy.remove();
+            idle.add(new int[]{sArr[temp[1]],temp[1]});
+        }
+    }
+}

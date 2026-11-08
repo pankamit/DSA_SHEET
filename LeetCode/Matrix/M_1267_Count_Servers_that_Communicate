@@ -1,0 +1,45 @@
+## https://leetcode.com/problems/count-servers-that-communicate/?envType=daily-question&envId=2026-11-08
+# TC : O(N*M)
+# SC : O(N+M)
+
+class Solution {
+    public int countServers(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int[] rArr = new int[n];
+        int[] cArr = new int[m];
+
+        for(int i=0;i<n;i++){
+            int cnt = 0;
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 1){
+                    cnt++;
+                }
+            }
+            rArr[i] = cnt;
+        }
+
+        for(int j=0;j<m;j++){
+            int cnt = 0;
+            for(int i=0;i<n;i++){
+                if(mat[i][j] == 1){
+                    cnt++;
+                }
+            }
+            cArr[j] = cnt;
+        }
+
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j] == 1 && (rArr[i] > 1 || cArr[j] > 1)){
+                    cnt++;
+                }
+            }
+        }
+
+        return cnt;
+
+    }
+}

@@ -1,0 +1,58 @@
+## https://leetcode.com/problems/find-servers-that-handled-most-number-of-requests/?envType=daily-question&envId=2026-11-09
+# TC : O((n+k)*logk)
+# SC : O(k)
+
+class Solution {
+    public List<Integer> busiestServers(int k, int[] aArr, int[] tArr) {
+        int n = aArr.length;
+        TreeSet<Integer> free = new TreeSet<>();
+        int[] freq = new int[k];
+        for(int ind=0;ind<k;ind++){
+            free.add(ind);
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((e1,e2) -> e1[0]-e2[0]);
+
+        int t = 0;
+
+        int max = 0;
+        for(int ind=0;ind<n;ind++){
+            t = Math.max(t,aArr[ind]);
+            release(pq,free,t);
+            
+            if(!free.isEmpty()){
+                int index = ind%k;
+                Integer ele = free.ceiling(index);
+
+                if(ele == null){
+                   ele = free.first();
+                }
+
+                pq.add(new int[]{t+tArr[ind],ele});
+                free.remove(ele);
+                freq[ele]++;
+                max = Math.max(max,freq[ele]);
+                ele++;
+                ele = ele%k;
+                
+            }
+        }
+
+        List<Integer> resLst = new ArrayList<>();
+
+        for(int ind=0;ind<k;ind++){
+            if(freq[ind] == max){
+                resLst.add(ind);
+            }
+        }
+
+        return resLst;
+    }
+
+    void release(PriorityQueue<int[]> pq,TreeSet<Integer> free,int t){
+        while(!pq.isEmpty() && pq.peek()[0] <= t){
+            int[] temp = pq.remove();
+            free.add(temp[1]);
+        }
+    }
+}
